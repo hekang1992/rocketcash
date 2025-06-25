@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/routes/routes.dart';
@@ -28,6 +29,7 @@ class _RocketCashAppState extends State<RocketCashApp> {
         debugShowCheckedModeBanner: false,
         initialRoute: '/splash',
         getPages: AppRoutes.routes,
+        builder: EasyLoading.init(),
       ),
     );
   }

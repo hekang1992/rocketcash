@@ -15,7 +15,12 @@ class GuideView extends GetView<GuideController> {
     final List<Widget> pages = [
       Stack(
         children: [
-          Image.asset('assets/images/list_guide_bg.png'),
+          Image.asset(
+            'assets/images/list_guide_bg.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
           getGuideView(
             context,
             'list_one_bg',
@@ -31,7 +36,12 @@ class GuideView extends GetView<GuideController> {
       ),
       Stack(
         children: [
-          Image.asset('assets/images/list_guide_bg.png'),
+          Image.asset(
+            'assets/images/list_guide_bg.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
           getGuideView(
             context,
             'list_next_bg',
