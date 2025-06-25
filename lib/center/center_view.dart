@@ -290,7 +290,7 @@ Widget moreFunctionView() {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 45.h,
                   child: Row(

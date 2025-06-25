@@ -15,10 +15,16 @@ class SplashController extends GetxController {
 
     final islogin = HiveStorage.isLoggedIn();
 
-    if (islogin) {
-      Get.offAllNamed(AppRoutes.tab);
+    final isshowguige = HiveStorage.isClick();
+
+    if (isshowguige) {
+      if (islogin) {
+        Get.offAllNamed(AppRoutes.tab);
+      } else {
+        Get.offAllNamed(AppRoutes.login);
+      }
     } else {
-      Get.offAllNamed(AppRoutes.login);
+      Get.offAllNamed(AppRoutes.guide);
     }
   }
 }

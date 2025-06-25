@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:rocketcash/guide/guide_controller.dart';
+import 'package:rocketcash/guide/guide_view.dart';
 import 'package:rocketcash/login/login_controller.dart';
 import 'package:rocketcash/login/login_view.dart';
 import 'package:rocketcash/main/main_controller.dart';
@@ -10,6 +12,7 @@ class AppRoutes {
   static const String splash = '/splash';
   static const String tab = '/tab';
   static const String login = '/login';
+  static const String guide = '/guide';
 
   static final routes = [
     GetPage(
@@ -18,6 +21,14 @@ class AppRoutes {
       transition: Transition.noTransition,
       binding: BindingsBuilder(() {
         Get.lazyPut(() => SplashController());
+      }),
+    ),
+    GetPage(
+      name: '/guide',
+      page: () => GuideView(),
+      transition: Transition.noTransition,
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => GuideController());
       }),
     ),
     GetPage(
