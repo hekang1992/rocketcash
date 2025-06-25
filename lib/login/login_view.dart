@@ -66,11 +66,15 @@ class LoginView extends GetView<GetxController> {
                     ),
                   ),
                   SizedBox(height: 47.h),
-                  GuideCustomerBtn(
-                    onPressed: () {
-                      loginController.loginInfo();
-                    },
-                    title: 'Embark on the RocketCash journey',
+                  SizedBox(
+                    width: 320.w,
+                    height: 50.h,
+                    child: GuideCustomerBtn(
+                      onPressed: () {
+                        loginController.loginInfo();
+                      },
+                      title: 'Embark on the RocketCash journey',
+                    ),
                   ),
                   SizedBox(height: 13.h),
                   SizedBox(
@@ -196,7 +200,7 @@ Widget phoneListView([
         ],
       ),
       SizedBox(height: 10.h),
-      Container(width: 295.w, height: 1, color: Color(0xFFB7C67D)),
+      Container(width: 320.w, height: 1, color: Color(0xFFB7C67D)),
     ],
   );
 }
