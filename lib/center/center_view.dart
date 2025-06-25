@@ -6,8 +6,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:rocketcash/center/center_controller.dart';
 import 'package:rocketcash/coler/coler.dart';
 
-typedef CompleteBlock = void Function(String value);
-
 class CenterView extends GetView<CenterController> {
   const CenterView({super.key});
 

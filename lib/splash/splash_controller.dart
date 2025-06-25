@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -42,13 +43,13 @@ class SplashController extends GetxController {
       }
     });
 
-    ever(connectionStatus, (value) {
+    ever(connectionStatus, (value) async {
       if (value == 'none' || value == "unknow") {
         Fluttertoast.showToast(
           msg: 'Connection lost, please check your network.',
         );
       } else if (value == 'mobile' || value == "wifi") {
-        logininitInfo();
+        await logininitInfo();
       }
     });
   }
