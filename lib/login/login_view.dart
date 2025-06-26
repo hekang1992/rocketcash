@@ -9,7 +9,6 @@ import 'package:rocketcash/login/login_controller.dart';
 
 class LoginView extends GetView<GetxController> {
   const LoginView({super.key});
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -54,6 +53,11 @@ class LoginView extends GetView<GetxController> {
                       'Mobile phone number (+63)',
                       'login_phone_imge',
                       'Please enter your mobile phone number',
+                      260,
+                      false,
+                      loginController.phonecontroller,
+                      null,
+                      null,
                     ),
                   ),
                   SizedBox(height: 25.h),
@@ -63,6 +67,15 @@ class LoginView extends GetView<GetxController> {
                       'Verification code',
                       'login_code_imge',
                       'Please enter the verification code',
+                      225,
+                      true,
+                      loginController.codecontroller,
+                      loginController.secondsLeft, // 传入倒计时变量
+                      () {
+                        loginController.tolcodeinfo(
+                          loginController.phonecontroller.text,
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: 47.h),
@@ -71,7 +84,10 @@ class LoginView extends GetView<GetxController> {
                     height: 50.h,
                     child: GuideCustomerBtn(
                       onPressed: () {
-                        loginController.loginInfo();
+                        loginController.tologininfo(
+                          phone: loginController.phonecontroller.text,
+                          rtp: loginController.codecontroller.text,
+                        );
                       },
                       title: 'Embark on the RocketCash journey',
                     ),
@@ -158,6 +174,11 @@ Widget phoneListView([
   String title = '',
   String? imageStr,
   String placeholderTitle = '',
+  double? textwidth,
+  bool? isshow,
+  TextEditingController? controller,
+  RxInt? secondsLeft,
+  VoidCallback? onPressed,
 ]) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,10 +198,11 @@ Widget phoneListView([
           Image.asset('assets/images/$imageStr.png', width: 17.w, height: 17.h),
           SizedBox(width: 10.w),
           SizedBox(
-            width: 260.w,
+            width: textwidth?.w,
             height: 20.h,
             child: Align(
               child: TextField(
+                controller: controller,
                 textAlignVertical: TextAlignVertical.center,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -197,6 +219,29 @@ Widget phoneListView([
               ),
             ),
           ),
+          if (isshow == true && secondsLeft != null)
+            Obx(
+              () => SizedBox(
+                width: 60.w,
+                height: 25.h,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // 去掉默认 padding
+                    backgroundColor: Color(0xFFDFE8BA),
+                    foregroundColor: Colors.black, // ✅ 设置文字颜色
+                  ),
+                  onPressed: secondsLeft.value == 0 ? onPressed : null,
+                  child: Text(
+                    secondsLeft.value == 0 ? "send" : "${secondsLeft.value}s",
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
       SizedBox(height: 10.h),

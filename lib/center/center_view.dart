@@ -31,6 +31,7 @@ class CenterView extends GetView<CenterController> {
 }
 
 Widget centerHeadView(BuildContext context) {
+  final controller = Get.put(CenterController());
   return Stack(
     children: [
       Image.asset(
@@ -71,11 +72,31 @@ Widget centerHeadView(BuildContext context) {
         left: 0, // 水平居中：通过 left/right 约束
         right: 0,
         child: Align(
-          child: Image.asset(
-            'assets/images/centerpeople_imge.png',
-            width: 348.w,
-            height: 144.h,
-            fit: BoxFit.fill,
+          child: Stack(
+            children: [
+              Image.asset(
+                'assets/images/centerpeople_imge.png',
+                width: 348.w,
+                height: 144.h,
+                fit: BoxFit.fill,
+              ),
+              Positioned.fill(
+                top: 45.sp,
+                child: Center(
+                  child: Obx(
+                    () => Text(
+                      controller.phone.value,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: Colors.black, // 视情况设置颜色
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

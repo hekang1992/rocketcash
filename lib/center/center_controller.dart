@@ -1,8 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:rocketcash/hive/save_info.dart';
 
 class CenterController extends GetxController {
+  RxString phone = ''.obs;
+
   void clickTap() {
     print('clickTap======');
   }
@@ -17,12 +18,10 @@ class CenterController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    final phoneStr = HiveStorage.getPhone() ?? '';
+    phone.value = maskPhoneNumber(phoneStr);
     print("onReady 被调用");
     // 页面渲染完成，可以安全地访问 UI
-    EasyLoading.show(status: 'loading...', dismissOnTap: true);
-    Future.delayed(Duration(milliseconds: 3000), () {
-      EasyLoading.dismiss();
-    });
   }
 
   @override
@@ -30,5 +29,19 @@ class CenterController extends GetxController {
     super.onClose();
     print("onClose 被调用");
     // 清理资源
+  }
+
+  String maskPhoneNumber(String number) {
+    final digits = number.replaceAll(RegExp(r'\D'), '');
+
+    if (digits.length < 6) {
+      return digits;
+    }
+
+    String firstPart = digits.substring(0, 2);
+    String lastPart = digits.substring(digits.length - 4);
+    String maskedPart = '*' * (digits.length - 6);
+
+    return firstPart + maskedPart + lastPart;
   }
 }

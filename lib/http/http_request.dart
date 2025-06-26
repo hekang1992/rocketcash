@@ -5,10 +5,8 @@ import 'package:rocketcash/http/login_info.dart';
 
 class GetApiUrlManager {
   Future<String?> buildApiUrl() async {
-    String baseurl = '';
-    Map<String, String> dict = await LoginInfoManager.getLoginInfo();
-    String? apiUrl = URLParameterHelper.appendQueryParameters(baseurl, dict);
-    return apiUrl;
+    String baseurl = 'http://8.212.151.134:10393/rocketcashapi';
+    return baseurl;
   }
 }
 
@@ -30,6 +28,19 @@ class HttpService {
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
     );
     _dio = Dio(options);
+
+    // 添加日志拦截器，方便调试
+    _dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+        responseBody: true,
+        error: true,
+        logPrint: (obj) => print(obj),
+      ),
+    );
   }
 
   Dio get dio => _dio;
@@ -50,8 +61,10 @@ class HttpService {
   // POST 表单请求
   Future<Response> postForm(String path, Map<String, dynamic> formData) async {
     final form = FormData.fromMap(formData);
+    Map<String, String> dict = await LoginInfoManager.getLoginInfo();
+    String? apiUrl = URLParameterHelper.appendQueryParameters(path, dict) ?? '';
     return await _dio.post(
-      path,
+      apiUrl,
       data: form,
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );

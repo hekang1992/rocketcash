@@ -16,7 +16,6 @@ class LoginInfoManager {
       'deal': 'recketcashapi',
       'blow': token,
       'heavy': loginInfo.identifierForVendor ?? '',
-      'operation': DateTime.now().millisecondsSinceEpoch.toString(),
     };
   }
 }
