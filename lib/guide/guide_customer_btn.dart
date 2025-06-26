@@ -6,8 +6,8 @@ class GuideCustomerBtn extends StatelessWidget {
 
   const GuideCustomerBtn({
     super.key,
-    required this.onPressed,
     required this.title,
+    required this.onPressed,
   });
 
   @override

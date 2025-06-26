@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:rocketcash/center/center_list_controller.dart';
+import 'package:rocketcash/center/center_list_view.dart';
+import 'package:rocketcash/center/center_view.dart';
 import 'package:rocketcash/guide/guide_controller.dart';
 import 'package:rocketcash/guide/guide_view.dart';
 import 'package:rocketcash/login/login_controller.dart';
@@ -13,6 +16,7 @@ class AppRoutes {
   static const String tab = '/tab';
   static const String login = '/login';
   static const String guide = '/guide';
+  static const String centerlist = 'centerlist';
 
   static final routes = [
     GetPage(
@@ -45,6 +49,14 @@ class AppRoutes {
       transition: Transition.noTransition,
       binding: BindingsBuilder(() {
         Get.lazyPut(() => LoginController());
+      }),
+    ),
+    GetPage(
+      name: '/centerlist',
+      page: () => CenterListView(),
+      // transition: Transition.noTransition,
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => CenterListController());
       }),
     ),
   ];

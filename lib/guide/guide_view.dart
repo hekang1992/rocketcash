@@ -132,12 +132,13 @@ Widget getGuideView(
           width: 301.w,
           height: 49.h,
           child: GuideCustomerBtn(
+            title: 'Next step',
             onPressed: () {
               final controller = Get.put(GuideController());
               if (controller.index.value == 0) {
                 vc?.animateToPage(
                   1,
-                  duration: Duration(milliseconds: 200),
+                  duration: Duration(milliseconds: 400),
                   curve: Curves.ease,
                 );
               } else {
@@ -145,7 +146,6 @@ Widget getGuideView(
                 Get.offAllNamed('/login');
               }
             },
-            title: 'Next step',
           ),
         ),
       ],

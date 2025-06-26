@@ -32,7 +32,7 @@ class _RocketCashAppState extends State<RocketCashApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/splash',
+        initialRoute: AppRoutes.splash,
         getPages: AppRoutes.routes,
         builder: EasyLoading.init(),
       ),

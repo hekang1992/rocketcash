@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:rocketcash/center/center_controller.dart';
 import 'package:rocketcash/coler/coler.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class CenterView extends GetView<CenterController> {
   const CenterView({super.key});
@@ -309,34 +311,37 @@ Widget moreFunctionView() {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  height: 45.h,
-                  child: Row(
-                    children: [
-                      SizedBox(width: 15.w),
-                      Image.asset(
-                        'assets/images/list_two_image.png',
-                        width: 20.w,
-                        height: 20.h,
-                      ),
-                      SizedBox(width: 10.w),
-                      Text(
-                        'Settings',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500,
+                InkWell(
+                  onTap: () => Get.toNamed(AppRoutes.centerlist),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 45.h,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 15.w),
+                        Image.asset(
+                          'assets/images/list_two_image.png',
+                          width: 20.w,
+                          height: 20.h,
                         ),
-                      ),
-                      Spacer(),
-                      Image.asset(
-                        'assets/images/right_image.png',
-                        width: 16.w,
-                        height: 16.h,
-                      ),
-                      SizedBox(width: 18.w),
-                    ],
+                        SizedBox(width: 10.w),
+                        Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        Image.asset(
+                          'assets/images/right_image.png',
+                          width: 16.w,
+                          height: 16.h,
+                        ),
+                        SizedBox(width: 18.w),
+                      ],
+                    ),
                   ),
                 ),
               ],

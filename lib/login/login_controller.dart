@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart' hide Response, FormData;
+import 'package:get/get.dart' hide FormData;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rocketcash/hive/save_info.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
@@ -13,6 +13,12 @@ import 'package:rocketcash/routes/routes.dart';
 class LoginController extends GetxController {
   final TextEditingController phonecontroller = TextEditingController();
   final TextEditingController codecontroller = TextEditingController();
+
+  @override
+  void onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+  }
 
   var isClick = false.obs;
 
@@ -50,20 +56,23 @@ class LoginController extends GetxController {
     // 发送成功后启动倒计时
     startCountdown();
 
-    final response = await HttpService().postForm('/computed/different', {
-      'space': phone,
-      'halt': 'login',
-    });
+    try {
+      final response = await HttpService().postForm('/computed/different', {
+        'space': phone,
+        'halt': 'login',
+      });
 
-    final model = BaseModel.fromJson(response.data);
+      final model = BaseModel.fromJson(response.data);
 
-    var code = model.salivating ?? '';
-    var companion = model.companion ?? '';
-    if (code == '0' || code == '00') {}
-    await EasyLoading.dismiss();
-    FlutterShowToast.showToast(companion);
-
-    print('model-------$model');
+      var code = model.salivating ?? '';
+      var companion = model.companion ?? '';
+      if (code == '0' || code == '00') {}
+      EasyLoading.dismiss();
+      FlutterShowToast.showToast(companion);
+      print('model-------$model');
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
   }
 
   //login
@@ -83,27 +92,32 @@ class LoginController extends GetxController {
       return;
     }
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
-    final response = await HttpService().postForm('/computed/grandfatherye', {
-      'fairy': phone,
-      'hot': rtp,
-      'blow': 'code',
-    });
 
-    final model = BaseModel.fromJson(response.data);
+    try {
+      final response = await HttpService().postForm('/computed/grandfatherye', {
+        'fairy': phone,
+        'hot': rtp,
+        'blow': 'code',
+      });
 
-    var code = model.salivating ?? '';
-    var companion = model.companion ?? '';
-    if (code == '0' || code == '00') {
-      final phone = model.maiden?.fairy ?? '';
-      final token = model.maiden?.blow ?? '';
-      HiveStorage.savePhone(phone);
-      HiveStorage.saveToken(token);
-      Get.offAllNamed(AppRoutes.tab);
+      final model = BaseModel.fromJson(response.data);
+
+      var code = model.salivating ?? '';
+      var companion = model.companion ?? '';
+      if (code == '0' || code == '00') {
+        final phone = model.maiden?.fairy ?? '';
+        final token = model.maiden?.blow ?? '';
+        HiveStorage.savePhone(phone);
+        HiveStorage.saveToken(token);
+        Get.offAllNamed(AppRoutes.tab);
+      }
+      EasyLoading.dismiss();
+      FlutterShowToast.showToast(companion);
+
+      print('model-------$model');
+    } catch (e) {
+      EasyLoading.dismiss();
     }
-    await EasyLoading.dismiss();
-    FlutterShowToast.showToast(companion);
-
-    print('model-------$model');
   }
 
   @override

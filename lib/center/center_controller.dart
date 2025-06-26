@@ -19,7 +19,7 @@ class CenterController extends GetxController {
   void onReady() {
     super.onReady();
     final phoneStr = HiveStorage.getPhone() ?? '';
-    phone.value = maskPhoneNumber(phoneStr);
+    phone.value = MakePhoneNumer.withNumber(phoneStr);
     print("onReady 被调用");
     // 页面渲染完成，可以安全地访问 UI
   }
@@ -30,8 +30,10 @@ class CenterController extends GetxController {
     print("onClose 被调用");
     // 清理资源
   }
+}
 
-  String maskPhoneNumber(String number) {
+class MakePhoneNumer {
+  static String withNumber(String number) {
     final digits = number.replaceAll(RegExp(r'\D'), '');
 
     if (digits.length < 6) {

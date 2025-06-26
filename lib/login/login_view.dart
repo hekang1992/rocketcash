@@ -7,12 +7,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/login/login_controller.dart';
 
-class LoginView extends GetView<GetxController> {
+class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    final loginController = Get.put(LoginController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
@@ -55,7 +54,7 @@ class LoginView extends GetView<GetxController> {
                       'Please enter your mobile phone number',
                       260,
                       false,
-                      loginController.phonecontroller,
+                      controller.phonecontroller,
                       null,
                       null,
                     ),
@@ -69,12 +68,10 @@ class LoginView extends GetView<GetxController> {
                       'Please enter the verification code',
                       225,
                       true,
-                      loginController.codecontroller,
-                      loginController.secondsLeft, // 传入倒计时变量
+                      controller.codecontroller,
+                      controller.secondsLeft, // 传入倒计时变量
                       () {
-                        loginController.tolcodeinfo(
-                          loginController.phonecontroller.text,
-                        );
+                        controller.tolcodeinfo(controller.phonecontroller.text);
                       },
                     ),
                   ),
@@ -83,13 +80,13 @@ class LoginView extends GetView<GetxController> {
                     width: 320.w,
                     height: 50.h,
                     child: GuideCustomerBtn(
+                      title: 'Embark on the RocketCash journey',
                       onPressed: () {
-                        loginController.tologininfo(
-                          phone: loginController.phonecontroller.text,
-                          rtp: loginController.codecontroller.text,
+                        controller.tologininfo(
+                          phone: controller.phonecontroller.text,
+                          rtp: controller.codecontroller.text,
                         );
                       },
-                      title: 'Embark on the RocketCash journey',
                     ),
                   ),
                   SizedBox(height: 13.h),
@@ -102,14 +99,14 @@ class LoginView extends GetView<GetxController> {
                           () => GestureDetector(
                             behavior:
                                 HitTestBehavior.translucent, // 👈 必加：确保空白区域也响应
-                            onTap: loginController.clickManagement,
+                            onTap: controller.clickManagement,
                             child: Container(
                               padding: EdgeInsets.only(
                                 right: 5.sp,
                                 bottom: 10.sp,
                               ),
                               child: Image.asset(
-                                loginController.isClick.value
+                                controller.isClick.value
                                     ? 'assets/images/man_sel_image.png'
                                     : 'assets/images/man_nor_image.png',
                                 width: 12.w,

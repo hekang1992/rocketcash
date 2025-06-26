@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:rocketcash/http/login_info.dart';
 
@@ -20,9 +21,9 @@ class HttpService {
 
   // 异步初始化方法
   Future<void> init() async {
-    String? apiUrl = await GetApiUrlManager().buildApiUrl();
+    String? baseUrl = await GetApiUrlManager().buildApiUrl();
     BaseOptions options = BaseOptions(
-      baseUrl: apiUrl ?? '',
+      baseUrl: baseUrl ?? '',
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
@@ -41,9 +42,31 @@ class HttpService {
         logPrint: (obj) => print(obj),
       ),
     );
+
+    await _configureProxy();
   }
 
   Dio get dio => _dio;
+
+  // 配置代理
+  Future<void> _configureProxy() async {
+    // 替换为你的电脑IP和Proxyman的端口
+    // String proxyIP = "10.1.1.55";
+    String proxyIP = "192.168.71.68";
+    String proxyPort = "9090";
+
+    if (proxyIP.isNotEmpty) {
+      (_dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient();
+        client.findProxy = (uri) {
+          return 'PROXY $proxyIP:$proxyPort';
+        };
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        return client;
+      };
+    }
+  }
 
   // GET 请求
   Future<Response> get(
