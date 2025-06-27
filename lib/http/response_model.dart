@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class BaseModel {
   String? salivating;
   String? companion;
@@ -11,9 +9,7 @@ class BaseModel {
     return BaseModel(
       salivating: json['salivating'],
       companion: json['companion'],
-      maiden: json['maiden'] != null
-          ? MaidenModel.fromJson(json['maiden'])
-          : null,
+      maiden: MaidenModel.fromJson(json['maiden']),
     );
   }
 
@@ -37,7 +33,9 @@ class MaidenModel {
     return MaidenModel(
       fairy: json['fairy'],
       blow: json['blow'],
-      greatly: GreatlyModel.fromJson(json['greatly']),
+      greatly: json['greatly'] != null
+          ? GreatlyModel.fromJson(json['greatly'])
+          : null,
     );
   }
 
