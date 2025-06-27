@@ -10,13 +10,15 @@ import 'package:rocketcash/main/main_controller.dart';
 import 'package:rocketcash/main/main_view.dart';
 import 'package:rocketcash/splash/splash_controller.dart';
 import 'package:rocketcash/splash/splash_view.dart';
+import 'package:rocketcash/web/web_flutter.dart';
 
 class AppRoutes {
   static const String splash = '/splash';
   static const String tab = '/tab';
   static const String login = '/login';
   static const String guide = '/guide';
-  static const String centerlist = 'centerlist';
+  static const String centerlist = '/centerlist';
+  static const String webpage = '/webpage';
 
   static final routes = [
     GetPage(
@@ -58,6 +60,11 @@ class AppRoutes {
       binding: BindingsBuilder(() {
         Get.lazyPut(() => CenterListController());
       }),
+    ),
+    GetPage(
+      name: '/webpage',
+      page: () => WebFlutterView(),
+      transition: Transition.cupertino,
     ),
   ];
 }

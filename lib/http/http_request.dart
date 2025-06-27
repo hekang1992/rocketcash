@@ -4,9 +4,11 @@ import 'package:dio/io.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:rocketcash/http/login_info.dart';
 
+const String h5Host = 'http://8.212.151.134:10393';
+
 class GetApiUrlManager {
   Future<String?> buildApiUrl() async {
-    String baseurl = 'http://8.212.151.134:10393/rocketcashapi';
+    String baseurl = '$h5Host/rocketcashapi';
     return baseurl;
   }
 }
@@ -51,8 +53,8 @@ class HttpService {
   // 配置代理
   Future<void> _configureProxy() async {
     // 替换为你的电脑IP和Proxyman的端口
-    // String proxyIP = "10.1.1.55";
-    String proxyIP = "192.168.71.68";
+    String proxyIP = "10.1.1.58";
+    // String proxyIP = "192.168.71.68";
     String proxyPort = "9090";
 
     if (proxyIP.isNotEmpty) {
@@ -73,12 +75,16 @@ class HttpService {
     String path, {
     Map<String, dynamic>? queryParameters,
   }) async {
-    return await _dio.get(path, queryParameters: queryParameters);
+    Map<String, String> dict = await LoginInfoManager.getLoginInfo();
+    String? apiUrl = URLParameterHelper.appendQueryParameters(path, dict) ?? '';
+    return await _dio.get(apiUrl, queryParameters: queryParameters);
   }
 
   // POST JSON 请求
   Future<Response> post(String path, {Map<String, dynamic>? data}) async {
-    return await _dio.post(path, data: data);
+    Map<String, String> dict = await LoginInfoManager.getLoginInfo();
+    String? apiUrl = URLParameterHelper.appendQueryParameters(path, dict) ?? '';
+    return await _dio.post(apiUrl, data: data);
   }
 
   // POST 表单请求

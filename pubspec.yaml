@@ -61,6 +61,8 @@ dependencies:
 
   advertising_id: ^2.7.1
 
+  webview_flutter: ^4.13.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -88,7 +90,7 @@ flutter:
     - assets/images/
 
   fonts:
-  - family: Inter
+  - family: inter
     fonts:
       - asset: assets/fonts/Inter_Medium.otf
       - asset: assets/fonts/Inter_SemiBold.otf

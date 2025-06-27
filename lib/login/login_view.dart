@@ -122,7 +122,7 @@ class LoginView extends GetView<LoginController> {
                             text: TextSpan(
                               style: TextStyle(
                                 color: Color(0xFF999999),
-                                fontFamily: 'Inter',
+                                fontFamily: 'inter',
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -184,7 +184,7 @@ Widget phoneListView([
         title,
         style: TextStyle(
           color: Colors.black,
-          fontFamily: 'Inter',
+          fontFamily: 'inter',
           fontSize: 13.sp,
           fontWeight: FontWeight.w500,
         ),
@@ -208,7 +208,7 @@ Widget phoneListView([
                   hintText: placeholderTitle,
                   hintStyle: TextStyle(
                     color: Color(0xFF999999),
-                    fontFamily: 'Inter',
+                    fontFamily: 'inter',
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                   ),
@@ -231,7 +231,7 @@ Widget phoneListView([
                   child: Text(
                     secondsLeft.value == 0 ? "send" : "${secondsLeft.value}s",
                     style: TextStyle(
-                      fontFamily: 'Inter',
+                      fontFamily: 'inter',
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                     ),

@@ -91,7 +91,7 @@ Widget getGuideView(
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Inter',
+              fontFamily: 'inter',
               fontSize: 22.sp,
               fontWeight: FontWeight.w700,
             ),
@@ -104,7 +104,7 @@ Widget getGuideView(
             desctitle,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Inter',
+              fontFamily: 'inter',
               fontSize: 12.sp,
               fontWeight: FontWeight.w500,
             ),

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class GuideCustomerBtn extends StatelessWidget {
   final VoidCallback onPressed;
   final String title;
+  final Color? color;
 
   const GuideCustomerBtn({
     super.key,
     required this.title,
+    this.color,
     required this.onPressed,
   });
 
@@ -15,7 +17,7 @@ class GuideCustomerBtn extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        backgroundColor: Colors.black,
+        backgroundColor: color ?? Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
@@ -24,7 +26,7 @@ class GuideCustomerBtn extends StatelessWidget {
         style: TextStyle(
           color: Colors.white,
           fontSize: 16,
-          fontFamily: 'Inter',
+          fontFamily: 'inter',
           fontWeight: FontWeight.w700,
         ),
       ),

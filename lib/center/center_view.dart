@@ -6,6 +6,8 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:rocketcash/center/center_controller.dart';
 import 'package:rocketcash/coler/coler.dart';
+import 'package:rocketcash/http/flutter_toast.dart';
+import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class CenterView extends GetView<CenterController> {
@@ -89,7 +91,7 @@ Widget centerHeadView(BuildContext context) {
                     () => Text(
                       controller.phone.value,
                       style: TextStyle(
-                        fontFamily: 'Inter',
+                        fontFamily: 'inter',
                         color: Colors.black, // 视情况设置颜色
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w700,
@@ -124,7 +126,7 @@ Widget serviceView() {
         Text(
           'Customer service',
           style: TextStyle(
-            fontFamily: 'Inter',
+            fontFamily: 'inter',
             fontSize: 13.sp,
             fontWeight: FontWeight.w600,
             color: AppColors.blacktextColor,
@@ -159,7 +161,7 @@ Widget centerListView() {
                 'My order',
                 style: TextStyle(
                   color: Color(0xFF000000),
-                  fontFamily: 'Inter',
+                  fontFamily: 'inter',
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w900,
                 ),
@@ -206,7 +208,7 @@ Widget centerListView() {
                     'Finish',
                     style: TextStyle(
                       color: Color(0xFF4EA7FF),
-                      fontFamily: 'Inter',
+                      fontFamily: 'inter',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w900,
                     ),
@@ -237,7 +239,7 @@ Widget orderListImageView(String bgImageStr, String title) {
         child: Text(
           title,
           style: TextStyle(
-            fontFamily: 'Inter',
+            fontFamily: 'inter',
             fontSize: 14.sp,
             fontWeight: FontWeight.w900,
             color: Color(0xFF7C58FF),
@@ -264,7 +266,7 @@ Widget moreFunctionView() {
               'More',
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontFamily: 'Inter',
+                fontFamily: 'inter',
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w700,
               ),
@@ -281,35 +283,43 @@ Widget moreFunctionView() {
             ),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 45.h,
-                  child: Row(
-                    children: [
-                      SizedBox(width: 15.w),
-                      Image.asset(
-                        'assets/images/list_one_image.png',
-                        width: 20.w,
-                        height: 20.h,
-                      ),
-                      SizedBox(width: 10.w),
-                      Text(
-                        'Our official website',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500,
+                InkWell(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 45.h,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 15.w),
+                        Image.asset(
+                          'assets/images/list_one_image.png',
+                          width: 20.w,
+                          height: 20.h,
                         ),
-                      ),
-                      Spacer(),
-                      Image.asset(
-                        'assets/images/right_image.png',
-                        width: 16.w,
-                        height: 16.h,
-                      ),
-                      SizedBox(width: 18.w),
-                    ],
+                        SizedBox(width: 10.w),
+                        Text(
+                          'Our official website',
+                          style: TextStyle(
+                            fontFamily: 'inter',
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        Image.asset(
+                          'assets/images/right_image.png',
+                          width: 16.w,
+                          height: 16.h,
+                        ),
+                        SizedBox(width: 18.w),
+                      ],
+                    ),
                   ),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.webpage,
+                      parameters: {'pageUrl': 'https://www.apple.com/it'},
+                    );
+                  },
                 ),
                 InkWell(
                   onTap: () => Get.toNamed(AppRoutes.centerlist),
@@ -328,7 +338,7 @@ Widget moreFunctionView() {
                         Text(
                           'Settings',
                           style: TextStyle(
-                            fontFamily: 'Inter',
+                            fontFamily: 'inter',
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w500,
                           ),

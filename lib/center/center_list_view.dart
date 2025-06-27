@@ -7,29 +7,12 @@ import 'package:rocketcash/guide/guide_customer_btn.dart';
 
 class CenterListView extends GetView<CenterListController> {
   const CenterListView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsets.all(8.sp),
-          child: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Image.asset('assets/images/back_btn_image.png'),
-          ),
-        ),
-        title: Text(
-          'Setting',
-          style: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      appBar: getAppBar('Setting', () {
+        Get.back();
+      }),
       body: Container(
         width: double.infinity,
         color: Color(0xFFEBEDE5),
@@ -58,6 +41,7 @@ class CenterListView extends GetView<CenterListController> {
                     Get.back();
                   }),
                   enableDrag: false,
+                  isScrollControlled: true,
                   isDismissible: false,
                 );
               },
@@ -124,95 +108,150 @@ class CenterListView extends GetView<CenterListController> {
   }
 }
 
+//删除账号
 Widget centerlistdeleteView(String phone, VoidCallback onTap) {
-  return Stack(
-    children: [
-      Container(
-        width: double.infinity,
-        height: 542.h,
-        decoration: BoxDecoration(
-          color: Color(0xFFAAD301),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(9.sp),
-            topRight: Radius.circular(9.sp),
-          ),
-        ),
+  final controller = Get.put(CenterListController());
+  return Container(
+    width: double.infinity,
+    height: 502.h,
+    decoration: BoxDecoration(
+      color: Color(0xFFAAD301),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(9.sp),
+        topRight: Radius.circular(9.sp),
       ),
-      Positioned(
-        right: 0,
-        left: 0,
-        top: 10.sp,
-        bottom: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFFFFFF),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(9.sp),
-              topRight: Radius.circular(9.sp),
-            ),
-          ),
-        ),
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 18.sp, top: 32.sp),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 241.w,
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Color(0xFF333333),
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Account cancellation',
-                          style: TextStyle(color: Color(0xFFD37401)),
-                        ),
-                        TextSpan(text: ' involves the following risks.'),
-                      ],
-                    ),
-                  ),
-                ),
-                Spacer(),
-                InkWell(onTap: onTap, child: Icon(Icons.cancel)),
-                SizedBox(width: 20.sp),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 15.sp, top: 9.sp),
-            child: RichText(
-              text: TextSpan(
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  color: Color(0xFFD37401),
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                ),
-                children: [
-                  TextSpan(
-                    text: 'Current account:',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  TextSpan(text: ' $phone'),
-                ],
+    ),
+    child: Stack(
+      children: [
+        Positioned(
+          right: 0,
+          left: 0,
+          top: 10.sp,
+          bottom: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFFFFFFF),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(9.sp),
+                topRight: Radius.circular(9.sp),
               ),
             ),
           ),
-        ],
-      ),
-    ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 18.sp, top: 22.sp),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 241.w,
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Color(0xFF333333),
+                          fontFamily: 'inter',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Account cancellation',
+                            style: TextStyle(color: Color(0xFFD37401)),
+                          ),
+                          TextSpan(text: ' involves the following risks.'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  InkWell(onTap: onTap, child: Icon(Icons.cancel)),
+                  SizedBox(width: 20.sp),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15.sp, top: 9.sp),
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Color(0xFFD37401),
+                    fontFamily: 'inter',
+                    fontWeight: FontWeight.w500,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Current account:',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    TextSpan(text: ' $phone'),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 14.h),
+            Center(
+              child: Container(
+                width: 340.w,
+                height: 272.h,
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(9.sp),
+                ),
+                // child: descInfoView(),
+                child: SizedBox(
+                  child: ListView.builder(
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return descInfoView(
+                        title: controller.titles[index],
+                        desc: controller.descs[index],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(left: 18.sp, right: 18.sp, top: 12.sp),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'This operation will permanently delete the account and it cannot be restored',
+                  style: TextStyle(
+                    fontFamily: 'inter',
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFFD30C01),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: SizedBox(
+                width: 347.w,
+                height: 49.h,
+                child: GuideCustomerBtn(
+                  title: 'I want to Account cancellation',
+                  color: Color(0xFFD37401),
+                  onPressed: () {
+                    controller.deleteInfo();
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
   );
 }
 
+//退出登录
 Widget centerListLogoutView({
   String? imageStr,
   String title = '',
@@ -241,7 +280,7 @@ Widget centerListLogoutView({
             Text(
               title,
               style: TextStyle(
-                fontFamily: 'Inter',
+                fontFamily: 'inter',
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
               ),
@@ -255,6 +294,73 @@ Widget centerListLogoutView({
             SizedBox(width: 18.w),
           ],
         ),
+      ),
+    ),
+  );
+}
+
+//list
+Widget descInfoView({required String title, required String desc}) {
+  return Padding(
+    padding: EdgeInsets.only(left: 13.sp, top: 15.sp),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              'assets/images/centerlist_cycle_image.png',
+              width: 12.w,
+              height: 12.h,
+            ),
+            SizedBox(width: 10.w),
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'inter',
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10.sp),
+        Padding(
+          padding: EdgeInsets.only(left: 22.sp), // 对应你原来的 left: 35.sp
+          child: SizedBox(
+            width: 271.w,
+            child: Text(
+              desc,
+              style: TextStyle(
+                fontFamily: 'inter',
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF666666),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+PreferredSizeWidget getAppBar(String? title, VoidCallback? onPressed) {
+  return AppBar(
+    leading: Padding(
+      padding: EdgeInsets.all(8.sp),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Image.asset('assets/images/back_btn_image.png'),
+      ),
+    ),
+    title: Text(
+      title ?? '',
+      style: TextStyle(
+        fontFamily: 'inter',
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
       ),
     ),
   );
