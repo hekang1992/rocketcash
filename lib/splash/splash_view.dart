@@ -4,8 +4,10 @@ import 'package:get/state_manager.dart';
 import 'package:rocketcash/splash/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
-  SplashView({super.key});
-  final _ = Get.put(SplashController());
+  SplashView({super.key}) {
+    final _ = Get.put(SplashController());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

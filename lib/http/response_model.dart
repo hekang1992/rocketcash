@@ -27,13 +27,15 @@ class MaidenModel {
   String? blow;
   GreatlyModel? greatly;
   GreatlyModel? points;
+  String? rpgs; //url_scheme
 
-  MaidenModel({this.fairy, this.blow, this.greatly, this.points});
+  MaidenModel({this.fairy, this.blow, this.greatly, this.points, this.rpgs});
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
     return MaidenModel(
       fairy: json['fairy'],
       blow: json['blow'],
+      rpgs: json['rpgs'],
       greatly: json['greatly'] != null
           ? GreatlyModel.fromJson(json['greatly'])
           : null,
@@ -44,7 +46,13 @@ class MaidenModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {'fairy': fairy, 'blow': blow, 'greatly': greatly, 'points': points};
+    return {
+      'fairy': fairy,
+      'blow': blow,
+      'greatly': greatly,
+      'points': points,
+      'rpgs': rpgs,
+    };
   }
 }
 

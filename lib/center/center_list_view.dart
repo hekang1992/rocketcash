@@ -348,6 +348,8 @@ Widget descInfoView({required String title, required String desc}) {
 
 PreferredSizeWidget getAppBar(String? title, VoidCallback? onPressed) {
   return AppBar(
+    elevation: 0,
+    backgroundColor: Colors.white,
     leading: Padding(
       padding: EdgeInsets.all(8.sp),
       child: IconButton(

@@ -16,45 +16,56 @@ class MainView extends GetView<MainController> {
     return Obx(() {
       return Scaffold(
         body: pages[controller.tabIndex.value],
-        bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(0.w),
-            topRight: Radius.circular(0.w),
-          ),
-          child: tabbar(controller, context),
-        ),
+        bottomNavigationBar: tabbar(controller, context),
       );
     });
   }
 }
 
 Widget tabbar(MainController controller, BuildContext context) {
-  return Theme(
-    data: ThemeData(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-    ),
-    child: BottomNavigationBar(
-      selectedItemColor: AppColors.tabselColor,
-      unselectedItemColor: AppColors.tabnorColor,
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.white,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      items: [
-        BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage('assets/images/home_nor.png')),
-          activeIcon: ImageIcon(AssetImage('assets/images/home_sel.png')),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: ImageIcon(AssetImage('assets/images/center_nor.png')),
-          activeIcon: ImageIcon(AssetImage('assets/images/center_sel.png')),
-          label: '',
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(0.sp),
+        topRight: Radius.circular(0.sp),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.1),
+          blurRadius: 9.sp,
+          offset: Offset(0, -1),
         ),
       ],
-      currentIndex: controller.tabIndex.value,
-      onTap: (value) => controller.changeTabIndex(value),
+    ),
+    child: Theme(
+      data: ThemeData(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+      ),
+      child: BottomNavigationBar(
+        selectedItemColor: AppColors.tabselColor,
+        unselectedItemColor: AppColors.tabnorColor,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.transparent,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        elevation: 0, // 移除默认阴影
+        items: [
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/images/home_nor.png')),
+            activeIcon: ImageIcon(AssetImage('assets/images/home_sel.png')),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/images/center_nor.png')),
+            activeIcon: ImageIcon(AssetImage('assets/images/center_sel.png')),
+            label: '',
+          ),
+        ],
+        currentIndex: controller.tabIndex.value,
+        onTap: (value) => controller.changeTabIndex(value),
+      ),
     ),
   );
 }

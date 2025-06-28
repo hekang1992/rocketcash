@@ -29,7 +29,11 @@ class _RocketCashAppState extends State<RocketCashApp> {
       splitScreenMode: true,
       builder: (context, child) => GetMaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+          appBarTheme: AppBarTheme(surfaceTintColor: Colors.transparent),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.splash,

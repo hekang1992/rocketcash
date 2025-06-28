@@ -17,15 +17,16 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Color(0xFFEBEDE5),
         child: Stack(
           children: [
             // 顶部背景图
             Image.asset(
               'assets/images/home_head_imge.png',
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width,
               height: 310.h,
               fit: BoxFit.cover,
             ),
@@ -41,159 +42,179 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
 
-            SmartRefresher(
-              physics: BouncingScrollPhysics(),
-              controller: controller.refreshController,
-              onRefresh: () {
-                controller.getHomeInfo();
-              },
-              child: ListView(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 32.sp,
-                  bottom: 24.sp,
-                ),
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset(
-                      'assets/images/green_home_image.png',
-                      width: 130.w,
-                      height: 17.h,
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: SmartRefresher(
+                physics: BouncingScrollPhysics(),
+                controller: controller.refreshController,
+                onRefresh: () {
+                  controller.getHomeInfo();
+                },
+                child: SizedBox(
+                  child: ListView(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 32.sp,
+                      bottom: 24.sp,
                     ),
-                  ),
-                  SizedBox(height: 14.sp),
-                  Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 13.sp),
-                        child: SizedBox(
-                          height: 40.h,
-                          width: 120.w,
-                          child: Obx(() {
-                            final rates =
-                                controller.model.value.maiden?.greatly?.rates ??
-                                '';
-                            final desc = rates == 'outsidkeot'
-                                ? controller
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset(
+                          'assets/images/green_home_image.png',
+                          width: 130.w,
+                          height: 17.h,
+                        ),
+                      ),
+                      SizedBox(height: 14.sp),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 13.sp),
+                            child: SizedBox(
+                              height: 40.h,
+                              width: 120.w,
+                              child: Obx(() {
+                                final rates =
+                                    controller
+                                        .model
+                                        .value
+                                        .maiden
+                                        ?.greatly
+                                        ?.rates ??
+                                    '';
+                                final desc = rates == 'outsidkeot'
+                                    ? controller
+                                              .model
+                                              .value
+                                              .maiden
+                                              ?.greatly
+                                              ?.tickets
+                                              ?.first
+                                              .ticket ??
+                                          ''
+                                    : '';
+                                return Text(
+                                  desc,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'inter',
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/images/up_image_home.png',
+                            width: 34.w,
+                            height: 34.h,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.sp),
+                      Stack(
+                        alignment: AlignmentDirectional.centerStart,
+                        children: [
+                          Image.asset(
+                            'assets/images/home_black_image.png',
+                            width: 229.w,
+                            height: 54.h,
+                            fit: BoxFit.cover,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(width: 38.w),
+                              Obx(
+                                () => Text(
+                                  controller
                                           .model
                                           .value
                                           .maiden
                                           ?.greatly
                                           ?.tickets
                                           ?.first
-                                          .ticket ??
-                                      ''
-                                : '';
-                            return Text(
-                              desc,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'inter',
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
+                                          .costs ??
+                                      '',
+                                  style: TextStyle(
+                                    color: Color(0xFFD3F157),
+                                    fontFamily: 'inter',
+                                    fontSize: 30.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                               ),
-                            );
-                          }),
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/images/up_image_home.png',
-                        width: 34.w,
-                        height: 34.h,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.sp),
-                  Stack(
-                    alignment: AlignmentDirectional.centerStart,
-                    children: [
-                      Image.asset(
-                        'assets/images/home_black_image.png',
-                        width: 229.w,
-                        height: 54.h,
-                        fit: BoxFit.cover,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 38.w),
-                          Obx(
-                            () => Text(
-                              controller
-                                      .model
-                                      .value
-                                      .maiden
-                                      ?.greatly
-                                      ?.tickets
-                                      ?.first
-                                      .costs ??
-                                  '',
-                              style: TextStyle(
-                                color: Color(0xFFD3F157),
-                                fontFamily: 'inter',
-                                fontSize: 30.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
+                      SizedBox(height: 48.h),
+                      Obx(() {
+                        final model = controller.model.value;
+                        return itemRateView(model: model);
+                      }),
+                      SizedBox(height: 13.5.sp),
+                      Padding(
+                        padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                        child: Obx(() {
+                          final model = controller.model.value;
+                          return GuideCustomerBtn(
+                            color: Color(0xFFAAD301),
+                            titlecolor: Color(0xFF333333),
+                            title: 'Apply for funding',
+                            onPressed: () {
+                              int producdID =
+                                  model.maiden?.greatly?.tickets?.first.three ??
+                                  0;
+                              controller.applyProduct(producdID.toString());
+                            },
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 13.h),
+                      Obx(() {
+                        final model = controller.model.value;
+                        List<String> images = [];
+                        for (TicketsModel model1
+                            in model.maiden?.points?.tickets ?? []) {
+                          images.add(model1.trolled ?? '');
+                        }
+                        return CarouselSlider(
+                          options: CarouselOptions(
+                            disableCenter: true,
+                            height: 84.h,
+                            autoPlay: true,
+                            enableInfiniteScroll: false,
+                            viewportFraction: 1,
+                            enlargeCenterPage: true,
+                          ),
+                          items: images.map((url) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                left: 13.sp,
+                                right: 13.sp,
+                              ),
+                              child: Image.network(
+                                url,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(color: Colors.pink);
+                                },
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      }),
+                      SizedBox(height: 10.h),
+                      loanitemsListView(),
+                      SizedBox(height: 18.h),
+                      appintrodueView(),
+                      SizedBox(height: 18.h),
+                      footerView(),
                     ],
                   ),
-                  SizedBox(height: 48.h),
-                  Obx(() {
-                    final model = controller.model.value;
-                    return itemRateView(model: model);
-                  }),
-                  SizedBox(height: 13.5.sp),
-                  Padding(
-                    padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
-                    child: GuideCustomerBtn(
-                      color: Color(0xFFAAD301),
-                      titlecolor: Color(0xFF333333),
-                      title: 'Apply for funding',
-                      onPressed: () {
-                        FlutterShowToast.showToast('apply');
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 13.h),
-                  Obx(() {
-                    final model = controller.model.value;
-                    List<String> images = [];
-                    for (TicketsModel model1
-                        in model.maiden?.points?.tickets ?? []) {
-                      images.add(model1.trolled ?? '');
-                    }
-                    return CarouselSlider(
-                      options: CarouselOptions(
-                        disableCenter: true,
-                        height: 84.h,
-                        autoPlay: true,
-                        enableInfiniteScroll: false,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                      ),
-                      items: images.map((url) {
-                        return Padding(
-                          padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
-                          child: Image.network(
-                            url,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(color: Colors.pink);
-                            },
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  }),
-                  SizedBox(height: 10.h),
-                  loanitemsListView(),
-                  SizedBox(height: 18.h),
-                  appintrodueView(),
-                  SizedBox(height: 18.h),
-                  footerView(),
-                ],
+                ),
               ),
             ),
           ],
@@ -450,7 +471,7 @@ Widget footerListView(String title) {
                 title,
                 style: TextStyle(
                   fontFamily: 'inter',
-                  fontSize: 14.sp,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF666666),
                 ),

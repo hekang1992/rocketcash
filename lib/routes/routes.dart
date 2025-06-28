@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+import 'package:rocketcash/auth/introduce/introduce_controller.dart';
+import 'package:rocketcash/auth/introduce/introduce_view.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
-import 'package:rocketcash/center/center_view.dart';
 import 'package:rocketcash/guide/guide_controller.dart';
 import 'package:rocketcash/guide/guide_view.dart';
 import 'package:rocketcash/login/login_controller.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const String guide = '/guide';
   static const String centerlist = '/centerlist';
   static const String webpage = '/webpage';
+  static const String introduce = '/introduce';
 
   static final routes = [
     GetPage(
@@ -29,6 +31,7 @@ class AppRoutes {
         Get.lazyPut(() => SplashController());
       }),
     ),
+
     GetPage(
       name: '/guide',
       page: () => GuideView(),
@@ -37,6 +40,7 @@ class AppRoutes {
         Get.lazyPut(() => GuideController());
       }),
     ),
+
     GetPage(
       name: '/',
       page: () => MainView(),
@@ -45,6 +49,7 @@ class AppRoutes {
         Get.lazyPut(() => MainController());
       }),
     ),
+
     GetPage(
       name: '/login',
       page: () => LoginView(),
@@ -53,6 +58,7 @@ class AppRoutes {
         Get.lazyPut(() => LoginController());
       }),
     ),
+
     GetPage(
       name: '/centerlist',
       page: () => CenterListView(),
@@ -61,10 +67,15 @@ class AppRoutes {
         Get.lazyPut(() => CenterListController());
       }),
     ),
+
+    GetPage(name: '/webpage', page: () => WebFlutterView()),
+
     GetPage(
-      name: '/webpage',
-      page: () => WebFlutterView(),
-      transition: Transition.cupertino,
+      name: '/introduce',
+      page: () => IntroduceView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => IntroduceController());
+      }),
     ),
   ];
 }
