@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -8,6 +9,7 @@ import 'package:rocketcash/home/home_controller.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key}) {
@@ -198,7 +200,12 @@ class HomeView extends GetView<HomeController> {
                   width: 37.w,
                   height: 37.h,
                 ),
-                onTap: () => FlutterShowToast.showToast('msg'),
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.webpage,
+                    parameters: {'pageUrl': 'https://www.apple.com'},
+                  );
+                },
               ),
             ),
           ],
@@ -319,7 +326,10 @@ Widget loanitemsListView() {
           ],
         ),
         onTap: () {
-          FlutterShowToast.showToast('items');
+          Get.toNamed(
+            AppRoutes.webpage,
+            parameters: {'pageUrl': 'https://www.apple.com.cn'},
+          );
         },
       ),
     ),

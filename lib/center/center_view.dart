@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:rocketcash/center/center_controller.dart';
 import 'package:rocketcash/coler/coler.dart';
-import 'package:rocketcash/http/flutter_toast.dart';
-import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class CenterView extends GetView<CenterController> {
@@ -114,32 +109,40 @@ Widget serviceView() {
     onTap: () {
       controller.clickTap();
     },
-    child: Row(
-      children: [
-        SizedBox(width: 10.w),
-        Image.asset(
-          'assets/images/service_keimge.png',
-          width: 20.w,
-          height: 20.h,
-        ),
-        SizedBox(width: 10.w),
-        Text(
-          'Customer service',
-          style: TextStyle(
-            fontFamily: 'inter',
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.blacktextColor,
+    child: InkWell(
+      child: Row(
+        children: [
+          SizedBox(width: 10.w),
+          Image.asset(
+            'assets/images/service_keimge.png',
+            width: 20.w,
+            height: 20.h,
           ),
-        ),
-        Spacer(),
-        Image.asset(
-          'assets/images/right_sp_image.png',
-          width: 16.w,
-          height: 16.h,
-        ),
-        SizedBox(width: 18.w),
-      ],
+          SizedBox(width: 10.w),
+          Text(
+            'Customer service',
+            style: TextStyle(
+              fontFamily: 'inter',
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.blacktextColor,
+            ),
+          ),
+          Spacer(),
+          Image.asset(
+            'assets/images/right_sp_image.png',
+            width: 16.w,
+            height: 16.h,
+          ),
+          SizedBox(width: 18.w),
+        ],
+      ),
+      onTap: () {
+        Get.toNamed(
+          AppRoutes.webpage,
+          parameters: {'pageUrl': 'https://www.apple.com.cn'},
+        );
+      },
     ),
   );
 }

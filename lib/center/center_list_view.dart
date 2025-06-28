@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class CenterListView extends GetView<CenterListController> {
   const CenterListView({super.key});
@@ -22,14 +23,20 @@ class CenterListView extends GetView<CenterListController> {
               imageStr: 'setting_one_image',
               title: 'Loan Terms',
               onTap: () {
-                Fluttertoast.showToast(msg: '1111');
+                Get.toNamed(
+                  AppRoutes.webpage,
+                  parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                );
               },
             ),
             centerListLogoutView(
               imageStr: 'setting_one_image',
               title: 'Privacy Policy',
               onTap: () {
-                Fluttertoast.showToast(msg: '2222');
+                Get.toNamed(
+                  AppRoutes.webpage,
+                  parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                );
               },
             ),
             centerListLogoutView(
