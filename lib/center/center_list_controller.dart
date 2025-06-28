@@ -13,6 +13,7 @@ class CenterListController extends GetxController {
     'Financial records',
     'Unfinished operation',
   ];
+
   final List<String> descs = [
     'Names, contact information, identity verification information, etc. will be permanently deleted.',
     'Loan application records, repayment records, transaction history, etc. will no longer be accessible.',

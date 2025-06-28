@@ -15,10 +15,10 @@ class HomeController extends GetxController {
   final refreshController = RefreshController(initialRefresh: false);
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     print('onInit===home=====');
-    await getHomeInfo(); // 首次加载
+    getHomeInfo(); // 首次加载
   }
 
   @override

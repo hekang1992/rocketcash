@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -6,4 +8,14 @@ class AppColors {
   static const Color tabnorColor = Color(0xFFD4D4D4);
   static const Color centerColor = Color(0xFFAAD301);
   static const Color blacktextColor = Color(0xFF333333);
+}
+
+Color getRandomColorWithAlpha() {
+  Random random = Random();
+  return Color.fromARGB(
+    random.nextInt(256), // A
+    random.nextInt(256), // R
+    random.nextInt(256), // G
+    random.nextInt(256), // B
+  );
 }
