@@ -26,8 +26,9 @@ class MaidenModel {
   String? fairy;
   String? blow;
   GreatlyModel? greatly;
+  GreatlyModel? points;
 
-  MaidenModel({this.fairy, this.blow, this.greatly});
+  MaidenModel({this.fairy, this.blow, this.greatly, this.points});
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
     return MaidenModel(
@@ -36,11 +37,14 @@ class MaidenModel {
       greatly: json['greatly'] != null
           ? GreatlyModel.fromJson(json['greatly'])
           : null,
+      points: json['points'] != null
+          ? GreatlyModel.fromJson(json['points'])
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'fairy': fairy, 'blow': blow, 'greatly': greatly};
+    return {'fairy': fairy, 'blow': blow, 'greatly': greatly, 'points': points};
   }
 }
 
@@ -83,7 +87,10 @@ class TicketsModel {
   String? guess;
   String? pissed;
   int? three;
+  String? paragraph;
   String? ticket;
+  String? trolled;
+  String? rpgs;
 
   TicketsModel({
     this.activating,
@@ -94,7 +101,10 @@ class TicketsModel {
     this.guess,
     this.pissed,
     this.three,
+    this.paragraph,
     this.ticket,
+    this.trolled,
+    this.rpgs,
   });
 
   factory TicketsModel.fromJson(Map<String, dynamic> json) {
@@ -107,7 +117,10 @@ class TicketsModel {
       guess: json['guess'],
       pissed: json['pissed'],
       three: json['three'],
+      paragraph: json['paragraph'],
       ticket: json['ticket'],
+      trolled: json['trolled'],
+      rpgs: json['rpgs'],
     );
   }
 
@@ -121,7 +134,10 @@ class TicketsModel {
       'guess': guess,
       'pissed': pissed,
       'three': three,
+      'paragraph': paragraph,
       'ticket': ticket,
+      'trolled': trolled,
+      'rpgs': rpgs,
     };
   }
 }

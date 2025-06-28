@@ -1,38 +1,43 @@
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
 
 class HomeController extends GetxController {
   var model = BaseModel().obs;
+  final refreshController = RefreshController(initialRefresh: false);
 
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     print('onInit===home=====');
-    await getHomeInfo();
+    await getHomeInfo(); // 首次加载
   }
 
   @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-    print('onReady===home=====');
+  void onClose() {
+    refreshController.dispose();
+    super.onClose();
   }
+}
 
+extension Home on HomeController {
   Future<void> getHomeInfo() async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
+
     try {
       final response = await HttpService().get('/computed/shout');
-      final model = BaseModel.fromJson(response.data);
-      final salivating = model.salivating ?? '';
-      if (salivating == '0' || salivating == '00') {
-        this.model.value = model;
+      final result = BaseModel.fromJson(response.data);
+      if (result.salivating == '0' || result.salivating == '00') {
+        model.value = result;
+        refreshController.refreshCompleted();
+      } else {
+        refreshController.refreshCompleted();
       }
       EasyLoading.dismiss();
     } catch (e) {
+      refreshController.refreshCompleted();
       EasyLoading.dismiss();
     }
   }

@@ -4,11 +4,13 @@ class GuideCustomerBtn extends StatelessWidget {
   final VoidCallback onPressed;
   final String title;
   final Color? color;
+  final Color? titlecolor;
 
   const GuideCustomerBtn({
     super.key,
     required this.title,
     this.color,
+    this.titlecolor,
     required this.onPressed,
   });
 
@@ -24,7 +26,7 @@ class GuideCustomerBtn extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: Colors.white,
+          color: titlecolor ?? Colors.white,
           fontSize: 16,
           fontFamily: 'inter',
           fontWeight: FontWeight.w700,
