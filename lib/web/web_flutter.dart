@@ -20,6 +20,7 @@ class _WebFlutterViewState extends State<WebFlutterView> {
   var urltitle = '';
   late final String pageUrl;
   bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -55,24 +56,27 @@ class _WebFlutterViewState extends State<WebFlutterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: getAppBar(urltitle, () async {
-        if (await _controller.canGoBack()) {
-          _controller.goBack();
-        } else {
-          Get.back();
-        }
-      }),
-      body: Stack(
-        children: [
-          WebViewWidget(controller: _controller),
-          if (isLoading)
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.white,
-            ),
-        ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: getAppBar(urltitle, () async {
+          if (await _controller.canGoBack()) {
+            _controller.goBack();
+          } else {
+            Get.back();
+          }
+        }),
+        body: Stack(
+          children: [
+            WebViewWidget(controller: _controller),
+            if (isLoading)
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.white,
+              ),
+          ],
+        ),
       ),
     );
   }

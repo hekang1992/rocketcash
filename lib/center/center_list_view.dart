@@ -10,105 +10,108 @@ class CenterListView extends GetView<CenterListController> {
   const CenterListView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: getAppBar('Setting', () {
-        Get.back();
-      }),
-      body: Container(
-        width: double.infinity,
-        color: Color(0xFFEBEDE5),
-        child: Column(
-          children: [
-            centerListLogoutView(
-              imageStr: 'setting_one_image',
-              title: 'Loan Terms',
-              onTap: () {
-                Get.toNamed(
-                  AppRoutes.webpage,
-                  parameters: {'pageUrl': 'https://www.apple.com.cn'},
-                );
-              },
-            ),
-            centerListLogoutView(
-              imageStr: 'setting_one_image',
-              title: 'Privacy Policy',
-              onTap: () {
-                Get.toNamed(
-                  AppRoutes.webpage,
-                  parameters: {'pageUrl': 'https://www.apple.com.cn'},
-                );
-              },
-            ),
-            centerListLogoutView(
-              imageStr: 'setting_two_imge',
-              title: 'Account cancellation',
-              onTap: () {
-                Get.bottomSheet(
-                  enableDrag: false,
-                  isScrollControlled: true,
-                  isDismissible: false,
-                  centerlistdeleteView(controller.getPhone(), () {
-                    Get.back();
-                  }),
-                );
-              },
-            ),
-            SizedBox(height: 34.h),
-            SizedBox(
-              width: 345.w,
-              height: 50.h,
-              child: GuideCustomerBtn(
-                title: 'Exit the account',
-                onPressed: () {
-                  Get.dialog(
-                    barrierDismissible: false,
-                    useSafeArea: false,
-                    Center(
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            'assets/images/logout_image.png',
-                            width: 340.w,
-                            height: 275.h,
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: InkWell(
-                              child: SizedBox(width: 40.w, height: 40.h),
-                              onTap: () {
-                                Get.back();
-                              },
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: InkWell(
-                              child: SizedBox(width: 160.w, height: 100.h),
-                              onTap: () {
-                                Get.back();
-                              },
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: InkWell(
-                              child: SizedBox(width: 160.w, height: 100.h),
-                              onTap: () {
-                                controller.logout();
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: getAppBar('Setting', () {
+          Get.back();
+        }),
+        body: Container(
+          width: double.infinity,
+          color: Color(0xFFEBEDE5),
+          child: Column(
+            children: [
+              centerListLogoutView(
+                imageStr: 'setting_one_image',
+                title: 'Loan Terms',
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.webpage,
+                    parameters: {'pageUrl': 'https://www.apple.com.cn'},
                   );
                 },
               ),
-            ),
-          ],
+              centerListLogoutView(
+                imageStr: 'setting_one_image',
+                title: 'Privacy Policy',
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.webpage,
+                    parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                  );
+                },
+              ),
+              centerListLogoutView(
+                imageStr: 'setting_two_imge',
+                title: 'Account cancellation',
+                onTap: () {
+                  Get.bottomSheet(
+                    enableDrag: false,
+                    isScrollControlled: true,
+                    isDismissible: false,
+                    centerlistdeleteView(controller.getPhone(), () {
+                      Get.back();
+                    }),
+                  );
+                },
+              ),
+              SizedBox(height: 34.h),
+              SizedBox(
+                width: 345.w,
+                height: 50.h,
+                child: GuideCustomerBtn(
+                  title: 'Exit the account',
+                  onPressed: () {
+                    Get.dialog(
+                      barrierDismissible: false,
+                      useSafeArea: false,
+                      Center(
+                        child: Stack(
+                          children: [
+                            Image.asset(
+                              'assets/images/logout_image.png',
+                              width: 340.w,
+                              height: 275.h,
+                            ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: InkWell(
+                                child: SizedBox(width: 40.w, height: 40.h),
+                                onTap: () {
+                                  Get.back();
+                                },
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              child: InkWell(
+                                child: SizedBox(width: 160.w, height: 100.h),
+                                onTap: () {
+                                  Get.back();
+                                },
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: InkWell(
+                                child: SizedBox(width: 160.w, height: 100.h),
+                                onTap: () {
+                                  controller.logout();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

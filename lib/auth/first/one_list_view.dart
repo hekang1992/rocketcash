@@ -11,10 +11,13 @@ class OneListView extends GetView<OneListController> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: getAppBar('Identity authentication', () {
-        Get.back();
-      }),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: getAppBar('Identity authentication', () {
+          Get.back();
+        }),
+      ),
     );
   }
 }

@@ -20,119 +20,122 @@ class IntroduceView extends GetView<IntroduceController> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: getAppBar('Identity Authentication', () {
-        Get.back();
-      }),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Color(0xFFEBEDE5),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(height: 21.h),
-              Obx(() {
-                final model = controller.model.value;
-                return oneView(model);
-              }),
-              SizedBox(height: 10.h),
-              SizedBox(
-                width: 347.w,
-                child: GuideCustomerBtn(
-                  title: 'Start the authentication',
-                  onPressed: () {},
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: getAppBar('Identity Authentication', () {
+          Get.back();
+        }),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Color(0xFFEBEDE5),
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: 21.h),
+                Obx(() {
+                  final model = controller.model.value;
+                  return oneView(model);
+                }),
+                SizedBox(height: 10.h),
+                SizedBox(
+                  width: 347.w,
+                  child: GuideCustomerBtn(
+                    title: 'Start the authentication',
+                    onPressed: () {},
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
+                SizedBox(height: 10.h),
 
-              Padding(
-                padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
-                child: InkWell(
-                  child: RichText(
-                    textAlign: TextAlign.center, // 关键设置
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              'We follow strict operational procedures and quality standards, as detailed in our',
-                          style: TextStyle(
-                            fontFamily: 'inter',
-                            color: Color(0xFF999999),
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w500,
+                Padding(
+                  padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                  child: InkWell(
+                    child: RichText(
+                      textAlign: TextAlign.center, // 关键设置
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                'We follow strict operational procedures and quality standards, as detailed in our',
+                            style: TextStyle(
+                              fontFamily: 'inter',
+                              color: Color(0xFF999999),
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: " Privacy Policy",
-                          style: TextStyle(
-                            fontFamily: 'inter',
-                            color: Color(0xFF333333),
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w500,
+                          TextSpan(
+                            text: " Privacy Policy",
+                            style: TextStyle(
+                              fontFamily: 'inter',
+                              color: Color(0xFF333333),
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.webpage,
+                        parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                      );
+                    },
                   ),
-                  onTap: () {
-                    Get.toNamed(
-                      AppRoutes.webpage,
-                      parameters: {'pageUrl': 'https://www.apple.com.cn'},
-                    );
-                  },
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Obx(() {
-                final model = controller.model.value;
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(), // 禁止 GridView 自身滚动
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.0, //宽高比为1时，子widget
-                  ),
-                  itemCount: model.maiden?.transformed?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final transformedModel = model.maiden?.transformed ?? [];
-                    return authListView(transformedModel[index], (
-                      supermy,
-                    ) async {
-                      switch (supermy) {
-                        case 'beatvoicaeious':
-                          await controller.getUmidInfo();
-                          Get.bottomSheet(
-                            enableDrag: false,
-                            isScrollControlled: true,
-                            isDismissible: false,
-                            Obx(() {
-                              final model = controller.listModel.value;
-                              return umidListView(
-                                model.maiden?.keyboard ?? [],
-                                () {
-                                  Get.back();
-                                },
-                              );
-                            }),
-                          );
-                          break;
-                        case 'gymnaproof':
-                          break;
-                        case 'tarsshoratitor':
-                          break;
-                        case 'vilaature':
-                          break;
-                        case 'speaakward':
-                          break;
-                        default:
-                      }
-                    });
-                  },
-                );
-              }),
-            ],
+                SizedBox(height: 10.h),
+                Obx(() {
+                  final model = controller.model.value;
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(), // 禁止 GridView 自身滚动
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.0, //宽高比为1时，子widget
+                    ),
+                    itemCount: model.maiden?.transformed?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final transformedModel = model.maiden?.transformed ?? [];
+                      return authListView(transformedModel[index], (
+                        supermy,
+                      ) async {
+                        switch (supermy) {
+                          case 'beatvoicaeious':
+                            await controller.getUmidInfo();
+                            Get.bottomSheet(
+                              enableDrag: false,
+                              isScrollControlled: true,
+                              isDismissible: false,
+                              Obx(() {
+                                final model = controller.listModel.value;
+                                return umidListView(
+                                  model.maiden?.keyboard ?? [],
+                                  () {
+                                    Get.back();
+                                  },
+                                );
+                              }),
+                            );
+                            break;
+                          case 'gymnaproof':
+                            break;
+                          case 'tarsshoratitor':
+                            break;
+                          case 'vilaature':
+                            break;
+                          case 'speaakward':
+                            break;
+                          default:
+                        }
+                      });
+                    },
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),
