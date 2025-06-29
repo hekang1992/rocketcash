@@ -356,9 +356,10 @@ Widget umidListView(List<KeyboardModel> modelArray, VoidCallback onTap) {
           child: ListView.builder(
             itemCount: modelArray.length,
             itemBuilder: (content, index) {
-              return unlistViwe(modelArray[index], (auth) {
+              return unlistViwe(modelArray[index], (auth) async {
                 final controller = Get.put(IntroduceController());
                 Get.back();
+                await Future.delayed(Duration(milliseconds: 250));
                 Get.toNamed(
                   AppRoutes.oneauth,
                   parameters: {'auth': auth, 'productID': controller.producdID},

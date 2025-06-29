@@ -7,7 +7,7 @@ import 'package:rocketcash/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HttpService().init(); // 必须初始化
+  await HttpService().init();
   runApp(RocketCashApp());
 }
 

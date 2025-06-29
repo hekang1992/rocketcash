@@ -45,7 +45,7 @@ class HttpService {
       ),
     );
 
-    await _configureProxy();
+    // await _configureProxy();
   }
 
   Dio get dio => _dio;
@@ -54,7 +54,7 @@ class HttpService {
   Future<void> _configureProxy() async {
     // 替换为你的电脑IP和Proxyman的端口
     // String proxyIP = "10.1.1.58";
-    String proxyIP = "192.168.71.45";
+    String proxyIP = "192.168.71.31";
     String proxyPort = "9090";
 
     if (proxyIP.isNotEmpty) {
