@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:rocketcash/auth/first/one_list_view.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/coler/coler.dart';
@@ -8,6 +10,7 @@ import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/home/home_view.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class IntroduceView extends GetView<IntroduceController> {
   IntroduceView({super.key}) {
@@ -74,7 +77,10 @@ class IntroduceView extends GetView<IntroduceController> {
                     ),
                   ),
                   onTap: () {
-                    FlutterShowToast.showToast('msg');
+                    Get.toNamed(
+                      AppRoutes.webpage,
+                      parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                    );
                   },
                 ),
               ),
@@ -90,7 +96,39 @@ class IntroduceView extends GetView<IntroduceController> {
                   ),
                   itemCount: model.maiden?.transformed?.length ?? 0,
                   itemBuilder: (context, index) {
-                    return Container(color: getRandomColorWithAlpha());
+                    final transformedModel = model.maiden?.transformed ?? [];
+                    return authListView(transformedModel[index], (
+                      supermy,
+                    ) async {
+                      switch (supermy) {
+                        case 'beatvoicaeious':
+                          await controller.getUmidInfo();
+                          Get.bottomSheet(
+                            enableDrag: false,
+                            isScrollControlled: true,
+                            isDismissible: false,
+                            Obx(() {
+                              final model = controller.listModel.value;
+                              return umidListView(
+                                model.maiden?.keyboard ?? [],
+                                () {
+                                  Get.back();
+                                },
+                              );
+                            }),
+                          );
+                          break;
+                        case 'gymnaproof':
+                          break;
+                        case 'tarsshoratitor':
+                          break;
+                        case 'vilaature':
+                          break;
+                        case 'speaakward':
+                          break;
+                        default:
+                      }
+                    });
                   },
                 );
               }),
@@ -102,6 +140,7 @@ class IntroduceView extends GetView<IntroduceController> {
   }
 }
 
+//headView
 Widget oneView(BaseModel model) {
   return Stack(
     alignment: AlignmentDirectional.topCenter,
@@ -198,5 +237,166 @@ Widget oneView(BaseModel model) {
         ),
       ),
     ],
+  );
+}
+
+//listView
+Widget authListView(TransformedModel model, void Function(String) onTap) {
+  var imageStr = '';
+  imageStr = model.shock == 1 ? 'list_comp_image' : 'list_no_iamge';
+  return InkWell(
+    child: SizedBox(
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 13.sp, bottom: 44.sp, right: 13.sp),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(9.sp),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 20.sp,
+            child: Image.network(
+              model.lap ?? '',
+              width: 72.sp,
+              height: 72.sp,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            top: 100.sp,
+            child: Text(
+              model.appeared ?? '',
+              style: TextStyle(
+                color: Color(0xFF333333),
+                fontFamily: 'inter',
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 125.sp,
+            child: Image.asset(
+              'assets/images/$imageStr.png',
+              width: 40.w,
+              height: 40.h,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
+      ),
+    ),
+    onTap: () {
+      onTap(model.supermysterious ?? '');
+    },
+  );
+}
+
+Widget umidListView(List<KeyboardModel> modelArray, VoidCallback onTap) {
+  return Container(
+    width: double.infinity,
+    height: 450.h,
+    decoration: BoxDecoration(
+      color: Color(0xFFAAD301),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(9.sp),
+        topRight: Radius.circular(9.sp),
+      ),
+    ),
+    child: Stack(
+      children: [
+        Positioned(
+          right: 0,
+          left: 0,
+          top: 10.sp,
+          bottom: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFFFFFFF),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(9.sp),
+                topRight: Radius.circular(9.sp),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 22.sp),
+          child: Row(
+            children: [
+              SizedBox(width: 22.w),
+              Text(
+                'Select Document',
+                style: TextStyle(
+                  fontFamily: 'inter',
+                  color: Color(0xFF333333),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Spacer(),
+              InkWell(onTap: onTap, child: Icon(Icons.cancel)),
+              SizedBox(width: 20.sp),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 60.sp,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: ListView.builder(
+            itemCount: modelArray.length,
+            itemBuilder: (content, index) {
+              return unlistViwe(modelArray[index], (auth) {
+                final controller = Get.put(IntroduceController());
+                Get.back();
+                Get.toNamed(
+                  AppRoutes.oneauth,
+                  parameters: {'auth': auth, 'productID': controller.producdID},
+                );
+              });
+            },
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget unlistViwe(KeyboardModel model, void Function(String) onTap) {
+  return InkWell(
+    onTap: () {
+      onTap(model.activate ?? '');
+    },
+    child: Padding(
+      padding: EdgeInsets.only(bottom: 20.sp),
+      child: Row(
+        children: [
+          SizedBox(width: 20.w),
+          Text(
+            model.activate ?? '',
+            style: TextStyle(
+              fontFamily: 'inter',
+              fontSize: 14.sp,
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Spacer(),
+          Image.asset(
+            'assets/images/right_image.png',
+            width: 15.w,
+            height: 15.h,
+          ),
+          SizedBox(width: 20.w),
+        ],
+      ),
+    ),
   );
 }

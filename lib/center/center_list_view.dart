@@ -44,12 +44,12 @@ class CenterListView extends GetView<CenterListController> {
               title: 'Account cancellation',
               onTap: () {
                 Get.bottomSheet(
-                  centerlistdeleteView(controller.getPhone(), () {
-                    Get.back();
-                  }),
                   enableDrag: false,
                   isScrollControlled: true,
                   isDismissible: false,
+                  centerlistdeleteView(controller.getPhone(), () {
+                    Get.back();
+                  }),
                 );
               },
             ),

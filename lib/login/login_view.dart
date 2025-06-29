@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/login/login_controller.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
@@ -135,7 +136,12 @@ class LoginView extends GetView<LoginController> {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      print('Privacy---Privacy');
+                                      Get.toNamed(
+                                        AppRoutes.webpage,
+                                        parameters: {
+                                          'pageUrl': 'https://www.apple.com.cn',
+                                        },
+                                      );
                                     },
                                 ),
                                 const TextSpan(text: ' and '),
@@ -146,7 +152,12 @@ class LoginView extends GetView<LoginController> {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      print('Terms---Terms');
+                                      Get.toNamed(
+                                        AppRoutes.webpage,
+                                        parameters: {
+                                          'pageUrl': 'https://www.baidu.com',
+                                        },
+                                      );
                                     },
                                 ),
                                 const TextSpan(text: '.'),

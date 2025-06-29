@@ -9,6 +9,8 @@ class IntroduceController extends GetxController {
 
   var model = BaseModel().obs;
 
+  var listModel = BaseModel().obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -44,6 +46,24 @@ extension Introduce on IntroduceController {
       final code = model.salivating ?? '';
       if (code == '0' || code == '00') {
         this.model.value = model;
+      }
+      EasyLoading.dismiss();
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> getUmidInfo() async {
+    EasyLoading.show(status: 'loading...', dismissOnTap: true);
+    try {
+      final response = await HttpService().get(
+        '/computed/without',
+        queryParameters: {'licence': '1'},
+      );
+      final model = BaseModel.fromJson(response.data);
+      final code = model.salivating ?? '';
+      if (code == '0' || code == '00') {
+        listModel.value = model;
       }
       EasyLoading.dismiss();
     } catch (e) {

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:rocketcash/auth/first/one_list_controller.dart';
+import 'package:rocketcash/auth/first/one_list_view.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/auth/introduce/introduce_view.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
@@ -21,6 +23,7 @@ class AppRoutes {
   static const String centerlist = '/centerlist';
   static const String webpage = '/webpage';
   static const String introduce = '/introduce';
+  static const String oneauth = '/oneauth';
 
   static final routes = [
     GetPage(
@@ -75,6 +78,14 @@ class AppRoutes {
       page: () => IntroduceView(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => IntroduceController());
+      }),
+    ),
+
+    GetPage(
+      name: '/oneauth',
+      page: () => OneListView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => OneListController());
       }),
     ),
   ];

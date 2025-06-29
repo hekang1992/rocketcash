@@ -33,6 +33,7 @@ class MaidenModel {
   FunctionModel? function;
   SubtleModel? subtle;
   List<TransformedModel>? transformed;
+  List<KeyboardModel>? keyboard;
 
   MaidenModel({
     this.fairy,
@@ -43,6 +44,7 @@ class MaidenModel {
     this.function,
     this.subtle,
     this.transformed,
+    this.keyboard,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,11 @@ class MaidenModel {
                 .map((item) => TransformedModel.fromJson(item))
                 .toList()
           : [],
+      keyboard: json['keyboard'] != null
+          ? (json['keyboard'] as List)
+                .map((item) => KeyboardModel.fromJson(item))
+                .toList()
+          : [],
     );
   }
 
@@ -80,6 +87,7 @@ class MaidenModel {
       'function': function?.toJson(),
       'subtle': subtle?.toJson(),
       'transformed': transformed?.map((model) => model.toJson()).toList(),
+      'keyboard': keyboard?.map((model) => model.toJson()).toList(),
     };
   }
 }
@@ -280,5 +288,20 @@ class TransformedModel {
       'supermysterious': supermysterious,
       'shock': shock,
     };
+  }
+}
+
+class KeyboardModel {
+  String? activate;
+  String? consume;
+
+  KeyboardModel({this.activate, this.consume});
+
+  factory KeyboardModel.fromJson(Map<String, dynamic> json) {
+    return KeyboardModel(activate: json['activate'], consume: json['consume']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'activate': activate, 'consume': consume};
   }
 }
