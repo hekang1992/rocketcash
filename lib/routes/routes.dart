@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
-import 'package:rocketcash/auth/first/one_list_controller.dart';
-import 'package:rocketcash/auth/first/one_list_view.dart';
+import 'package:rocketcash/auth/personan/personal_controller.dart';
+import 'package:rocketcash/auth/personan/personal_view.dart';
+import 'package:rocketcash/auth/umid/face_controller.dart';
+import 'package:rocketcash/auth/umid/face_view.dart';
+import 'package:rocketcash/auth/umid/one_list_controller.dart';
+import 'package:rocketcash/auth/umid/one_list_view.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/auth/introduce/introduce_view.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
@@ -16,14 +20,16 @@ import 'package:rocketcash/splash/splash_view.dart';
 import 'package:rocketcash/web/web_flutter.dart';
 
 class AppRoutes {
-  static const String splash = '/splash';
   static const String tab = '/tab';
+  static const String splash = '/splash';
   static const String login = '/login';
   static const String guide = '/guide';
   static const String centerlist = '/centerlist';
   static const String webpage = '/webpage';
-  static const String introduce = '/introduce';
-  static const String oneauth = '/oneauth';
+  static const String introduce = '/introduce'; //认证列表页面
+  static const String oneauth = '/oneauth'; //umid
+  static const String faceauth = '/faceauth'; //face
+  static const String personalauth = '/personalauth';
 
   static final routes = [
     GetPage(
@@ -45,7 +51,7 @@ class AppRoutes {
     ),
 
     GetPage(
-      name: '/',
+      name: '/tab',
       page: () => MainView(),
       transition: Transition.noTransition,
       binding: BindingsBuilder(() {
@@ -86,6 +92,22 @@ class AppRoutes {
       page: () => OneListView(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => OneListController());
+      }),
+    ),
+
+    GetPage(
+      name: '/faceauth',
+      page: () => FaceView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => FaceController());
+      }),
+    ),
+
+    GetPage(
+      name: '/personalauth',
+      page: () => PersonalView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => PersonalController());
       }),
     ),
   ];

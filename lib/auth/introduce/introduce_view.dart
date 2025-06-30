@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:rocketcash/auth/first/one_list_view.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
-import 'package:rocketcash/coler/coler.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/home/home_view.dart';
-import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:rocketcash/routes/routes.dart';
 
@@ -23,9 +19,12 @@ class IntroduceView extends GetView<IntroduceController> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: getAppBar('Identity Authentication', () {
-          Get.back();
-        }),
+        appBar: getAppBar(
+          'Identity Authentication',
+          onPressed: () {
+            Get.back();
+          },
+        ),
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -101,18 +100,29 @@ class IntroduceView extends GetView<IntroduceController> {
                       final transformedModel = model.maiden?.transformed ?? [];
                       return authListView(transformedModel[index], (
                         supermy,
+                        shock,
                       ) async {
                         switch (supermy) {
-                          case 'beatvoicaeious':
+                          case 'beatvoicaeious': //人脸认证信息
                             bottomSheetInfo(controller);
                             break;
-                          case 'gymnaproof':
+                          case 'gymnaproof': //个人信息
+                            shock == '1'
+                                ? Get.toNamed(AppRoutes.personalauth)
+                                : controller.getProductDetailToNextPage(
+                                    controller.producdID,
+                                    block: (p0) {
+                                      if (p0 == 'beatvoicaeious') {
+                                        bottomSheetInfo(controller);
+                                      }
+                                    },
+                                  );
                             break;
-                          case 'tarsshoratitor':
+                          case 'tarsshoratitor': //工作信息
                             break;
-                          case 'vilaature':
+                          case 'vilaature': //联系人信息
                             break;
-                          case 'speaakward':
+                          case 'speaakward': //银行信息
                             break;
                           default:
                         }
@@ -138,7 +148,12 @@ bottomSheetInfo(IntroduceController controller) async {
         'auth': model.maiden?.phoenix?.mountain ?? '',
         'productID': controller.producdID,
       },
-    );
+    )?.then((onValue) {
+      if (onValue == 'idcard') {
+        controller.getAuthInfo(controller.producdID);
+        return onValue;
+      }
+    });
   } else {
     await controller.getUmidInfo();
     Get.bottomSheet(
@@ -259,9 +274,13 @@ Widget oneView(BaseModel model) {
 }
 
 //listView
-Widget authListView(TransformedModel model, void Function(String) onTap) {
+Widget authListView(
+  TransformedModel model,
+  void Function(String, String) onTap,
+) {
   var imageStr = '';
-  imageStr = model.shock == 1 ? 'list_comp_image' : 'list_no_iamge';
+  final shock = model.shock ?? 0;
+  imageStr = shock == 1 ? 'list_comp_image' : 'list_no_iamge';
   return InkWell(
     child: SizedBox(
       child: Stack(
@@ -310,7 +329,7 @@ Widget authListView(TransformedModel model, void Function(String) onTap) {
       ),
     ),
     onTap: () {
-      onTap(model.supermysterious ?? '');
+      onTap(model.supermysterious ?? '', shock.toString());
     },
   );
 }
@@ -379,13 +398,24 @@ Widget umidListView(
                 Get.back();
                 await Future.delayed(Duration(milliseconds: 250));
                 Get.toNamed(
-                  AppRoutes.oneauth,
-                  parameters: {'auth': auth, 'productID': controller.producdID},
-                )?.then((result) {
-                  if (result == 'chosen') {
-                    bottomSheetInfo(controller);
-                  }
-                });
+                      AppRoutes.oneauth,
+                      parameters: {
+                        'auth': auth,
+                        'productID': controller.producdID,
+                      },
+                    )
+                    ?.then((result) {
+                      if (result == 'chosen') {
+                        bottomSheetInfo(controller);
+                      }
+                      return result;
+                    })
+                    .then((onValue) {
+                      if (onValue == 'idcard') {
+                        controller.getAuthInfo(controller.producdID);
+                      }
+                      return onValue;
+                    });
               });
             },
           ),

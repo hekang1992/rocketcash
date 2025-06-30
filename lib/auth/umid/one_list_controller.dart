@@ -63,6 +63,7 @@ class OneListController extends GetxController {
       imageFile.value = image;
 
       await uploadUmidInfo(
+        rates: '11',
         source: '1',
         imageFile: File(image.path),
         imageBlock: (grand) {
@@ -89,13 +90,25 @@ class OneListController extends GetxController {
       );
       if (image == null) return;
       imageFile.value = image;
-      await uploadUmidInfo(
-        source: '2',
-        imageFile: File(image.path),
-        imageBlock: (grand) {
-          imageBlock(grand);
-        },
-      );
+      if (isFace == true) {
+        await uploadUmidInfo(
+          rates: '10',
+          source: '2',
+          imageFile: File(image.path),
+          imageBlock: (grand) {
+            imageBlock(grand);
+          },
+        );
+      } else {
+        await uploadUmidInfo(
+          rates: '11',
+          source: '2',
+          imageFile: File(image.path),
+          imageBlock: (grand) {
+            imageBlock(grand);
+          },
+        );
+      }
     } else {
       showPermissionDeniedDialog('Camera');
     }
@@ -127,7 +140,7 @@ class OneListController extends GetxController {
 extension ListVc on OneListController {
   // 获取用户认证信息
   Future<void> getAuthInfo(String productID) async {
-    EasyLoading.show(status: '加载中...', dismissOnTap: true);
+    EasyLoading.show(status: 'loading...', dismissOnTap: true);
 
     try {
       final response = await HttpService().get(
@@ -154,6 +167,7 @@ extension ListVc on OneListController {
 
   //上传身份信息
   Future<void> uploadUmidInfo({
+    required String rates,
     required String source,
     required File imageFile,
     required Function(bool) imageBlock,
@@ -161,7 +175,7 @@ extension ListVc on OneListController {
     final dict = {
       'somehow': source,
       'successfully': productID,
-      'rates': '11',
+      'rates': rates,
       'mountain': authStr,
       'solid': '',
       'halt': '',

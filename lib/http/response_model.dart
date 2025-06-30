@@ -38,6 +38,7 @@ class MaidenModel {
   String? mechanical;
   String? reverberated;
   PhoenixModel? phoenix;
+  int? browsing;
 
   MaidenModel({
     this.fairy,
@@ -53,6 +54,7 @@ class MaidenModel {
     this.mechanical,
     this.reverberated,
     this.phoenix,
+    this.browsing,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class MaidenModel {
       activate: json['activate'],
       mechanical: json['mechanical'],
       reverberated: json['reverberated'],
+      browsing: json['browsing'],
       phoenix: json['phoenix'] != null
           ? PhoenixModel.fromJson(json['phoenix'])
           : null,

@@ -13,9 +13,12 @@ class CenterListView extends GetView<CenterListController> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: getAppBar('Setting', () {
-          Get.back();
-        }),
+        appBar: getAppBar(
+          'Setting',
+          onPressed: () {
+            Get.back();
+          },
+        ),
         body: Container(
           width: double.infinity,
           color: Color(0xFFEBEDE5),
@@ -356,7 +359,7 @@ Widget descInfoView({required String title, required String desc}) {
   );
 }
 
-PreferredSizeWidget getAppBar(String? title, VoidCallback? onPressed) {
+PreferredSizeWidget getAppBar(String? title, {VoidCallback? onPressed}) {
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.white,

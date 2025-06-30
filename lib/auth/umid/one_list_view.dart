@@ -1,16 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:rocketcash/auth/first/one_list_controller.dart';
+import 'package:rocketcash/auth/umid/one_list_controller.dart';
+import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
-import 'package:rocketcash/coler/coler.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class OneListView extends GetView<OneListController> {
   OneListView({super.key}) {
@@ -24,9 +22,12 @@ class OneListView extends GetView<OneListController> {
       canPop: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: getAppBar('Identity authentication', () {
-          Get.back();
-        }),
+        appBar: getAppBar(
+          'Identity authentication',
+          onPressed: () {
+            Get.back(result: 'idcard');
+          },
+        ),
         body: Container(
           color: Color(0xFFEBEDE5),
           width: MediaQuery.of(context).size.width,
@@ -86,62 +87,114 @@ class OneListView extends GetView<OneListController> {
                       '2、Please upload your identification documents',
                       picUrl.isEmpty ? 'list_phont_imge' : picUrl,
                       onTap: () {
-                        if (model.maiden?.phoenix?.shock != 1) {
-                          Get.bottomSheet(
-                            enableDrag: false,
-                            isScrollControlled: true,
-                            isDismissible: false,
-                            popPhotoView(
-                              albulmTap: () async {
-                                Get.back();
-                                await controller.pickImageFromGallery(
-                                  imageBlock: (grand) {
-                                    if (grand == true) {
-                                      Get.bottomSheet(
-                                        enableDrag: false,
-                                        isScrollControlled: true,
-                                        isDismissible: false,
-                                        successUmidInfo(
-                                          controller,
-                                          context: context,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                              cameraTap: () async {
-                                Get.back();
-                                await controller.takePhoto(
-                                  isFace: false,
-                                  imageBlock: (grand) {
-                                    if (grand == true) {
-                                      Get.bottomSheet(
-                                        enableDrag: false,
-                                        isScrollControlled: true,
-                                        isDismissible: false,
-                                        successUmidInfo(controller),
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                            ),
+                        if (model.maiden?.phoenix?.shock == 0) {
+                          //相册相机弹窗
+                          popPhotoCameraView(context, controller);
+                          return;
+                        }
+                        if (model.maiden?.phoenix?.shock == 1) {
+                          //相册相机弹窗
+                          FlutterShowToast.showToast(
+                            'You have successfully completed the verification.',
                           );
+                          return;
                         }
                       },
                     );
                   }),
                   SizedBox(height: 10.h),
-                  idcardandFaceView(
-                    '3、Please upload your frontal headshot',
-                    'list_face_imge',
-                    onTap: () async {
-                      await controller.takePhoto(
-                        isFace: true,
-                        imageBlock: (grand) {},
-                      );
-                    },
+                  Obx(() {
+                    final model = controller.model.value;
+                    final picUrl = model.maiden?.rpgs ?? '';
+                    return idcardandFaceView(
+                      '3、Please upload your frontal headshot',
+                      picUrl.isEmpty ? 'list_face_imge' : picUrl,
+                      onTap: () async {
+                        final model = controller.model.value;
+                        final shock = model.maiden?.phoenix?.shock ?? 0; //id
+                        final browsing = model.maiden?.browsing ?? 0; //face
+                        if (shock == 0) {
+                          FlutterShowToast.showToast(
+                            'Kindly upload your identification photo first.',
+                          );
+                          return;
+                        }
+                        if (browsing == 1) {
+                          FlutterShowToast.showToast(
+                            'You have successfully completed the verification.',
+                          );
+                          return;
+                        }
+                        if (browsing == 0) {
+                          //go face
+                          Get.toNamed(
+                            AppRoutes.faceauth,
+                            arguments: {
+                              'controller': controller,
+                              'productID': controller.productID ?? '',
+                            },
+                          )?.then((onValue) {
+                            if (onValue == 'face') {
+                              controller.getAuthInfo(
+                                controller.productID ?? '',
+                              );
+                            }
+                          });
+                        }
+                        // await controller.takePhoto(
+                        //   isFace: true,
+                        //   imageBlock: (grand) {},
+                        // );
+                      },
+                    );
+                  }),
+                  SizedBox(height: 150.h),
+                  SizedBox(
+                    width: 347.w,
+                    height: 50.h,
+                    child: Center(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: double.infinity,
+                        child: GuideCustomerBtn(
+                          title: 'Next step',
+                          onPressed: () {
+                            final model = controller.model.value;
+                            final shock =
+                                model.maiden?.phoenix?.shock ?? 0; //id
+                            final browsing = model.maiden?.browsing ?? 0; //face
+                            if (shock == 0) {
+                              popPhotoCameraView(context, controller);
+                            } else {
+                              if (browsing == 1) {
+                                //go productdetail
+                                final controller = Get.put(
+                                  IntroduceController(),
+                                );
+                                controller.getProductDetailToNextPage(
+                                  controller.producdID,
+                                );
+                              } else {
+                                //go face
+                                Get.toNamed(
+                                  AppRoutes.faceauth,
+                                  arguments: {
+                                    'controller': controller,
+                                    'productID': controller.productID ?? '',
+                                  },
+                                )?.then((result) {
+                                  if (result == 'face') {
+                                    controller.getAuthInfo(
+                                      controller.productID ?? '',
+                                    );
+                                  }
+                                });
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -201,9 +254,15 @@ Widget authListView(OneListController controller) {
                 ],
               ),
               onTap: () {
-                model.maiden?.phoenix?.shock == 1
-                    ? null
-                    : Get.back(result: 'chosen');
+                if (model.maiden?.phoenix?.shock == 1) {
+                  //相册相机弹窗
+                  FlutterShowToast.showToast(
+                    'You have successfully completed the verification.',
+                  );
+                  return;
+                } else {
+                  Get.back(result: 'chosen');
+                }
               },
             ),
           ),
@@ -600,5 +659,46 @@ void showPicktime(
       final selectdate = DateFormat('dd-MM-yyyy').format(date);
       timeBlock(selectdate);
     },
+  );
+}
+
+void popPhotoCameraView(BuildContext context, OneListController controller) {
+  Get.bottomSheet(
+    enableDrag: false,
+    isScrollControlled: true,
+    isDismissible: false,
+    popPhotoView(
+      albulmTap: () async {
+        Get.back();
+        await controller.pickImageFromGallery(
+          imageBlock: (grand) {
+            if (grand == true) {
+              Get.bottomSheet(
+                enableDrag: false,
+                isScrollControlled: true,
+                isDismissible: false,
+                successUmidInfo(controller, context: context),
+              );
+            }
+          },
+        );
+      },
+      cameraTap: () async {
+        Get.back();
+        await controller.takePhoto(
+          isFace: false,
+          imageBlock: (grand) {
+            if (grand == true) {
+              Get.bottomSheet(
+                enableDrag: false,
+                isScrollControlled: true,
+                isDismissible: false,
+                successUmidInfo(controller),
+              );
+            }
+          },
+        );
+      },
+    ),
   );
 }

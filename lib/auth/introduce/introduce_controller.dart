@@ -1,8 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/routes/routes.dart';
 
 class IntroduceController extends GetxController {
   late final String producdID;
@@ -77,7 +79,7 @@ extension Introduce on IntroduceController {
 
   //获取用户umid信息
   Future<void> getAuthInfo(String productID) async {
-    EasyLoading.show(status: '加载中...', dismissOnTap: true);
+    EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {
       final response = await HttpService().get(
         '/computed/tonightim',
@@ -91,6 +93,51 @@ extension Introduce on IntroduceController {
     } catch (e) {
       EasyLoading.dismiss();
     } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+  //跳转
+  Future<void> getProductDetailToNextPage(
+    String producdID, {
+    void Function(String)? block,
+  }) async {
+    EasyLoading.show(status: 'loading...', dismissOnTap: true);
+
+    try {
+      final response = await HttpService().postForm('/computed/better', {
+        'activated': '0',
+        'successfully': producdID,
+        'backlighting': '1',
+      });
+      final model = BaseModel.fromJson(response.data);
+      final code = model.salivating ?? '';
+      if (code == '0' || code == '00') {
+        // this.model.value = model;
+        final supermy = model.maiden?.function?.supermysterious ?? '';
+        switch (supermy) {
+          case 'beatvoicaeious': //人脸认证信息
+            if (block != null) {
+              block('beatvoicaeious');
+            }
+            break;
+          case 'gymnaproof': //个人信息
+            Get.toNamed(
+              AppRoutes.personalauth,
+              parameters: {'producdID': producdID},
+            );
+            break;
+          case 'tarsshoratitor': //工作信息
+            break;
+          case 'vilaature': //联系人信息
+            break;
+          case 'speaakward': //银行信息
+            break;
+          default:
+        }
+      }
+      EasyLoading.dismiss();
+    } catch (e) {
       EasyLoading.dismiss();
     }
   }

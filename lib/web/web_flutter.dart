@@ -59,13 +59,16 @@ class _WebFlutterViewState extends State<WebFlutterView> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: getAppBar(urltitle, () async {
-          if (await _controller.canGoBack()) {
-            _controller.goBack();
-          } else {
-            Get.back();
-          }
-        }),
+        appBar: getAppBar(
+          urltitle,
+          onPressed: () async {
+            if (await _controller.canGoBack()) {
+              _controller.goBack();
+            } else {
+              Get.back();
+            }
+          },
+        ),
         body: Stack(
           children: [
             WebViewWidget(controller: _controller),
