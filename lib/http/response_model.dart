@@ -37,6 +37,7 @@ class MaidenModel {
   String? activate;
   String? mechanical;
   String? reverberated;
+  PhoenixModel? phoenix;
 
   MaidenModel({
     this.fairy,
@@ -51,6 +52,7 @@ class MaidenModel {
     this.activate,
     this.mechanical,
     this.reverberated,
+    this.phoenix,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -61,6 +63,9 @@ class MaidenModel {
       activate: json['activate'],
       mechanical: json['mechanical'],
       reverberated: json['reverberated'],
+      phoenix: json['phoenix'] != null
+          ? PhoenixModel.fromJson(json['phoenix'])
+          : null,
       greatly: json['greatly'] != null
           ? GreatlyModel.fromJson(json['greatly'])
           : null,
@@ -312,5 +317,25 @@ class KeyboardModel {
 
   Map<String, dynamic> toJson() {
     return {'activate': activate, 'consume': consume};
+  }
+}
+
+class PhoenixModel {
+  String? mountain;
+  String? rpgs;
+  int? shock;
+
+  PhoenixModel({this.mountain, this.rpgs, this.shock});
+
+  factory PhoenixModel.fromJson(Map<String, dynamic> json) {
+    return PhoenixModel(
+      mountain: json['mountain'],
+      rpgs: json['rpgs'],
+      shock: json['shock'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'mountain': mountain, 'rpgs': rpgs, 'shock': shock};
   }
 }

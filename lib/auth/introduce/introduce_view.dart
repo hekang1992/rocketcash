@@ -130,21 +130,32 @@ class IntroduceView extends GetView<IntroduceController> {
 }
 
 bottomSheetInfo(IntroduceController controller) async {
-  await controller.getUmidInfo();
-  Get.bottomSheet(
-    enableDrag: false,
-    isScrollControlled: true,
-    isDismissible: false,
-    Obx(() {
-      final model = controller.listModel.value;
-      return umidListView(
-        model.maiden?.keyboard ?? [],
-        onTap: () {
-          Get.back();
-        },
-      );
-    }),
-  );
+  final model = controller.authmodel.value;
+  if (model.maiden?.phoenix?.shock == 1) {
+    Get.toNamed(
+      AppRoutes.oneauth,
+      parameters: {
+        'auth': model.maiden?.phoenix?.mountain ?? '',
+        'productID': controller.producdID,
+      },
+    );
+  } else {
+    await controller.getUmidInfo();
+    Get.bottomSheet(
+      enableDrag: false,
+      isScrollControlled: true,
+      isDismissible: false,
+      Obx(() {
+        final model = controller.listModel.value;
+        return umidListView(
+          model.maiden?.keyboard ?? [],
+          onTap: () {
+            Get.back();
+          },
+        );
+      }),
+    );
+  }
 }
 
 //headView

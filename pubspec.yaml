@@ -73,6 +73,10 @@ dependencies:
 
   flutter_image_compress: ^2.4.0
 
+  flutter_datetime_picker_plus: ^2.2.0
+
+  intl: ^0.20.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

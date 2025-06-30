@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,6 +17,11 @@ class OneListController extends GetxController {
 
   var photoModel = BaseModel().obs;
   var cameraModel = BaseModel().obs;
+
+  final TextEditingController namecontroller = TextEditingController();
+  final TextEditingController idcontroller = TextEditingController();
+
+  var timeStr = ''.obs;
 
   @override
   void onInit() {
@@ -42,7 +48,9 @@ class OneListController extends GetxController {
   }
 
   /// 从相册选择
-  Future<void> pickImageFromGallery() async {
+  Future<void> pickImageFromGallery({
+    required void Function(bool) imageBlock,
+  }) async {
     final status = await Permission.photos.request();
 
     print("✈️ 权限状态: $status");
@@ -54,14 +62,23 @@ class OneListController extends GetxController {
       if (image == null) return;
       imageFile.value = image;
 
-      await uploadUmidInfo(source: '1', imageFile: File(image.path));
+      await uploadUmidInfo(
+        source: '1',
+        imageFile: File(image.path),
+        imageBlock: (grand) {
+          imageBlock(grand);
+        },
+      );
     } else {
       showPermissionDeniedDialog('Gallery');
     }
   }
 
   /// 拍照
-  Future<void> takePhoto({required bool isFace}) async {
+  Future<void> takePhoto({
+    required bool isFace,
+    required void Function(bool) imageBlock,
+  }) async {
     final ImagePicker picker = ImagePicker();
     if (isFace) {}
     final status = await Permission.camera.request();
@@ -72,7 +89,13 @@ class OneListController extends GetxController {
       );
       if (image == null) return;
       imageFile.value = image;
-      await uploadUmidInfo(source: '2', imageFile: File(image.path));
+      await uploadUmidInfo(
+        source: '2',
+        imageFile: File(image.path),
+        imageBlock: (grand) {
+          imageBlock(grand);
+        },
+      );
     } else {
       showPermissionDeniedDialog('Camera');
     }
@@ -99,11 +122,6 @@ class OneListController extends GetxController {
       ),
     );
   }
-}
-
-//上传信息成功之后的确认弹窗
-Widget successUmidInfo() {
-  return Container();
 }
 
 extension ListVc on OneListController {
@@ -138,6 +156,7 @@ extension ListVc on OneListController {
   Future<void> uploadUmidInfo({
     required String source,
     required File imageFile,
+    required Function(bool) imageBlock,
   }) async {
     final dict = {
       'somehow': source,
@@ -159,10 +178,36 @@ extension ListVc on OneListController {
       final code = model.salivating ?? '';
       final companion = model.companion ?? '';
       if (code == '0' || code == '00') {
-        Get.bottomSheet(successUmidInfo());
+        timeStr.value = model.maiden?.mechanical ?? '';
+        photoModel.value = model;
+        imageBlock(true);
+      } else {
+        imageBlock(false);
       }
       EasyLoading.dismiss();
       FlutterShowToast.showToast(companion);
+    } catch (e) {
+      imageBlock(false);
+      EasyLoading.dismiss();
+    }
+  }
+
+  //保存信息
+  Future<void> safeUnmiInfo(
+    Map<String, dynamic> dict, {
+    required VoidCallback block,
+  }) async {
+    EasyLoading.show(status: 'loading...', dismissOnTap: true);
+    try {
+      final response = await HttpService().postForm('/computed/maybe', dict);
+      final model = BaseModel.fromJson(response.data);
+      final code = model.salivating ?? '';
+      final companion = model.companion ?? '';
+      if (code == '0' || code == '00') {
+        block();
+      }
+      FlutterShowToast.showToast(companion);
+      EasyLoading.dismiss();
     } catch (e) {
       EasyLoading.dismiss();
     }

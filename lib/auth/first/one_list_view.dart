@@ -1,10 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/auth/first/one_list_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
+import 'package:rocketcash/coler/coler.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:intl/intl.dart';
 
 class OneListView extends GetView<OneListController> {
   OneListView({super.key}) {
@@ -17,6 +23,7 @@ class OneListView extends GetView<OneListController> {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: getAppBar('Identity authentication', () {
           Get.back();
         }),
@@ -72,33 +79,68 @@ class OneListView extends GetView<OneListController> {
                   SizedBox(height: 28),
                   authListView(controller),
                   SizedBox(height: 10.h),
-                  idcardandFaceView(
-                    '2、Please upload your identification documents',
-                    'list_phont_imge',
-                    onTap: () {
-                      Get.bottomSheet(
-                        enableDrag: false,
-                        isScrollControlled: true,
-                        isDismissible: false,
-                        popPhotoView(
-                          albulmTap: () async {
-                            Get.back();
-                            await controller.pickImageFromGallery();
-                          },
-                          cameraTap: () async {
-                            Get.back();
-                            await controller.takePhoto(isFace: false);
-                          },
-                        ),
-                      );
-                    },
-                  ),
+                  Obx(() {
+                    final model = controller.model.value;
+                    final picUrl = model.maiden?.phoenix?.rpgs ?? '';
+                    return idcardandFaceView(
+                      '2、Please upload your identification documents',
+                      picUrl.isEmpty ? 'list_phont_imge' : picUrl,
+                      onTap: () {
+                        if (model.maiden?.phoenix?.shock != 1) {
+                          Get.bottomSheet(
+                            enableDrag: false,
+                            isScrollControlled: true,
+                            isDismissible: false,
+                            popPhotoView(
+                              albulmTap: () async {
+                                Get.back();
+                                await controller.pickImageFromGallery(
+                                  imageBlock: (grand) {
+                                    if (grand == true) {
+                                      Get.bottomSheet(
+                                        enableDrag: false,
+                                        isScrollControlled: true,
+                                        isDismissible: false,
+                                        successUmidInfo(
+                                          controller,
+                                          context: context,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                              cameraTap: () async {
+                                Get.back();
+                                await controller.takePhoto(
+                                  isFace: false,
+                                  imageBlock: (grand) {
+                                    if (grand == true) {
+                                      Get.bottomSheet(
+                                        enableDrag: false,
+                                        isScrollControlled: true,
+                                        isDismissible: false,
+                                        successUmidInfo(controller),
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  }),
                   SizedBox(height: 10.h),
                   idcardandFaceView(
                     '3、Please upload your frontal headshot',
                     'list_face_imge',
                     onTap: () async {
-                      await controller.takePhoto(isFace: true);
+                      await controller.takePhoto(
+                        isFace: true,
+                        imageBlock: (grand) {},
+                      );
                     },
                   ),
                 ],
@@ -112,56 +154,63 @@ class OneListView extends GetView<OneListController> {
 }
 
 Widget authListView(OneListController controller) {
-  return SizedBox(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '1、The identification document you have chosen',
-          style: TextStyle(
-            fontFamily: 'inter',
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF333333),
-          ),
-        ),
-        SizedBox(height: 9.h),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(9.sp),
-          ),
-          height: 40.h,
-          child: InkWell(
-            child: Row(
-              children: [
-                SizedBox(width: 18.w),
-                Text(
-                  controller.authStr ?? '',
-                  style: TextStyle(
-                    fontFamily: 'inter',
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF333333),
-                  ),
-                ),
-                Spacer(),
-                Image.asset(
-                  'assets/images/right_image.png',
-                  width: 14.w,
-                  height: 14.h,
-                ),
-                SizedBox(width: 18.w),
-              ],
+  return Obx(() {
+    final model = controller.model.value;
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '1、The identification document you have chosen',
+            style: TextStyle(
+              fontFamily: 'inter',
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF333333),
             ),
-            onTap: () {
-              Get.back(result: 'chosen');
-            },
           ),
-        ),
-      ],
-    ),
-  );
+          SizedBox(height: 9.h),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(9.sp),
+            ),
+            height: 40.h,
+            child: InkWell(
+              child: Row(
+                children: [
+                  SizedBox(width: 18.w),
+                  Text(
+                    model.maiden?.phoenix?.shock == 1
+                        ? model.maiden?.phoenix?.mountain ?? ''
+                        : controller.authStr ?? '',
+                    style: TextStyle(
+                      fontFamily: 'inter',
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                  Spacer(),
+                  Image.asset(
+                    'assets/images/right_image.png',
+                    width: 14.w,
+                    height: 14.h,
+                  ),
+                  SizedBox(width: 18.w),
+                ],
+              ),
+              onTap: () {
+                model.maiden?.phoenix?.shock == 1
+                    ? null
+                    : Get.back(result: 'chosen');
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  });
 }
 
 Widget idcardandFaceView(
@@ -194,11 +243,18 @@ Widget idcardandFaceView(
             child: Row(
               children: [
                 SizedBox(width: 18.w),
-                Image.asset(
-                  'assets/images/$imageStr.png',
-                  width: 60.w,
-                  height: 60.h,
-                ),
+                imageStr.contains('http')
+                    ? Image.network(
+                        imageStr,
+                        width: 60.w,
+                        height: 60.h,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        'assets/images/$imageStr.png',
+                        width: 60.w,
+                        height: 60.h,
+                      ),
                 Spacer(),
                 Image.asset(
                   'assets/images/black_gr_image_btn.png',
@@ -303,5 +359,246 @@ Widget popPhotoView({
         ),
       ),
     ],
+  );
+}
+
+//上传信息成功之后的确认弹窗
+Widget successUmidInfo(OneListController controller, {BuildContext? context}) {
+  return Stack(
+    alignment: AlignmentDirectional.topCenter,
+    children: [
+      Container(
+        height: 380.h,
+        decoration: BoxDecoration(
+          color: Color(0xFFAAD301),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(9.sp),
+            topRight: Radius.circular(9.sp),
+          ),
+        ),
+      ),
+      Positioned(
+        top: 10.sp,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        child: Container(
+          height: 250.h,
+          decoration: BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(9.sp),
+              topRight: Radius.circular(9.sp),
+            ),
+          ),
+        ),
+      ),
+      Positioned(
+        left: 22.sp,
+        top: 35.sp,
+        right: 22.sp,
+        child: Row(
+          children: [
+            Text(
+              'Confirm information',
+              style: TextStyle(
+                fontFamily: 'inter',
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF333333),
+              ),
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () => Get.back(),
+              child: Image.asset(
+                'assets/images/canel_imge_im.png',
+                width: 17.w,
+                height: 17.h,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      Positioned(
+        top: 72.sp,
+        left: 0,
+        right: 0,
+        child: Column(
+          children: [
+            Obx(() {
+              final model = controller.photoModel.value;
+              controller.namecontroller.text = model.maiden?.activate ?? '';
+              return umidlistChildView(
+                'Name',
+                'Please Enter Your name',
+                controller.namecontroller,
+                null,
+              );
+            }),
+
+            SizedBox(height: 11.sp),
+
+            Obx(() {
+              final model = controller.photoModel.value;
+              controller.idcontroller.text = model.maiden?.reverberated ?? '';
+              return umidlistChildView(
+                'Id number',
+                'Please Enter Your ID number',
+                controller.idcontroller,
+                null,
+              );
+            }),
+
+            SizedBox(height: 11.sp),
+
+            //时间
+            Obx(() {
+              var timea = controller.timeStr.value;
+              return umidlistChildView(
+                'Date of birth',
+                timea.isEmpty ? 'Please select date of birth' : timea,
+                null,
+                context: context,
+                (time) {
+                  controller.timeStr.value = time;
+                },
+              );
+            }),
+
+            SizedBox(height: 20.sp),
+            SizedBox(
+              width: 347.w,
+              height: 50.h,
+              child: GuideCustomerBtn(
+                title: 'Confirm',
+                onPressed: () async {
+                  final name = controller.namecontroller.text;
+                  final idnumber = controller.idcontroller.text;
+                  final timeStr = controller.timeStr.value;
+
+                  final dict = {
+                    'mechanical': timeStr,
+                    'reverberated': idnumber,
+                    'activate': name,
+                    'rates': '11',
+                    'glory': '1',
+                    'mountain': controller.authStr ?? '',
+                  };
+                  await controller.safeUnmiInfo(
+                    dict,
+                    block: () async {
+                      Get.back();
+                      await controller.getAuthInfo(controller.productID ?? '');
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget umidlistChildView(
+  String name,
+  String placeholderTitle,
+  TextEditingController? controller,
+  void Function(String)? timeBlock, {
+  BuildContext? context,
+}) {
+  return Padding(
+    padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
+    child: Container(
+      height: 60.sp,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9.sp),
+        color: Color(0xFFEBEDE5),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(left: 13.sp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 9.h),
+            Text(
+              name,
+              style: TextStyle(
+                fontFamily: 'inter',
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF666666),
+              ),
+            ),
+            SizedBox(height: 4.h),
+            SizedBox(
+              height: 18,
+              child: name != 'Date of birth'
+                  ? TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        border: InputBorder.none,
+                        hintText: placeholderTitle,
+                        hintStyle: TextStyle(
+                          color: Color(0xFF999999),
+                          fontFamily: 'inter',
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )
+                  : InkWell(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 18.sp,
+                        child: Text(
+                          placeholderTitle,
+                          style: TextStyle(
+                            color: placeholderTitle.isEmpty
+                                ? Color(0xFF999999)
+                                : Color(0xFF333333),
+                            fontFamily: 'inter',
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        showPicktime(placeholderTitle, context: context, (
+                          time,
+                        ) {
+                          timeBlock!(time);
+                        });
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+void showPicktime(
+  String defaulttime,
+  void Function(String) timeBlock, {
+  BuildContext? context,
+}) {
+  DateTime initialDate = DateFormat('dd-MM-yyyy').parse(defaulttime);
+  DatePicker.showDatePicker(
+    context!,
+    showTitleActions: true,
+    currentTime: initialDate,
+    locale: LocaleType.en,
+    onConfirm: (date) {
+      final selectdate = DateFormat('dd-MM-yyyy').format(date);
+      timeBlock(selectdate);
+    },
   );
 }

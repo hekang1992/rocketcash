@@ -11,12 +11,16 @@ class IntroduceController extends GetxController {
 
   var listModel = BaseModel().obs;
 
+  //用户信息model
+  var authmodel = BaseModel().obs;
+
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
-    getProductDetailInfo(producdID);
+    await getProductDetailInfo(producdID);
+    await getAuthInfo(producdID);
   }
 
   @override
@@ -67,6 +71,26 @@ extension Introduce on IntroduceController {
       }
       EasyLoading.dismiss();
     } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  //获取用户umid信息
+  Future<void> getAuthInfo(String productID) async {
+    EasyLoading.show(status: '加载中...', dismissOnTap: true);
+    try {
+      final response = await HttpService().get(
+        '/computed/tonightim',
+        queryParameters: {'successfully': productID, 'sutra': 'c'},
+      );
+      final model = BaseModel.fromJson(response.data);
+      final code = model.salivating ?? '';
+      if (code == '0' || code == "00") {
+        authmodel.value = model;
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+    } finally {
       EasyLoading.dismiss();
     }
   }
