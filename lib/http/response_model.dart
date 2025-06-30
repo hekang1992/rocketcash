@@ -34,6 +34,9 @@ class MaidenModel {
   SubtleModel? subtle;
   List<TransformedModel>? transformed;
   List<KeyboardModel>? keyboard;
+  String? activate;
+  String? mechanical;
+  String? reverberated;
 
   MaidenModel({
     this.fairy,
@@ -45,6 +48,9 @@ class MaidenModel {
     this.subtle,
     this.transformed,
     this.keyboard,
+    this.activate,
+    this.mechanical,
+    this.reverberated,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +58,9 @@ class MaidenModel {
       fairy: json['fairy'],
       blow: json['blow'],
       rpgs: json['rpgs'],
+      activate: json['activate'],
+      mechanical: json['mechanical'],
+      reverberated: json['reverberated'],
       greatly: json['greatly'] != null
           ? GreatlyModel.fromJson(json['greatly'])
           : null,

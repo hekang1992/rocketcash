@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/auth/first/one_list_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
-import 'package:rocketcash/coler/coler.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 
@@ -89,7 +87,7 @@ class OneListView extends GetView<OneListController> {
                           },
                           cameraTap: () async {
                             Get.back();
-                            await controller.takePhoto();
+                            await controller.takePhoto(isFace: false);
                           },
                         ),
                       );
@@ -99,8 +97,8 @@ class OneListView extends GetView<OneListController> {
                   idcardandFaceView(
                     '3、Please upload your frontal headshot',
                     'list_face_imge',
-                    onTap: () {
-                      FlutterShowToast.showToast('face');
+                    onTap: () async {
+                      await controller.takePhoto(isFace: true);
                     },
                   ),
                 ],
@@ -157,7 +155,7 @@ Widget authListView(OneListController controller) {
               ],
             ),
             onTap: () {
-              // FlutterShowToast.showToast('msg');
+              Get.back(result: 'chosen');
             },
           ),
         ),
@@ -176,7 +174,7 @@ Widget idcardandFaceView(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '1、The identification document you have chosen',
+          title,
           style: TextStyle(
             fontFamily: 'inter',
             fontSize: 13.sp,

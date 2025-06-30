@@ -104,21 +104,7 @@ class IntroduceView extends GetView<IntroduceController> {
                       ) async {
                         switch (supermy) {
                           case 'beatvoicaeious':
-                            await controller.getUmidInfo();
-                            Get.bottomSheet(
-                              enableDrag: false,
-                              isScrollControlled: true,
-                              isDismissible: false,
-                              Obx(() {
-                                final model = controller.listModel.value;
-                                return umidListView(
-                                  model.maiden?.keyboard ?? [],
-                                  () {
-                                    Get.back();
-                                  },
-                                );
-                              }),
-                            );
+                            bottomSheetInfo(controller);
                             break;
                           case 'gymnaproof':
                             break;
@@ -141,6 +127,24 @@ class IntroduceView extends GetView<IntroduceController> {
       ),
     );
   }
+}
+
+bottomSheetInfo(IntroduceController controller) async {
+  await controller.getUmidInfo();
+  Get.bottomSheet(
+    enableDrag: false,
+    isScrollControlled: true,
+    isDismissible: false,
+    Obx(() {
+      final model = controller.listModel.value;
+      return umidListView(
+        model.maiden?.keyboard ?? [],
+        onTap: () {
+          Get.back();
+        },
+      );
+    }),
+  );
 }
 
 //headView
@@ -300,7 +304,10 @@ Widget authListView(TransformedModel model, void Function(String) onTap) {
   );
 }
 
-Widget umidListView(List<KeyboardModel> modelArray, VoidCallback onTap) {
+Widget umidListView(
+  List<KeyboardModel> modelArray, {
+  required VoidCallback onTap,
+}) {
   return Container(
     width: double.infinity,
     height: 450.h,
@@ -363,7 +370,11 @@ Widget umidListView(List<KeyboardModel> modelArray, VoidCallback onTap) {
                 Get.toNamed(
                   AppRoutes.oneauth,
                   parameters: {'auth': auth, 'productID': controller.producdID},
-                );
+                )?.then((result) {
+                  if (result == 'chosen') {
+                    bottomSheetInfo(controller);
+                  }
+                });
               });
             },
           ),

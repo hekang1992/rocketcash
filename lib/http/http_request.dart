@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:rocketcash/http/login_info.dart';
 
@@ -45,7 +47,7 @@ class HttpService {
       ),
     );
 
-    // await _configureProxy();
+    await _configureProxy();
   }
 
   Dio get dio => _dio;
@@ -53,8 +55,8 @@ class HttpService {
   // 配置代理
   Future<void> _configureProxy() async {
     // 替换为你的电脑IP和Proxyman的端口
-    // String proxyIP = "10.1.1.58";
-    String proxyIP = "192.168.71.31";
+    String proxyIP = "10.1.1.55";
+    // String proxyIP = "192.168.71.31";
     String proxyPort = "9090";
 
     if (proxyIP.isNotEmpty) {
@@ -104,19 +106,30 @@ class HttpService {
     String path,
     File imageFile, {
     Map<String, dynamic>? additionalData,
-    String fileField = 'file',
+    String fileField = 'gold',
   }) async {
-    String fileName = imageFile.path.split('/').last;
+    Map<String, String> dict = await LoginInfoManager.getLoginInfo();
+    String? apiUrl = URLParameterHelper.appendQueryParameters(path, dict) ?? '';
+
+    Uint8List originalData = await imageFile.readAsBytes();
+    Uint8List? compressedData = await FlutterImageCompress.compressWithList(
+      originalData,
+      minHeight: 800, // adjust as needed
+      minWidth: 800, // adjust as needed
+      quality: 60, // start with 85%, adjust as needed
+    );
+
+    String fileName = 'auth.image';
 
     FormData formData = FormData.fromMap({
-      fileField: await MultipartFile.fromFile(
-        imageFile.path,
+      fileField: MultipartFile.fromBytes(
+        compressedData,
         filename: fileName,
         contentType: MediaType("image", "jpeg"),
       ),
       ...?additionalData,
     });
 
-    return await _dio.post(path, data: formData);
+    return await _dio.post(apiUrl, data: formData);
   }
 }
