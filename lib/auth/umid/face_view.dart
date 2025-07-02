@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/auth/umid/face_controller.dart';
 import 'package:rocketcash/auth/umid/one_list_controller.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
-import 'package:rocketcash/home/home_controller.dart';
 
 class FaceView extends GetView<FaceController> {
   const FaceView({super.key});

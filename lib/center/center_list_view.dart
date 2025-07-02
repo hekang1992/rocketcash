@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';

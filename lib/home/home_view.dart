@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/home/home_controller.dart';
-import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rocketcash/routes/routes.dart';
@@ -175,7 +172,7 @@ class HomeView extends GetView<HomeController> {
                             url,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return Container(color: Colors.pink);
+                              return Container(color: Colors.white);
                             },
                           ),
                         );

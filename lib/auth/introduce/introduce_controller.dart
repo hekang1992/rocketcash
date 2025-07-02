@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/http/http_request.dart';
@@ -128,8 +126,16 @@ extension Introduce on IntroduceController {
             );
             break;
           case 'tarsshoratitor': //工作信息
+            Get.toNamed(
+              AppRoutes.workauth,
+              parameters: {'producdID': producdID},
+            );
             break;
           case 'vilaature': //联系人信息
+            Get.toNamed(
+              AppRoutes.contactauth,
+              parameters: {'producdID': producdID},
+            );
             break;
           case 'speaakward': //银行信息
             break;

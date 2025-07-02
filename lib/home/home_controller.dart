@@ -1,5 +1,3 @@
-import 'dart:ui' as html;
-
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -8,7 +6,6 @@ import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:rocketcash/routes/routes.dart';
-import 'package:rocketcash/web/web_flutter.dart';
 
 class HomeController extends GetxController {
   var model = BaseModel().obs;

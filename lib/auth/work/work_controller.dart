@@ -6,7 +6,7 @@ import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
 
-class PersonalController extends GetxController {
+class WorkController extends GetxController {
   late final String producdID;
   var model = BaseModel().obs;
   var citymodel = BaseModel().obs;
@@ -17,7 +17,7 @@ class PersonalController extends GetxController {
   void onInit() async {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
-    await getPersonalInfo(producdID);
+    await getJobInfo(producdID);
   }
 
   @override
@@ -33,13 +33,13 @@ class PersonalController extends GetxController {
   }
 }
 
-extension PersonVc on PersonalController {
-  //获取个人信息
-  Future<void> getPersonalInfo(String productID) async {
+extension PersonVc on WorkController {
+  //获取工作信息
+  Future<void> getJobInfo(String productID) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     final dict = {'successfully': productID, 'scrolls': '1'};
     try {
-      final response = await HttpService().postForm('/computed/sirius', dict);
+      final response = await HttpService().postForm('/computed/beloved', dict);
       final model = BaseModel.fromJson(response.data);
       final code = model.salivating ?? '';
       if (code == '0' || code == '00') {
@@ -73,10 +73,13 @@ extension PersonVc on PersonalController {
     }
   }
 
-  Future<void> savePersonalInfo(Map<String, dynamic> dict) async {
+  Future<void> saveJobInfo(Map<String, dynamic> dict) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {
-      final response = await HttpService().postForm('/computed/elder', dict);
+      final response = await HttpService().postForm(
+        '/computed/injustice',
+        dict,
+      );
       final model = BaseModel.fromJson(response.data);
       final code = model.salivating ?? '';
       final companion = model.companion ?? '';

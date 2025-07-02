@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:rocketcash/auth/contract/contact_controller.dart';
+import 'package:rocketcash/auth/contract/contact_view.dart';
 import 'package:rocketcash/auth/personan/personal_controller.dart';
 import 'package:rocketcash/auth/personan/personal_view.dart';
 import 'package:rocketcash/auth/umid/face_controller.dart';
@@ -7,6 +9,7 @@ import 'package:rocketcash/auth/umid/one_list_controller.dart';
 import 'package:rocketcash/auth/umid/one_list_view.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/auth/introduce/introduce_view.dart';
+import 'package:rocketcash/auth/work/work_view.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/guide/guide_controller.dart';
@@ -30,6 +33,8 @@ class AppRoutes {
   static const String oneauth = '/oneauth'; //umid
   static const String faceauth = '/faceauth'; //face
   static const String personalauth = '/personalauth';
+  static const String workauth = '/workauth';
+  static const String contactauth = '/contactauth';
 
   static final routes = [
     GetPage(
@@ -108,6 +113,22 @@ class AppRoutes {
       page: () => PersonalView(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => PersonalController());
+      }),
+    ),
+
+    GetPage(
+      name: '/workauth',
+      page: () => WorkView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => PersonalController());
+      }),
+    ),
+
+    GetPage(
+      name: '/contactauth',
+      page: () => ContactView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => ContactController());
       }),
     ),
   ];

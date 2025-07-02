@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

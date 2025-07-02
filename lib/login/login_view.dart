@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/login/login_controller.dart';
 import 'package:rocketcash/routes/routes.dart';

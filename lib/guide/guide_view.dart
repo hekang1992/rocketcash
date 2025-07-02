@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:rocketcash/guide/guide_controller.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/hive/save_info.dart';

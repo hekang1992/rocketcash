@@ -28,8 +28,8 @@ class HttpService {
     String? baseUrl = await GetApiUrlManager().buildApiUrl();
     BaseOptions options = BaseOptions(
       baseUrl: baseUrl ?? '',
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
     );
     _dio = Dio(options);
@@ -55,8 +55,8 @@ class HttpService {
   // 配置代理
   Future<void> _configureProxy() async {
     // 替换为你的电脑IP和Proxyman的端口
-    // String proxyIP = "10.1.1.55";
-    String proxyIP = "192.168.71.72";
+    String proxyIP = "10.1.1.63";
+    // String proxyIP = "192.168.71.72";
     String proxyPort = "9090";
 
     if (proxyIP.isNotEmpty) {

@@ -13,6 +13,8 @@ PODS:
     - Mantle
     - SDWebImage
     - SDWebImageWebPCoder
+  - flutter_keyboard_visibility (0.0.1):
+    - Flutter
   - fluttertoast (0.0.2):
     - Flutter
   - image_picker_ios (0.0.1):
@@ -56,6 +58,7 @@ DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -83,6 +86,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_image_compress_common:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   image_picker_ios:
@@ -103,6 +108,7 @@ SPEC CHECKSUMS:
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_image_compress_common: 1697a328fd72bfb335507c6bca1a65fa5ad87df1
+  flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
   fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8

@@ -7,6 +7,7 @@ import 'package:rocketcash/routes/routes.dart';
 
 class SplashController extends GetxController {
   final Connectivity _connectivity = Connectivity();
+  late final Stream<ConnectivityResult> _connectivityStream;
   final RxString connectionStatus = ''.obs;
 
   @override

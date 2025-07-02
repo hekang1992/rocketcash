@@ -43,11 +43,19 @@ class IntroduceView extends GetView<IntroduceController> {
                   width: 347.w,
                   child: GuideCustomerBtn(
                     title: 'Start the authentication',
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.getProductDetailToNextPage(
+                        controller.producdID,
+                        block: (p0) {
+                          if (p0 == 'beatvoicaeious') {
+                            bottomSheetInfo(controller);
+                          }
+                        },
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: 10.h),
-
                 Padding(
                   padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
                   child: InkWell(
@@ -98,6 +106,7 @@ class IntroduceView extends GetView<IntroduceController> {
                     itemCount: model.maiden?.transformed?.length ?? 0,
                     itemBuilder: (context, index) {
                       final transformedModel = model.maiden?.transformed ?? [];
+                      final producdID = controller.producdID;
                       return authListView(transformedModel[index], (
                         supermy,
                         shock,
@@ -108,7 +117,10 @@ class IntroduceView extends GetView<IntroduceController> {
                             break;
                           case 'gymnaproof': //个人信息
                             shock == '1'
-                                ? Get.toNamed(AppRoutes.personalauth)
+                                ? Get.toNamed(
+                                    AppRoutes.personalauth,
+                                    parameters: {'producdID': producdID},
+                                  )
                                 : controller.getProductDetailToNextPage(
                                     controller.producdID,
                                     block: (p0) {
@@ -119,8 +131,34 @@ class IntroduceView extends GetView<IntroduceController> {
                                   );
                             break;
                           case 'tarsshoratitor': //工作信息
+                            shock == '1'
+                                ? Get.toNamed(
+                                    AppRoutes.workauth,
+                                    parameters: {'producdID': producdID},
+                                  )
+                                : controller.getProductDetailToNextPage(
+                                    controller.producdID,
+                                    block: (p0) {
+                                      if (p0 == 'beatvoicaeious') {
+                                        bottomSheetInfo(controller);
+                                      }
+                                    },
+                                  );
                             break;
                           case 'vilaature': //联系人信息
+                            shock == '1'
+                                ? Get.toNamed(
+                                    AppRoutes.contactauth,
+                                    parameters: {'producdID': producdID},
+                                  )
+                                : controller.getProductDetailToNextPage(
+                                    controller.producdID,
+                                    block: (p0) {
+                                      if (p0 == 'beatvoicaeious') {
+                                        bottomSheetInfo(controller);
+                                      }
+                                    },
+                                  );
                             break;
                           case 'speaakward': //银行信息
                             break;
@@ -302,6 +340,14 @@ Widget authListView(
               width: 72.sp,
               height: 72.sp,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/place_image_list.png',
+                  fit: BoxFit.cover,
+                  width: 72.sp,
+                  height: 72.sp,
+                );
+              },
             ),
           ),
           Positioned(

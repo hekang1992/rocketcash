@@ -39,6 +39,7 @@ class MaidenModel {
   String? reverberated;
   PhoenixModel? phoenix;
   int? browsing;
+  List<Fortunemodel>? fortune;
 
   MaidenModel({
     this.fairy,
@@ -55,6 +56,7 @@ class MaidenModel {
     this.reverberated,
     this.phoenix,
     this.browsing,
+    this.fortune,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -91,6 +93,11 @@ class MaidenModel {
                 .map((item) => KeyboardModel.fromJson(item))
                 .toList()
           : [],
+      fortune: json['fortune'] != null
+          ? (json['fortune'] as List)
+                .map((item) => Fortunemodel.fromJson(item))
+                .toList()
+          : [],
     );
   }
 
@@ -105,6 +112,7 @@ class MaidenModel {
       'subtle': subtle?.toJson(),
       'transformed': transformed?.map((model) => model.toJson()).toList(),
       'keyboard': keyboard?.map((model) => model.toJson()).toList(),
+      'fortune': fortune?.map((model) => model.toJson()).toList(),
     };
   }
 }
@@ -311,15 +319,28 @@ class TransformedModel {
 class KeyboardModel {
   String? activate;
   String? consume;
+  List<KeyboardModel>? keyboard;
 
-  KeyboardModel({this.activate, this.consume});
+  KeyboardModel({this.activate, this.consume, this.keyboard});
 
   factory KeyboardModel.fromJson(Map<String, dynamic> json) {
-    return KeyboardModel(activate: json['activate'], consume: json['consume']);
+    return KeyboardModel(
+      activate: json['activate'],
+      consume: json['consume'],
+      keyboard: json['keyboard'] != null
+          ? (json['keyboard'] as List)
+                .map((item) => KeyboardModel.fromJson(item))
+                .toList()
+          : [],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    return {'activate': activate, 'consume': consume};
+    return {
+      'activate': activate,
+      'consume': consume,
+      'keyboard': keyboard?.map((model) => model.toJson()).toList(),
+    };
   }
 }
 
@@ -340,5 +361,77 @@ class PhoenixModel {
 
   Map<String, dynamic> toJson() {
     return {'mountain': mountain, 'rpgs': rpgs, 'shock': shock};
+  }
+}
+
+class Fortunemodel {
+  String? appeared;
+  String? heartbeat;
+  String? opportunities; // type 单选框，输入框，地区选择框
+  String? salivating; // key
+  String? friends; // 回写时候的值
+  String? rates; // value
+  int? plenty; // 键盘类型
+  List<Unnoticedmodel>? unnoticed;
+
+  Fortunemodel({
+    this.appeared,
+    this.heartbeat,
+    this.opportunities,
+    this.salivating,
+    this.friends,
+    this.rates,
+    this.plenty,
+    this.unnoticed,
+  });
+
+  factory Fortunemodel.fromJson(Map<String, dynamic> json) {
+    return Fortunemodel(
+      appeared: json['appeared'],
+      heartbeat: json['heartbeat'],
+      opportunities: json['opportunities'],
+      salivating: json['salivating'],
+      friends: json['friends'],
+      rates: json['rates'],
+      plenty: json['plenty'],
+      unnoticed: json['unnoticed'] != null
+          ? (json['unnoticed'] as List)
+                .map((item) => Unnoticedmodel.fromJson(item))
+                .toList()
+          : [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['appeared'] = appeared;
+    data['heartbeat'] = heartbeat;
+    data['opportunities'] = opportunities;
+    data['salivating'] = salivating;
+    data['friends'] = friends;
+    data['rates'] = rates;
+    data['plenty'] = plenty;
+    data['unnoticed'] = unnoticed?.map((model) => model.toJson()).toList();
+    return data;
+  }
+}
+
+class Unnoticedmodel {
+  String? activate;
+  int? rates;
+  bool? select;
+
+  Unnoticedmodel({this.activate, this.rates, this.select});
+
+  factory Unnoticedmodel.fromJson(Map<String, dynamic> json) {
+    return Unnoticedmodel(
+      activate: json['activate'],
+      rates: json['rates'],
+      select: json['select'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'activate': activate, 'rates': rates, 'select': select};
   }
 }

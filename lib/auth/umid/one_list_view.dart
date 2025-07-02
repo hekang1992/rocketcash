@@ -73,8 +73,8 @@ class OneListView extends GetView<OneListController> {
                     child: LinearProgressIndicator(
                       borderRadius: BorderRadius.circular(9.sp),
                       backgroundColor: Color(0x1A000000),
-                      valueColor: AlwaysStoppedAnimation(Colors.blue),
-                      value: 0.05,
+                      valueColor: AlwaysStoppedAnimation(Colors.black),
+                      value: 0.2,
                     ),
                   ),
                   SizedBox(height: 28),
@@ -308,6 +308,13 @@ Widget idcardandFaceView(
                         width: 60.w,
                         height: 60.h,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/images/place_image_list.png',
+                            width: 60.w,
+                            height: 60.h,
+                          );
+                        },
                       )
                     : Image.asset(
                         'assets/images/$imageStr.png',

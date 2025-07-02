@@ -4,21 +4,20 @@ import 'package:flutter_pickers/style/picker_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/auth/introduce/transition_view.dart';
 import 'package:rocketcash/auth/personan/click_view.dart';
 import 'package:rocketcash/auth/personan/emum_view.dart';
 import 'package:rocketcash/auth/personan/input_view.dart';
-import 'package:rocketcash/auth/personan/personal_controller.dart';
+import 'package:rocketcash/auth/work/work_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:rocketcash/routes/routes.dart';
 
-class PersonalView extends GetView<PersonalController> {
-  PersonalView({super.key}) {
-    Get.put(PersonalController());
+class WorkView extends GetView<WorkController> {
+  WorkView({super.key}) {
+    Get.put(WorkController());
   }
 
   @override
@@ -55,7 +54,7 @@ class PersonalView extends GetView<PersonalController> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      bottom: isKeyboardVisible ? 200.h : 40.h, // ✅ 避开键盘
+                      bottom: isKeyboardVisible ? 200.h : 40.h, // 避开键盘
                     ),
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
@@ -64,15 +63,15 @@ class PersonalView extends GetView<PersonalController> {
                         width: double.infinity,
                         height: 115.h,
                         child: TransitionView(
-                          title: 'Basic information',
+                          title: 'Job information',
                           desc: 'We will protect your information security',
-                          image: 'base_imge_li',
-                          progress: 0.4,
+                          image: 'jso_image_cad',
+                          progress: 0.6,
                         ),
                       ),
                       SizedBox(height: 10.h),
 
-                      // ✅ 渲染列表内容
+                      // 渲染列表内容
                       ...List.generate(model.maiden?.fortune?.length ?? 0, (
                         index,
                       ) {
@@ -166,7 +165,7 @@ class PersonalView extends GetView<PersonalController> {
                                 final key = model.salivating ?? '';
                                 dict[key] = model.rates ?? '';
                               }
-                              controller.savePersonalInfo(dict);
+                              controller.saveJobInfo(dict);
                               print('dict=======$dict');
                             },
                           ),
