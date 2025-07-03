@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rocketcash/coler/coler.dart';
 import 'package:rocketcash/http/response_model.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class InputView extends StatefulWidget {
   final Fortunemodel model;

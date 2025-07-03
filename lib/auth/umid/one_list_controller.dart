@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:rocketcash/auth/contract/contace_services.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
@@ -70,7 +71,7 @@ class OneListController extends GetxController {
         },
       );
     } else {
-      showPermissionDeniedDialog('Gallery');
+      PermissionConfig.showPermissionDeniedDialog('Gallery');
     }
   }
 
@@ -109,31 +110,11 @@ class OneListController extends GetxController {
         );
       }
     } else {
-      showPermissionDeniedDialog('Camera');
+      PermissionConfig.showPermissionDeniedDialog('Camera');
     }
   }
 
   // 显示权限被拒绝的对话框
-  showPermissionDeniedDialog(String permissionName) {
-    Get.dialog(
-      AlertDialog(
-        title: Text('$permissionName permission denied'),
-        content: Text(
-          '$permissionName permission is required to proceed. Please go to the settings and enable the permission.',
-        ),
-        actions: [
-          TextButton(child: const Text('Cancel'), onPressed: () => Get.back()),
-          TextButton(
-            child: const Text('Setting'),
-            onPressed: () {
-              Get.back();
-              openAppSettings();
-            },
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 extension ListVc on OneListController {

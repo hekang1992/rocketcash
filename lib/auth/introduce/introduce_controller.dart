@@ -138,6 +138,10 @@ extension Introduce on IntroduceController {
             );
             break;
           case 'speaakward': //银行信息
+            Get.toNamed(
+              AppRoutes.bankctauth,
+              parameters: {'producdID': producdID},
+            );
             break;
           default:
         }

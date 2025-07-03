@@ -61,7 +61,7 @@ class WorkView extends GetView<WorkController> {
                     children: [
                       SizedBox(
                         width: double.infinity,
-                        height: 115.h,
+                        height: 120.h,
                         child: TransitionView(
                           title: 'Job information',
                           desc: 'We will protect your information security',

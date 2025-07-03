@@ -4,12 +4,12 @@ import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/http/response_model.dart';
 
 // ignore: must_be_immutable
-class EmumView extends StatefulWidget {
-  List<Unnoticedmodel> model;
-  void Function(Unnoticedmodel) modelBlock;
+class ContactEnmuView extends StatefulWidget {
+  List<EmployingModel> model;
+  void Function(EmployingModel) modelBlock;
   VoidCallback dismissBlock;
 
-  EmumView({
+  ContactEnmuView({
     super.key,
     required this.model,
     required this.modelBlock,
@@ -18,13 +18,13 @@ class EmumView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _EmumViewState();
+    return _ContactEnmuViewState();
   }
 }
 
-class _EmumViewState extends State<EmumView> {
+class _ContactEnmuViewState extends State<ContactEnmuView> {
   int? selectindex;
-
+  var listmodel = EmployingModel();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -84,6 +84,7 @@ class _EmumViewState extends State<EmumView> {
                   physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final listModel = widget.model[index];
+                    listmodel = listModel;
                     final isSelected = selectindex == index;
                     return enumListView(
                       listModel,
@@ -92,7 +93,7 @@ class _EmumViewState extends State<EmumView> {
                         setState(() {
                           selectindex = index;
                         });
-                        widget.modelBlock(listModel);
+                        // widget.modelBlock(listModel);
                         print('object=========${listModel.activate ?? ''}');
                         print('object=========${listModel.rates ?? ''}');
                       },
@@ -107,7 +108,7 @@ class _EmumViewState extends State<EmumView> {
                 child: GuideCustomerBtn(
                   title: 'Confirm',
                   onPressed: () {
-                    widget.dismissBlock();
+                    widget.modelBlock(listmodel);
                   },
                 ),
               ),
@@ -121,7 +122,7 @@ class _EmumViewState extends State<EmumView> {
 }
 
 Widget enumListView(
-  Unnoticedmodel model,
+  EmployingModel model,
   bool select, {
   required VoidCallback onTap,
 }) {

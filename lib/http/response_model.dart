@@ -40,6 +40,7 @@ class MaidenModel {
   PhoenixModel? phoenix;
   int? browsing;
   List<Fortunemodel>? fortune;
+  TrainedModel? trained;
 
   MaidenModel({
     this.fairy,
@@ -57,6 +58,7 @@ class MaidenModel {
     this.phoenix,
     this.browsing,
     this.fortune,
+    this.trained,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -79,6 +81,9 @@ class MaidenModel {
           : null,
       function: json['function'] != null
           ? FunctionModel.fromJson(json['function'])
+          : null,
+      trained: json['trained'] != null
+          ? TrainedModel.fromJson(json['trained'])
           : null,
       subtle: json['subtle'] != null
           ? SubtleModel.fromJson(json['subtle'])
@@ -317,19 +322,45 @@ class TransformedModel {
 }
 
 class KeyboardModel {
-  String? activate;
+  String? activate; //name
   String? consume;
+  String? facing;
+  String? suitable; //phone
+  String? target; //关系的key
+  String? threat; //
+  String? relationText;
   List<KeyboardModel>? keyboard;
+  List<EmployingModel>? employing;
 
-  KeyboardModel({this.activate, this.consume, this.keyboard});
+  KeyboardModel({
+    this.activate,
+    this.consume,
+    this.keyboard,
+    this.facing,
+    this.suitable,
+    this.target,
+    this.employing,
+    this.threat,
+    this.relationText,
+  });
 
   factory KeyboardModel.fromJson(Map<String, dynamic> json) {
     return KeyboardModel(
       activate: json['activate'],
       consume: json['consume'],
+      facing: json['facing'],
+      suitable: json['suitable'],
+      target: json['target'],
+      threat: json['threat'],
+      relationText: json['relationText'],
       keyboard: json['keyboard'] != null
           ? (json['keyboard'] as List)
                 .map((item) => KeyboardModel.fromJson(item))
+                .toList()
+          : [],
+      employing: json['employing'] != null
+          ? (json['employing'] as List)
+                .map((item) => EmployingModel.fromJson(item))
                 .toList()
           : [],
     );
@@ -339,6 +370,11 @@ class KeyboardModel {
     return {
       'activate': activate,
       'consume': consume,
+      'facing': facing,
+      'suitable': suitable,
+      'target': target,
+      'threat': threat,
+      'relationText': relationText,
       'keyboard': keyboard?.map((model) => model.toJson()).toList(),
     };
   }
@@ -433,5 +469,40 @@ class Unnoticedmodel {
 
   Map<String, dynamic> toJson() {
     return {'activate': activate, 'rates': rates, 'select': select};
+  }
+}
+
+class TrainedModel {
+  List<KeyboardModel>? keyboard;
+
+  TrainedModel({this.keyboard});
+
+  factory TrainedModel.fromJson(Map<String, dynamic> json) {
+    return TrainedModel(
+      keyboard: json['keyboard'] != null
+          ? (json['keyboard'] as List)
+                .map((item) => KeyboardModel.fromJson(item))
+                .toList()
+          : [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'keyboard': keyboard?.map((model) => model.toJson()).toList()};
+  }
+}
+
+class EmployingModel {
+  String? activate;
+  String? rates;
+
+  EmployingModel({this.activate, this.rates});
+
+  factory EmployingModel.fromJson(Map<String, dynamic> json) {
+    return EmployingModel(activate: json['activate'], rates: json['rates']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'activate': activate, 'rates': rates};
   }
 }

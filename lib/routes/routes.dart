@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:rocketcash/auth/bank/bank_controller.dart';
+import 'package:rocketcash/auth/bank/bank_view.dart';
 import 'package:rocketcash/auth/contract/contact_controller.dart';
 import 'package:rocketcash/auth/contract/contact_view.dart';
 import 'package:rocketcash/auth/personan/personal_controller.dart';
@@ -35,6 +37,7 @@ class AppRoutes {
   static const String personalauth = '/personalauth';
   static const String workauth = '/workauth';
   static const String contactauth = '/contactauth';
+  static const String bankctauth = '/bankctauth';
 
   static final routes = [
     GetPage(
@@ -129,6 +132,14 @@ class AppRoutes {
       page: () => ContactView(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => ContactController());
+      }),
+    ),
+
+    GetPage(
+      name: '/bankctauth',
+      page: () => BankView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => BankController());
       }),
     ),
   ];

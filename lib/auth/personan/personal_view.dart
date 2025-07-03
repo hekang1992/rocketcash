@@ -55,14 +55,14 @@ class PersonalView extends GetView<PersonalController> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      bottom: isKeyboardVisible ? 200.h : 40.h, // ✅ 避开键盘
+                      bottom: isKeyboardVisible ? 200.h : 40.h, // 避开键盘
                     ),
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
                     children: [
                       SizedBox(
                         width: double.infinity,
-                        height: 115.h,
+                        height: 120.h,
                         child: TransitionView(
                           title: 'Basic information',
                           desc: 'We will protect your information security',
@@ -72,7 +72,7 @@ class PersonalView extends GetView<PersonalController> {
                       ),
                       SizedBox(height: 10.h),
 
-                      // ✅ 渲染列表内容
+                      // 渲染列表内容
                       ...List.generate(model.maiden?.fortune?.length ?? 0, (
                         index,
                       ) {

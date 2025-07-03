@@ -161,6 +161,19 @@ class IntroduceView extends GetView<IntroduceController> {
                                   );
                             break;
                           case 'speaakward': //银行信息
+                            shock == '1'
+                                ? Get.toNamed(
+                                    AppRoutes.bankctauth,
+                                    parameters: {'producdID': producdID},
+                                  )
+                                : controller.getProductDetailToNextPage(
+                                    controller.producdID,
+                                    block: (p0) {
+                                      if (p0 == 'beatvoicaeious') {
+                                        bottomSheetInfo(controller);
+                                      }
+                                    },
+                                  );
                             break;
                           default:
                         }

@@ -86,9 +86,8 @@ extension PersonVc on WorkController {
       if (code == '0' || code == '00') {
         final controller = Get.put(IntroduceController());
         controller.getProductDetailToNextPage(producdID);
-      } else {
-        FlutterShowToast.showToast(companion);
       }
+      FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();
     } catch (e) {
       EasyLoading.dismiss();

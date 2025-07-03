@@ -61,11 +61,27 @@ class _TransitionViewState extends State<TransitionView> {
                     ),
                   ],
                 ),
-                Image.asset(
-                  'assets/images/${widget.image}.png',
-                  width: 58.w,
-                  height: 58.h,
-                  fit: BoxFit.cover,
+                Container(
+                  color: Colors.transparent,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/${widget.image}.png',
+                        width: 58.w,
+                        height: 58.h,
+                        fit: BoxFit.cover,
+                      ),
+                      Text(
+                        '${(widget.progress * 100).toInt()}%',
+                        style: TextStyle(
+                          fontFamily: 'inter',
+                          fontSize: 10.sp,
+                          color: Color(0xFF666666),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
