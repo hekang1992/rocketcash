@@ -24,7 +24,7 @@ class ContactEnmuView extends StatefulWidget {
 
 class _ContactEnmuViewState extends State<ContactEnmuView> {
   int? selectindex;
-  var listmodel = EmployingModel();
+  var lismodel = EmployingModel();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -84,16 +84,16 @@ class _ContactEnmuViewState extends State<ContactEnmuView> {
                   physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final listModel = widget.model[index];
-                    listmodel = listModel;
                     final isSelected = selectindex == index;
                     return enumListView(
                       listModel,
                       isSelected,
                       onTap: () {
                         setState(() {
+                          lismodel = listModel;
                           selectindex = index;
                         });
-                        // widget.modelBlock(listModel);
+                        widget.modelBlock(listModel);
                         print('object=========${listModel.activate ?? ''}');
                         print('object=========${listModel.rates ?? ''}');
                       },
@@ -108,7 +108,8 @@ class _ContactEnmuViewState extends State<ContactEnmuView> {
                 child: GuideCustomerBtn(
                   title: 'Confirm',
                   onPressed: () {
-                    widget.modelBlock(listmodel);
+                    widget.dismissBlock();
+                    // widget.modelBlock(listModel);
                   },
                 ),
               ),

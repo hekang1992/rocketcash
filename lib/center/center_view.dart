@@ -184,8 +184,20 @@ Widget centerListView() {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              orderListImageView('under_way_image.png', 'Under Way'),
-              orderListImageView('repay_ment_iamge.png', 'Repayment'),
+              orderListImageView(
+                'under_way_image.png',
+                'Under Way',
+                onTap: () {
+                  Get.toNamed(AppRoutes.orderlist, arguments: {'type': '1'});
+                },
+              ),
+              orderListImageView(
+                'repay_ment_iamge.png',
+                'Repayment',
+                onTap: () {
+                  Get.toNamed(AppRoutes.orderlist, arguments: {'type': '2'});
+                },
+              ),
             ],
           ),
         ),
@@ -198,32 +210,36 @@ Widget centerListView() {
                 color: Color(0xFFDFEFFF),
                 borderRadius: BorderRadius.circular(9.sp),
               ),
-              child: Row(
-                children: [
-                  SizedBox(width: 18.sp),
-                  Image.asset(
-                    'assets/images/list_imge_icon.png',
-                    width: 22.sp,
-                    height: 22.sp,
-                  ),
-                  SizedBox(width: 10.sp),
-                  Text(
-                    'Finish',
-                    style: TextStyle(
-                      color: Color(0xFF4EA7FF),
-                      fontFamily: 'inter',
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w900,
+              child: InkWell(
+                onTap: () =>
+                    Get.toNamed(AppRoutes.orderlist, arguments: {'type': '3'}),
+                child: Row(
+                  children: [
+                    SizedBox(width: 18.sp),
+                    Image.asset(
+                      'assets/images/list_imge_icon.png',
+                      width: 22.sp,
+                      height: 22.sp,
                     ),
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    'assets/images/white_icon_right.png',
-                    width: 16.sp,
-                    height: 16.sp,
-                  ),
-                  SizedBox(width: 18.sp),
-                ],
+                    SizedBox(width: 10.sp),
+                    Text(
+                      'Finish',
+                      style: TextStyle(
+                        color: Color(0xFF4EA7FF),
+                        fontFamily: 'inter',
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Spacer(),
+                    Image.asset(
+                      'assets/images/white_icon_right.png',
+                      width: 16.sp,
+                      height: 16.sp,
+                    ),
+                    SizedBox(width: 18.sp),
+                  ],
+                ),
               ),
             ),
           ),
@@ -233,23 +249,30 @@ Widget centerListView() {
   );
 }
 
-Widget orderListImageView(String bgImageStr, String title) {
-  return Stack(
-    children: [
-      Image.asset('assets/images/$bgImageStr', width: 165.w, height: 75.h),
-      Padding(
-        padding: EdgeInsets.only(top: 15.h, left: 18.w), // 设置上边距和左边距
-        child: Text(
-          title,
-          style: TextStyle(
-            fontFamily: 'inter',
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w900,
-            color: Color(0xFF7C58FF),
+Widget orderListImageView(
+  String bgImageStr,
+  String title, {
+  required VoidCallback onTap,
+}) {
+  return InkWell(
+    onTap: onTap,
+    child: Stack(
+      children: [
+        Image.asset('assets/images/$bgImageStr', width: 165.w, height: 75.h),
+        Padding(
+          padding: EdgeInsets.only(top: 15.h, left: 18.w), // 设置上边距和左边距
+          child: Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'inter',
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w900,
+              color: Color(0xFF7C58FF),
+            ),
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
 

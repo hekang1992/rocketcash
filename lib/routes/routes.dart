@@ -20,6 +20,8 @@ import 'package:rocketcash/login/login_controller.dart';
 import 'package:rocketcash/login/login_view.dart';
 import 'package:rocketcash/main/main_controller.dart';
 import 'package:rocketcash/main/main_view.dart';
+import 'package:rocketcash/order/order_controller.dart';
+import 'package:rocketcash/order/order_view.dart';
 import 'package:rocketcash/splash/splash_controller.dart';
 import 'package:rocketcash/splash/splash_view.dart';
 import 'package:rocketcash/web/web_flutter.dart';
@@ -38,6 +40,7 @@ class AppRoutes {
   static const String workauth = '/workauth';
   static const String contactauth = '/contactauth';
   static const String bankctauth = '/bankctauth';
+  static const String orderlist = '/orderlist';
 
   static final routes = [
     GetPage(
@@ -140,6 +143,14 @@ class AppRoutes {
       page: () => BankView(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => BankController());
+      }),
+    ),
+
+    GetPage(
+      name: '/orderlist',
+      page: () => OrderView(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => OrderController());
       }),
     ),
   ];

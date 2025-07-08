@@ -138,6 +138,14 @@ Widget enumListView(
         child: Row(
           children: [
             SizedBox(width: 10.w),
+            if (model.equipped?.isNotEmpty ?? false)
+              Image.network(
+                model.equipped ?? '',
+                width: 20.w,
+                height: 20.h,
+                fit: BoxFit.cover,
+              ),
+            if (model.equipped?.isNotEmpty ?? false) SizedBox(width: 10.w),
             Text(
               model.activate ?? '',
               style: TextStyle(

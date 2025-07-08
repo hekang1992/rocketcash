@@ -1,6 +1,7 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/http/http_request.dart';
+import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:rocketcash/routes/routes.dart';
 
@@ -39,7 +40,6 @@ class IntroduceController extends GetxController {
 extension Introduce on IntroduceController {
   Future<void> getProductDetailInfo(String producdID) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
-
     try {
       final response = await HttpService().postForm('/computed/better', {
         'activated': '0',
@@ -101,7 +101,6 @@ extension Introduce on IntroduceController {
     void Function(String)? block,
   }) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
-
     try {
       final response = await HttpService().postForm('/computed/better', {
         'activated': '0',
@@ -113,37 +112,71 @@ extension Introduce on IntroduceController {
       if (code == '0' || code == '00') {
         // this.model.value = model;
         final supermy = model.maiden?.function?.supermysterious ?? '';
-        switch (supermy) {
-          case 'beatvoicaeious': //人脸认证信息
-            if (block != null) {
-              block('beatvoicaeious');
-            }
-            break;
-          case 'gymnaproof': //个人信息
-            Get.toNamed(
-              AppRoutes.personalauth,
-              parameters: {'producdID': producdID},
-            );
-            break;
-          case 'tarsshoratitor': //工作信息
-            Get.toNamed(
-              AppRoutes.workauth,
-              parameters: {'producdID': producdID},
-            );
-            break;
-          case 'vilaature': //联系人信息
-            Get.toNamed(
-              AppRoutes.contactauth,
-              parameters: {'producdID': producdID},
-            );
-            break;
-          case 'speaakward': //银行信息
-            Get.toNamed(
-              AppRoutes.bankctauth,
-              parameters: {'producdID': producdID},
-            );
-            break;
-          default:
+        if (supermy.isNotEmpty) {
+          switch (supermy) {
+            case 'beatvoicaeious': //人脸认证信息
+              if (block != null) {
+                block('beatvoicaeious');
+              }
+              break;
+            case 'gymnaproof': //个人信息
+              Get.toNamed(
+                AppRoutes.personalauth,
+                parameters: {'producdID': producdID},
+              );
+              break;
+            case 'tarsshoratitor': //工作信息
+              Get.toNamed(
+                AppRoutes.workauth,
+                parameters: {'producdID': producdID},
+              );
+              break;
+            case 'vilaature': //联系人信息
+              Get.toNamed(
+                AppRoutes.contactauth,
+                parameters: {'producdID': producdID},
+              );
+              break;
+            case 'speaakward': //银行信息
+              Get.toNamed(
+                AppRoutes.bankctauth,
+                parameters: {'producdID': producdID},
+              );
+              break;
+            default:
+          }
+        } else {
+          print('glowing=========${model.maiden?.subtle?.glowing ?? ''}');
+          //go order
+          final glowing = model.maiden?.subtle?.glowing ?? '';
+          goOrderInfo(glowing);
+        }
+      }
+      EasyLoading.dismiss();
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  goOrderInfo(String orderid) async {
+    EasyLoading.show(status: 'loading...', dismissOnTap: true);
+    try {
+      final response = await HttpService().postForm('/computed/mercilessly', {
+        'struggled': orderid,
+        'analyze': '1',
+        'successfully': producdID,
+        'seek': 'deep',
+      });
+      final model = BaseModel.fromJson(response.data);
+      final code = model.salivating ?? '';
+      if (code == '0' || code == '00') {
+        final rpgs = model.maiden?.rpgs ?? '';
+        if (rpgs.contains('rocket.apploan.org')) {
+        } else {
+          Map<String, String> dict = await LoginInfoManager.getLoginInfo();
+          String? pageUrl =
+              URLParameterHelper.appendQueryParameters(rpgs, dict) ?? '';
+          Get.toNamed(AppRoutes.webpage, parameters: {'pageUrl': pageUrl});
         }
       }
       EasyLoading.dismiss();

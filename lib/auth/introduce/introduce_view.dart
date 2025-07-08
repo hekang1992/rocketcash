@@ -22,7 +22,7 @@ class IntroduceView extends GetView<IntroduceController> {
         appBar: getAppBar(
           'Identity Authentication',
           onPressed: () {
-            Get.back();
+            Get.back(result: 'order');
           },
         ),
         body: Container(
