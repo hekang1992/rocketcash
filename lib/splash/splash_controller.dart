@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:rocketcash/other/hive/save_info.dart';
-import 'package:rocketcash/other/idfa/get_idfa.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class SplashController extends GetxController {
@@ -25,17 +24,21 @@ class SplashController extends GetxController {
         case ConnectivityResult.mobile:
           connectionStatus.value = 'mobile';
           print('5g========');
+          HiveStorage.savenet('5g');
           break;
         case ConnectivityResult.wifi:
           connectionStatus.value = 'wifi';
           print('wifi========');
+          HiveStorage.savenet('wifi');
           break;
         case ConnectivityResult.none:
           connectionStatus.value = 'none';
+          HiveStorage.savenet('none');
           print('none========');
           break;
         default:
           connectionStatus.value = 'unknown';
+          HiveStorage.savenet('none');
           print('unknown========');
       }
     });

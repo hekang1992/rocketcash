@@ -9,16 +9,23 @@ import 'package:rocketcash/other/location/location.dart';
 
 class WorkController extends GetxController {
   late final String producdID;
+
   var model = BaseModel().obs;
+
   var citymodel = BaseModel().obs;
+
   final inputControllers = <int, TextEditingController>{};
+
   List<Fortunemodel> get fortuneList => model.value.maiden?.fortune ?? [];
+
   var startTime = '';
+
   @override
   void onInit() async {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
     await getJobInfo(producdID);
+    DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override

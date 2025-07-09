@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -7,6 +10,7 @@ import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/device/device.dart';
 import 'package:rocketcash/other/hive/save_info.dart';
 import 'package:rocketcash/other/location/location.dart';
 import 'package:rocketcash/routes/routes.dart';
@@ -18,11 +22,13 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print('onInit===home=====');
+
     getHomeInfo(); // 首次加载
 
     final position = await LocationService.getDetailedLocation();
     await uploadLocationInfo(position);
+
+    print('onInit===home====');
   }
 
   @override
@@ -110,6 +116,17 @@ extension Home on HomeController {
   Future<void> uploadLocationInfo(Map<String, dynamic> dict) async {
     try {
       await HttpService().postForm('/computed/mealsi', dict);
+      await loadDeviceData();
+    } catch (e) {}
+  }
+
+  Future<void> loadDeviceData() async {
+    final ddict = await DeviceData.collectAll();
+    String jsonStr = json.encode(ddict);
+    String base64Str = base64.encode(utf8.encode(jsonStr));
+    final dict = {'maiden': base64Str, 'dto': '1', 'safe': '0'};
+    try {
+      final _ = await HttpService().postForm('/computed/activated', dict);
     } catch (e) {}
   }
 }

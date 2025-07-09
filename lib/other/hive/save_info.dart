@@ -6,6 +6,7 @@ class HiveStorage {
   static const String _tokenKey = 'user_token';
   static const String _clickGuideKey = '_clickguide_key';
   static const String _loginStartTime = '_loginStartTime';
+  static const String _nettype = '_nettype';
   static Box? _box;
 
   static Future<void> init() async {
@@ -53,6 +54,16 @@ class HiveStorage {
     return _box?.get(_tokenKey);
   }
 
+  /// 保存网络类型呢
+  static Future<void> savenet(String nettype) async {
+    await _box?.put(_nettype, nettype);
+  }
+
+  /// 获取网络类型
+  static String? getnet() {
+    return _box?.get(_nettype);
+  }
+
   /// 同时保存手机号和 token
   static Future<void> saveUserData({
     required String phone,
@@ -79,6 +90,11 @@ class HiveStorage {
   /// 清除 login1
   static Future<void> clearLoginTime() async {
     await _box?.delete(_loginStartTime);
+  }
+
+  /// 清除 网络类型
+  static Future<void> clearnettype() async {
+    await _box?.delete(_nettype);
   }
 
   /// 清除所有用户数据
