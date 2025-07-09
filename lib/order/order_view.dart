@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/http/login_info.dart';
+import 'package:rocketcash/main/main_controller.dart';
 import 'package:rocketcash/order/order_controller.dart';
 import 'package:rocketcash/order/order_list_view.dart';
 import 'package:rocketcash/routes/routes.dart';
@@ -31,7 +32,13 @@ class OrderView extends GetView<OrderController> {
                 final model = controller.model.value;
                 final keyboard = model.maiden?.keyboard ?? [];
                 if (keyboard.isEmpty) {
-                  return Expanded(child: havenodataView());
+                  return Expanded(
+                    child: havenodataView(() {
+                      final vc = Get.put(MainController());
+                      vc.changeTabIndex(0);
+                      Get.back();
+                    }),
+                  );
                 } else {
                   return Expanded(
                     child: SmartRefresher(
@@ -201,9 +208,9 @@ Widget orderHeadView(OrderController controller) {
   );
 }
 
-Widget havenodataView() {
+Widget havenodataView(VoidCallback onTap) {
   return InkWell(
-    onTap: () => Get.offAllNamed(AppRoutes.tab),
+    onTap: onTap,
     child: Column(
       children: [
         SizedBox(height: 20.h),
