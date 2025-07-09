@@ -1,5 +1,8 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:rocketcash/http/http_request.dart';
+import 'package:rocketcash/other/idfa/get_idfa.dart';
 
 class LocationService {
   /// 获取当前地址信息（包含坐标与地址）
@@ -15,12 +18,12 @@ class LocationService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw Exception('定位权限被拒绝');
+        throw Exception('location error');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw Exception('定位权限永久被拒绝');
+      throw Exception('location erroe');
     }
 
     // 获取位置
@@ -35,7 +38,7 @@ class LocationService {
     );
 
     if (placemarks.isEmpty) {
-      throw Exception('未能解析出地址');
+      throw Exception('locaton error');
     }
 
     final Placemark place = placemarks.first;
@@ -49,5 +52,32 @@ class LocationService {
       'divine': place.locality ?? place.subAdministrativeArea,
       'track': '${place.subLocality ?? ''} ${place.street ?? ''}',
     };
+  }
+}
+
+class Uploadfindinginfo {
+  static Future<void> scInfo({
+    required String startTime,
+    required String type,
+    required String producdID,
+  }) async {
+    final putting = await DeviceIdentifierManager.getOrCreateDeviceIdentifier();
+    final energy = await AppTrackingTransparency.getAdvertisingIdentifier();
+    final endTiem = DateTime.now().millisecondsSinceEpoch.toString();
+    final position = await LocationService.getDetailedLocation();
+    final dict = {
+      'glad': producdID,
+      'access': type,
+      'glowing': '',
+      'putting': putting,
+      'energy': energy,
+      'grant': position['grant'],
+      'etern': position['etern'],
+      'absorb': startTime,
+      'herbs': endTiem,
+    };
+    try {
+      final _ = await HttpService().postForm('/computed/finding', dict);
+    } catch (e) {}
   }
 }

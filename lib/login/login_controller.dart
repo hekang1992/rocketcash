@@ -24,6 +24,9 @@ class LoginController extends GetxController {
     String? idfa = await AppTrackingTransparency.getAdvertisingIdentifier();
     //getupload
     uploadidfa(idfa);
+
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+    HiveStorage.saveloginTime(time);
   }
 
   var isClick = false.obs;

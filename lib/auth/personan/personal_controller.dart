@@ -5,19 +5,27 @@ import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/location/location.dart';
 
 class PersonalController extends GetxController {
   late final String producdID;
+
   var model = BaseModel().obs;
+
   var citymodel = BaseModel().obs;
+
   final inputControllers = <int, TextEditingController>{};
+
   List<Fortunemodel> get fortuneList => model.value.maiden?.fortune ?? [];
+
+  var startTime = '';
 
   @override
   void onInit() async {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
     await getPersonalInfo(producdID);
+    startTime = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override
@@ -83,6 +91,11 @@ extension PersonVc on PersonalController {
       if (code == '0' || code == '00') {
         final controller = Get.put(IntroduceController());
         controller.getProductDetailToNextPage(producdID);
+        await Uploadfindinginfo.scInfo(
+          startTime: startTime,
+          type: '5',
+          producdID: producdID,
+        );
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();

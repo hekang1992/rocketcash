@@ -7,6 +7,7 @@ import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
 import 'package:rocketcash/other/location/location.dart';
 import 'package:rocketcash/routes/routes.dart';
 
@@ -66,6 +67,13 @@ extension Home on HomeController {
     }
     final position = await LocationService.getDetailedLocation();
     await uploadLocationInfo(position);
+
+    final startTime = HiveStorage.getloginTime() ?? '';
+    Uploadfindinginfo.scInfo(
+      startTime: startTime,
+      type: '1',
+      producdID: producdID,
+    );
 
     Map<String, String> dict = await LoginInfoManager.getLoginInfo();
     EasyLoading.show(status: 'loading...', dismissOnTap: true);

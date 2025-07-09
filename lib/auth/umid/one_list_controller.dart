@@ -8,6 +8,7 @@ import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rocketcash/other/location/location.dart';
 
 class OneListController extends GetxController {
   late final String? productID;
@@ -20,6 +21,10 @@ class OneListController extends GetxController {
 
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController idcontroller = TextEditingController();
+
+  var startTime = '';
+
+  var camerastartTime = '';
 
   var timeStr = ''.obs;
 
@@ -175,6 +180,9 @@ extension ListVc on OneListController {
         timeStr.value = model.maiden?.mechanical ?? '';
         photoModel.value = model;
         imageBlock(true);
+        if (rates == '10') {
+          await uplod4info();
+        }
       } else {
         imageBlock(false);
       }
@@ -199,6 +207,7 @@ extension ListVc on OneListController {
       final companion = model.companion ?? '';
       if (code == '0' || code == '00') {
         block();
+        await uplod3info();
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();
@@ -207,5 +216,19 @@ extension ListVc on OneListController {
     }
   }
 
-  //上传人脸
+  Future<void> uplod3info() async {
+    await Uploadfindinginfo.scInfo(
+      startTime: startTime,
+      type: '3',
+      producdID: productID ?? '',
+    );
+  }
+
+  Future<void> uplod4info() async {
+    await Uploadfindinginfo.scInfo(
+      startTime: camerastartTime,
+      type: '4',
+      producdID: productID ?? '',
+    );
+  }
 }

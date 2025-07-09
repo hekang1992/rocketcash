@@ -36,6 +36,7 @@ class CenterListController extends GetxController {
       if (code == '0' || code == '00') {
         HiveStorage.clearPhone();
         HiveStorage.clearToken();
+        HiveStorage.clearLoginTime();
         Get.offAllNamed(AppRoutes.login);
       }
       EasyLoading.dismiss();
@@ -56,6 +57,7 @@ class CenterListController extends GetxController {
       if (code == '0' || code == '00') {
         HiveStorage.clearPhone();
         HiveStorage.clearToken();
+        HiveStorage.clearLoginTime();
         Get.offAllNamed(AppRoutes.login);
       }
       EasyLoading.dismiss();

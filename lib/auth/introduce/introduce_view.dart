@@ -453,8 +453,11 @@ Widget umidListView(
             itemCount: modelArray.length,
             itemBuilder: (content, index) {
               return unlistViwe(modelArray[index], (auth) async {
+                //点击umid
                 final controller = Get.put(IntroduceController());
                 Get.back();
+                //上报
+                controller.uplodinfo();
                 await Future.delayed(Duration(milliseconds: 250));
                 Get.toNamed(
                       AppRoutes.oneauth,

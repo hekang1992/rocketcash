@@ -5,6 +5,7 @@ class HiveStorage {
   static const String _phoneKey = 'user_phone';
   static const String _tokenKey = 'user_token';
   static const String _clickGuideKey = '_clickguide_key';
+  static const String _loginStartTime = '_loginStartTime';
   static Box? _box;
 
   static Future<void> init() async {
@@ -30,6 +31,16 @@ class HiveStorage {
   /// 获取用户手机号
   static String? getPhone() {
     return _box?.get(_phoneKey);
+  }
+
+  /// 保存登录时间
+  static Future<void> saveloginTime(String time) async {
+    await _box?.put(_loginStartTime, time);
+  }
+
+  /// 获取登录时间
+  static String? getloginTime() {
+    return _box?.get(_loginStartTime);
   }
 
   /// 保存用户 token
@@ -63,6 +74,11 @@ class HiveStorage {
   /// 清除 token
   static Future<void> clearToken() async {
     await _box?.delete(_tokenKey);
+  }
+
+  /// 清除 login1
+  static Future<void> clearLoginTime() async {
+    await _box?.delete(_loginStartTime);
   }
 
   /// 清除所有用户数据

@@ -5,6 +5,7 @@ import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/location/location.dart';
 
 class BankController extends GetxController {
   late final String producdID;
@@ -16,6 +17,8 @@ class BankController extends GetxController {
   final inputControllers = <int, TextEditingController>{};
 
   var selected = 'E-Wallet'.obs;
+
+  var startTime = '';
 
   void select(String value) {
     selected.value = value;
@@ -35,6 +38,7 @@ class BankController extends GetxController {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
     await getBankInfo(producdID);
+    startTime = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override
@@ -95,6 +99,11 @@ extension BankVc on BankController {
       if (code == '0' || code == '00') {
         final controller = Get.put(IntroduceController());
         controller.getProductDetailToNextPage(producdID);
+        await Uploadfindinginfo.scInfo(
+          startTime: startTime,
+          type: '8',
+          producdID: producdID,
+        );
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();

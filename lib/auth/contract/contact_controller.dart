@@ -4,10 +4,14 @@ import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/location/location.dart';
 
 class ContactController extends GetxController {
   late final String producdID;
+
   var model = BaseModel().obs;
+
+  var startTime = '';
 
   @override
   void onInit() async {
@@ -15,6 +19,7 @@ class ContactController extends GetxController {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
     await getContactInfo(producdID);
+    startTime = DateTime.now().millisecondsSinceEpoch.toString();
   }
 }
 
@@ -62,7 +67,13 @@ extension ContactVc on ContactController {
       final response = await HttpService().postForm('/computed/thosei', dict);
       final model = BaseModel.fromJson(response.data);
       final code = model.salivating ?? '';
-      if (code == '0' || code == '00') {}
+      if (code == '0' || code == '00') {
+        await Uploadfindinginfo.scInfo(
+          startTime: startTime,
+          type: '7',
+          producdID: producdID,
+        );
+      }
       EasyLoading.dismiss();
     } catch (e) {
       EasyLoading.dismiss();

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/location/location.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class IntroduceController extends GetxController {
@@ -15,6 +16,8 @@ class IntroduceController extends GetxController {
   //用户信息model
   var authmodel = BaseModel().obs;
 
+  var sttime = '';
+
   @override
   void onInit() async {
     // TODO: implement onInit
@@ -22,6 +25,7 @@ class IntroduceController extends GetxController {
     producdID = Get.parameters['producdID'] ?? '';
     await getProductDetailInfo(producdID);
     await getAuthInfo(producdID);
+    sttime = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override
@@ -183,5 +187,13 @@ extension Introduce on IntroduceController {
     } catch (e) {
       EasyLoading.dismiss();
     }
+  }
+
+  Future<void> uplodinfo() async {
+    await Uploadfindinginfo.scInfo(
+      startTime: sttime,
+      type: '2',
+      producdID: producdID,
+    );
   }
 }

@@ -5,6 +5,7 @@ import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/location/location.dart';
 
 class WorkController extends GetxController {
   late final String producdID;
@@ -12,7 +13,7 @@ class WorkController extends GetxController {
   var citymodel = BaseModel().obs;
   final inputControllers = <int, TextEditingController>{};
   List<Fortunemodel> get fortuneList => model.value.maiden?.fortune ?? [];
-
+  var startTime = '';
   @override
   void onInit() async {
     super.onInit();
@@ -86,6 +87,11 @@ extension PersonVc on WorkController {
       if (code == '0' || code == '00') {
         final controller = Get.put(IntroduceController());
         controller.getProductDetailToNextPage(producdID);
+        await Uploadfindinginfo.scInfo(
+          startTime: startTime,
+          type: '6',
+          producdID: producdID,
+        );
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();
