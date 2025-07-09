@@ -153,7 +153,8 @@ extension Introduce on IntroduceController {
           print('glowing=========${model.maiden?.subtle?.glowing ?? ''}');
           //go order
           final glowing = model.maiden?.subtle?.glowing ?? '';
-          goOrderInfo(glowing);
+          String time = DateTime.now().millisecondsSinceEpoch.toString();
+          goOrderInfo(glowing, time);
         }
       }
       EasyLoading.dismiss();
@@ -162,7 +163,7 @@ extension Introduce on IntroduceController {
     }
   }
 
-  goOrderInfo(String orderid) async {
+  goOrderInfo(String orderid, String time) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {
       final response = await HttpService().postForm('/computed/mercilessly', {
@@ -181,6 +182,11 @@ extension Introduce on IntroduceController {
           String? pageUrl =
               URLParameterHelper.appendQueryParameters(rpgs, dict) ?? '';
           Get.toNamed(AppRoutes.webpage, parameters: {'pageUrl': pageUrl});
+          await Uploadfindinginfo.scInfo(
+            startTime: time,
+            type: '9',
+            producdID: producdID,
+          );
         }
       }
       EasyLoading.dismiss();
