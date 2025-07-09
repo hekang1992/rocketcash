@@ -47,8 +47,7 @@ class LocationService {
       'grasping': place.isoCountryCode,
       'straw': place.administrativeArea,
       'divine': place.locality ?? place.subAdministrativeArea,
-      'district': place.subLocality,
-      'track': place.street,
+      'track': '${place.subLocality ?? ''} ${place.street ?? ''}',
     };
   }
 }
