@@ -41,15 +41,14 @@ class LocationService {
     final Placemark place = placemarks.first;
 
     return {
-      'latitude': position.latitude,
-      'longitude': position.longitude,
-      'country': place.country,
-      'countryCode': place.isoCountryCode,
-      'province': place.administrativeArea,
-      'city': place.locality ?? place.subAdministrativeArea,
+      'etern': position.latitude,
+      'grant': position.longitude,
+      'drowning': place.country,
+      'grasping': place.isoCountryCode,
+      'straw': place.administrativeArea,
+      'divine': place.locality ?? place.subAdministrativeArea,
       'district': place.subLocality,
-      'street': place.street,
-      'name': place.name,
+      'track': place.street,
     };
   }
 }

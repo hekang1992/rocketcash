@@ -21,9 +21,7 @@ class HomeController extends GetxController {
     getHomeInfo(); // 首次加载
 
     final position = await LocationService.getDetailedLocation();
-    print(
-      '纬度==========${position['latitude']}, 经度=========${position['longitude']}',
-    );
+    await uploadLocationInfo(position);
   }
 
   @override
@@ -66,6 +64,8 @@ extension Home on HomeController {
         return;
       }
     }
+    final position = await LocationService.getDetailedLocation();
+    await uploadLocationInfo(position);
 
     Map<String, String> dict = await LoginInfoManager.getLoginInfo();
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
@@ -96,5 +96,12 @@ extension Home on HomeController {
     } catch (e) {
       EasyLoading.dismiss();
     }
+  }
+
+  //上报定位信息
+  Future<void> uploadLocationInfo(Map<String, dynamic> dict) async {
+    try {
+      await HttpService().postForm('/computed/mealsi', dict);
+    } catch (e) {}
   }
 }
