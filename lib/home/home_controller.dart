@@ -1,10 +1,13 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:rocketcash/auth/contract/contace_services.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/location/location.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class HomeController extends GetxController {
@@ -12,10 +15,15 @@ class HomeController extends GetxController {
   final refreshController = RefreshController(initialRefresh: false);
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     print('onInit===home=====');
     getHomeInfo(); // 首次加载
+
+    final position = await LocationService.getDetailedLocation();
+    print(
+      '纬度==========${position['latitude']}, 经度=========${position['longitude']}',
+    );
   }
 
   @override
@@ -48,6 +56,17 @@ extension Home on HomeController {
 
   //申请产品
   Future<void> applyProduct(String producdID) async {
+    final function = this.model.value.maiden?.function ?? 0;
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (function == 1) {
+      //判断是否定位
+      if (permission != LocationPermission.always ||
+          permission != LocationPermission.whileInUse) {
+        PermissionConfig.showPermissionDeniedDialog('Location');
+        return;
+      }
+    }
+
     Map<String, String> dict = await LoginInfoManager.getLoginInfo();
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {

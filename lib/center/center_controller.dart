@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:rocketcash/hive/save_info.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
+import 'package:rocketcash/other/location/location.dart';
 
 class CenterController extends GetxController {
   RxString phone = ''.obs;
@@ -9,10 +10,14 @@ class CenterController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     print("onInit 被调用");
     // 初始化操作，如 API 请求
+    final position = await LocationService.getDetailedLocation();
+    print(
+      '纬度==========${position['latitude']}, 经度=========${position['longitude']}',
+    );
   }
 
   @override

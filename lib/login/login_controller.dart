@@ -3,11 +3,11 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:rocketcash/hive/save_info.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
-import 'package:rocketcash/idfa/get_idfa.dart';
+import 'package:rocketcash/other/idfa/get_idfa.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class LoginController extends GetxController {
@@ -40,7 +40,7 @@ class LoginController extends GetxController {
     if (_timer != null && _timer!.isActive) return;
 
     secondsLeft.value = 60;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       if (secondsLeft.value == 0) {
         timer.cancel();
       } else {
@@ -72,7 +72,10 @@ class LoginController extends GetxController {
 
       var code = model.salivating ?? '';
       var companion = model.companion ?? '';
-      if (code == '0' || code == '00') {}
+      if (code == '0' || code == '00') {
+        String? idfa = await AppTrackingTransparency.getAdvertisingIdentifier();
+        uploadidfa(idfa);
+      }
       EasyLoading.dismiss();
       FlutterShowToast.showToast(companion);
       print('model-------$model');

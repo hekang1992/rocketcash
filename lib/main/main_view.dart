@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/state_manager.dart';
 import 'package:rocketcash/center/center_view.dart';
-import 'package:rocketcash/coler/coler.dart';
+import 'package:rocketcash/other/coler/coler.dart';
 import 'package:rocketcash/home/home_view.dart';
 import 'package:rocketcash/main/main_controller.dart';
 

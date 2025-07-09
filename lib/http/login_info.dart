@@ -1,7 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:ios_utsname_ext/extension.dart';
-import 'package:rocketcash/hive/save_info.dart';
-import 'package:rocketcash/idfa/get_idfa.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
+import 'package:rocketcash/other/idfa/get_idfa.dart';
 
 class LoginInfoManager {
   static Future<Map<String, String>> getLoginInfo() async {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/center/center_controller.dart';
-import 'package:rocketcash/coler/coler.dart';
+import 'package:rocketcash/other/coler/coler.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class CenterView extends GetView<CenterController> {

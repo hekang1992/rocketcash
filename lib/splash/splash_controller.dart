@@ -2,8 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
-import 'package:rocketcash/hive/save_info.dart';
-import 'package:rocketcash/idfa/get_idfa.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
+import 'package:rocketcash/other/idfa/get_idfa.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class SplashController extends GetxController {
