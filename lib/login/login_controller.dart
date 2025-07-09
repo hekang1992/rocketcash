@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -6,6 +7,7 @@ import 'package:rocketcash/hive/save_info.dart';
 import 'package:rocketcash/http/flutter_toast.dart';
 import 'package:rocketcash/http/http_request.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/idfa/get_idfa.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class LoginController extends GetxController {
@@ -16,6 +18,12 @@ class LoginController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
+
+    await Future.delayed(Duration(seconds: 1));
+    await GetIdfa.requestIDFA();
+    String? idfa = await AppTrackingTransparency.getAdvertisingIdentifier();
+    //getupload
+    uploadidfa(idfa);
   }
 
   var isClick = false.obs;
@@ -122,5 +130,18 @@ class LoginController extends GetxController {
   void onClose() {
     _timer?.cancel();
     super.onClose();
+  }
+}
+
+extension LoginVc on LoginController {
+  Future uploadidfa(String idfa) async {
+    final idfv = await DeviceIdentifierManager.getOrCreateDeviceIdentifier();
+    final dict = {'ridiculous': '1', 'badly': idfa, 'spun': idfv};
+    try {
+      final response = await HttpService().postForm('/computed/world', dict);
+      BaseModel model = BaseModel.fromJson(response.data);
+      final salivating = model.salivating ?? '';
+      if (salivating == '0' || salivating == '00') {}
+    } catch (e) {}
   }
 }

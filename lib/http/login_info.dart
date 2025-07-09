@@ -1,6 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:ios_utsname_ext/extension.dart';
 import 'package:rocketcash/hive/save_info.dart';
+import 'package:rocketcash/idfa/get_idfa.dart';
 
 class LoginInfoManager {
   static Future<Map<String, String>> getLoginInfo() async {
@@ -11,11 +12,11 @@ class LoginInfoManager {
       'qian': 'ios',
       'sima': '1.0.0',
       'goal': loginInfo.utsname.machine.iOSProductName,
-      'lifes': loginInfo.identifierForVendor ?? '',
+      'lifes': await DeviceIdentifierManager.getOrCreateDeviceIdentifier(),
       'perform': loginInfo.systemVersion,
       'deal': 'recketcashapi',
       'blow': token,
-      'heavy': loginInfo.identifierForVendor ?? '',
+      'heavy': await DeviceIdentifierManager.getOrCreateDeviceIdentifier(),
     };
   }
 }

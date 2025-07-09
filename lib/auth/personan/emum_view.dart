@@ -144,6 +144,9 @@ Widget enumListView(
                 width: 20.w,
                 height: 20.h,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container();
+                },
               ),
             if (model.equipped?.isNotEmpty ?? false) SizedBox(width: 10.w),
             Text(

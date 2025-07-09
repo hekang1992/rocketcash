@@ -41,6 +41,7 @@ class MaidenModel {
   int? browsing;
   List<Fortunemodel>? fortune;
   TrainedModel? trained;
+  EssenceModel? essence;
 
   MaidenModel({
     this.fairy,
@@ -59,6 +60,7 @@ class MaidenModel {
     this.browsing,
     this.fortune,
     this.trained,
+    this.essence,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -88,6 +90,9 @@ class MaidenModel {
       subtle: json['subtle'] != null
           ? SubtleModel.fromJson(json['subtle'])
           : null,
+      essence: json['essence'] != null
+          ? EssenceModel.fromJson(json['essence'])
+          : null,
       transformed: json['transformed'] != null
           ? (json['transformed'] as List)
                 .map((item) => TransformedModel.fromJson(item))
@@ -115,6 +120,8 @@ class MaidenModel {
       'rpgs': rpgs,
       'function': function?.toJson(),
       'subtle': subtle?.toJson(),
+      'trained': trained?.toJson(),
+      'essence': essence?.toJson(),
       'transformed': transformed?.map((model) => model.toJson()).toList(),
       'keyboard': keyboard?.map((model) => model.toJson()).toList(),
       'fortune': fortune?.map((model) => model.toJson()).toList(),
@@ -595,6 +602,33 @@ class ChosenModel {
       'wish': wish,
       'glad': glad,
       'buried': buried,
+    };
+  }
+}
+
+class EssenceModel {
+  String? amounts;
+  String? rare;
+  String? resource;
+  String? valuable;
+
+  EssenceModel({this.amounts, this.rare, this.resource, this.valuable});
+
+  factory EssenceModel.fromJson(Map<String, dynamic> json) {
+    return EssenceModel(
+      amounts: json['amounts'],
+      rare: json['rare'],
+      resource: json['resource'],
+      valuable: json['valuable'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'amounts': amounts,
+      'rare': rare,
+      'resource': resource,
+      'valuable': valuable,
     };
   }
 }

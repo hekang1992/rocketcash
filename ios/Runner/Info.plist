@@ -2,14 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>idfa</string>
 	<key>NSContactsUsageDescription</key>
-	<string></string>
+	<string>通讯录</string>
 	<key>NSCameraUsageDescription</key>
-	<string>fdasfadsf</string>
+	<string>相机</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>发大水放大舒服</string>
+	<string>相册</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

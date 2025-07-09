@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rocketcash/guide/guide_controller.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/hive/save_info.dart';
@@ -47,8 +48,8 @@ class GuideView extends GetView<GuideController> {
             'Strict encryption, compliant operation, your privacy is carefully protected by us.',
             'la_two_image',
             'la_one_imge',
-            24,
             5,
+            24,
             pageController,
           ),
         ],
@@ -116,12 +117,14 @@ Widget getGuideView(
               'assets/images/$bigImageStr.png',
               width: imageOneWidth.w,
               height: 5.h,
+              fit: BoxFit.cover,
             ),
             SizedBox(width: 2),
             Image.asset(
               'assets/images/$cycleImageStr.png',
               width: imageTwoWeight.w,
               height: 5.h,
+              fit: BoxFit.cover,
             ),
           ],
         ),
