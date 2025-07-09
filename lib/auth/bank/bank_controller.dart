@@ -55,7 +55,6 @@ class BankController extends GetxController {
 }
 
 extension BankVc on BankController {
-  //获取bank信息
   Future<void> getBankInfo(String productID) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     final dict = {'successfully': productID, 'alter': '0'};
@@ -71,7 +70,7 @@ extension BankVc on BankController {
         final fortuneList = model.maiden?.fortune ?? [];
         addTextController(fortuneList[0]);
         listModel.value = fortuneList[0];
-        print('object==============$fortuneList');
+        print('object========$fortuneList');
       }
       EasyLoading.dismiss();
     } catch (e) {

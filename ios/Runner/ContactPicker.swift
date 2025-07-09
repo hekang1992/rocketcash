@@ -6,7 +6,6 @@ public class ContactHandler: NSObject, CNContactPickerDelegate {
     private let contactStore = CNContactStore()
     var singleSelectResult: FlutterResult?
     
-    // MARK: - 获取所有联系人（仅姓名和电话）
     public func getAllContacts(result: @escaping FlutterResult) {
         requestContactAccess { [weak self] granted in
             guard granted else {
@@ -42,7 +41,7 @@ public class ContactHandler: NSObject, CNContactPickerDelegate {
         }
     }
     
-    // MARK: - 单选联系人
+    
     public func pickSingleContact(result: @escaping FlutterResult) {
         requestContactAccess { [weak self] granted in
             guard granted else {
@@ -65,7 +64,6 @@ public class ContactHandler: NSObject, CNContactPickerDelegate {
         }
     }
     
-    // MARK: - CNContactPickerDelegate
     public func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
         let name = formatName(family: contact.familyName, given: contact.givenName)
         let phone = contact.phoneNumbers.first?.value.stringValue
@@ -80,7 +78,6 @@ public class ContactHandler: NSObject, CNContactPickerDelegate {
         singleSelectResult = nil
     }
     
-    // MARK: - 私有方法
     private func requestContactAccess(completion: @escaping (Bool) -> Void) {
         contactStore.requestAccess(for: .contacts) { granted, error in
             DispatchQueue.main.async {

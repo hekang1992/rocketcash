@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    getHomeInfo(); // 首次加载
+    getHomeInfo();
 
     final position = await LocationService.getDetailedLocation();
     await uploadLocationInfo(position);

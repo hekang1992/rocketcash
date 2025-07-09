@@ -3,13 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/http/response_model.dart';
 
-// ignore: must_be_immutable
 class ContactEnmuView extends StatefulWidget {
-  List<EmployingModel> model;
-  void Function(EmployingModel) modelBlock;
-  VoidCallback dismissBlock;
+  final List<EmployingModel> model;
+  final void Function(EmployingModel) modelBlock;
+  final VoidCallback dismissBlock;
 
-  ContactEnmuView({
+  const ContactEnmuView({
     super.key,
     required this.model,
     required this.modelBlock,
@@ -94,8 +93,8 @@ class _ContactEnmuViewState extends State<ContactEnmuView> {
                           selectindex = index;
                         });
                         widget.modelBlock(listModel);
-                        print('object=========${listModel.activate ?? ''}');
-                        print('object=========${listModel.rates ?? ''}');
+                        print('activate=======${listModel.activate ?? ''}');
+                        print('rates======${listModel.rates ?? ''}');
                       },
                     );
                   },

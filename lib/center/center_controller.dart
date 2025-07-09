@@ -12,11 +12,11 @@ class CenterController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print("onInit 被调用");
-    // 初始化操作，如 API 请求
+    print("onInit===");
+
     final position = await LocationService.getDetailedLocation();
     print(
-      '纬度==========${position['latitude']}, 经度=========${position['longitude']}',
+      'latitude==========${position['latitude']}, longitude=========${position['longitude']}',
     );
   }
 
@@ -25,15 +25,13 @@ class CenterController extends GetxController {
     super.onReady();
     final phoneStr = HiveStorage.getPhone() ?? '';
     phone.value = MakePhoneNumer.withNumber(phoneStr);
-    print("onReady 被调用");
-    // 页面渲染完成，可以安全地访问 UI
+    print("onReady===");
   }
 
   @override
   void onClose() {
     super.onClose();
-    print("onClose 被调用");
-    // 清理资源
+    print("onClose===");
   }
 }
 

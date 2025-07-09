@@ -189,7 +189,6 @@ showPicker(
   BuildContext context, {
   required void Function(String) cityBlock,
 }) {
-  // 构造 Map<String, dynamic> 格式的数据
   Map<String, dynamic> pickerData = {};
 
   for (var province in modelArray) {
@@ -223,7 +222,7 @@ showPicker(
         String districtName = selected[2] ?? '';
         cityBlock('$provinceName-$cityName-$districtName');
       } catch (e) {
-        print("选择失败: $e");
+        print("failure====: $e");
       }
     },
     pickerStyle: PickerStyle(

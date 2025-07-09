@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-//头部进度页面
+//head progress view
 class TransitionView extends StatefulWidget {
   final String title;
   final String desc;

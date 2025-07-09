@@ -60,7 +60,7 @@ class IntroduceView extends GetView<IntroduceController> {
                   padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
                   child: InkWell(
                     child: RichText(
-                      textAlign: TextAlign.center, // 关键设置
+                      textAlign: TextAlign.center,
                       text: TextSpan(
                         children: [
                           TextSpan(
@@ -98,10 +98,10 @@ class IntroduceView extends GetView<IntroduceController> {
                   final model = controller.model.value;
                   return GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(), // 禁止 GridView 自身滚动
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1.0, //宽高比为1时，子widget
+                      childAspectRatio: 1.0,
                     ),
                     itemCount: model.maiden?.transformed?.length ?? 0,
                     itemBuilder: (context, index) {

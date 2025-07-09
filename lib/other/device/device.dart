@@ -139,7 +139,7 @@ class PhoneSizeDetector {
         return _getIosPhoneSize(iosInfo.utsname.machine);
       }
     } catch (e) {
-      print('获取设备信息失败: $e');
+      print('get-device-info-failur===: $e');
     }
     return null;
   }

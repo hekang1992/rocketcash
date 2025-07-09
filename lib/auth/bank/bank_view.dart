@@ -54,7 +54,7 @@ class BankView extends GetView<BankController> {
                   ),
                   SizedBox(height: 10.h),
 
-                  /// 选择按钮区域
+                  /// select - bank -- wallet
                   Obx(() {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
