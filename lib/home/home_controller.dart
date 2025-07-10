@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -18,7 +16,7 @@ import 'package:rocketcash/routes/routes.dart';
 class HomeController extends GetxController {
   var model = BaseModel().obs;
   final refreshController = RefreshController(initialRefresh: false);
-
+  final refreshController1 = RefreshController(initialRefresh: false);
   @override
   void onInit() async {
     super.onInit();
@@ -34,6 +32,7 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     refreshController.dispose();
+    refreshController1.dispose();
     super.onClose();
   }
 }
@@ -48,13 +47,13 @@ extension Home on HomeController {
       final result = BaseModel.fromJson(response.data);
       if (result.salivating == '0' || result.salivating == '00') {
         model.value = result;
-        refreshController.refreshCompleted();
-      } else {
-        refreshController.refreshCompleted();
       }
+      refreshController.refreshCompleted();
+      refreshController1.refreshCompleted();
       EasyLoading.dismiss();
     } catch (e) {
       refreshController.refreshCompleted();
+      refreshController1.refreshCompleted();
       EasyLoading.dismiss();
     }
   }

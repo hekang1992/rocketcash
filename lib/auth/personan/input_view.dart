@@ -47,9 +47,14 @@ class _InputViewState extends State<InputView> {
                   padding: EdgeInsets.only(left: 15.sp),
                   child: TextField(
                     keyboardType: widget.model.plenty == 0
-                        ? TextInputType.multiline
+                        ? TextInputType.text
                         : TextInputType.number,
                     controller: widget.controller,
+                    onChanged: (value) {
+                      if (widget.controller.value.composing.isValid) {
+                        return;
+                      }
+                    },
                     decoration: InputDecoration(
                       isDense: true,
                       border: InputBorder.none,

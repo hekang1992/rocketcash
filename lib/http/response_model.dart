@@ -131,11 +131,19 @@ class MaidenModel {
       'rpgs': rpgs,
       'function': function?.toJson(),
       'subtle': subtle?.toJson(),
-      'trained': trained?.toJson(),
-      'essence': essence?.toJson(),
       'transformed': transformed?.map((model) => model.toJson()).toList(),
       'keyboard': keyboard?.map((model) => model.toJson()).toList(),
+      'activate': activate,
+      'mechanical': mechanical,
+      'reverberated': reverberated,
+      'phoenix': phoenix?.toJson(),
+      'browsing': browsing,
       'fortune': fortune?.map((model) => model.toJson()).toList(),
+      'trained': trained?.toJson(),
+      'essence': essence?.toJson(),
+      'functions': functions,
+      'uis': uis?.toJson(),
+      'dishearteningly': dishearteningly?.toJson(),
     };
   }
 }
@@ -264,8 +272,8 @@ class FunctionModel {
 class SubtleModel {
   String? termDesc;
   String? screen;
-  ColumnTextModel? columnText;
   String? glowing;
+  ColumnTextModel? columnText;
 
   SubtleModel({this.columnText, this.termDesc, this.screen, this.glowing});
 
@@ -285,6 +293,7 @@ class SubtleModel {
       'columnText': columnText?.toJson(),
       'termDesc': termDesc,
       'screen': screen,
+      'glowing': glowing,
     };
   }
 }
@@ -410,6 +419,7 @@ class KeyboardModel {
       'relationText': relationText,
       'chosen': chosen?.toJson(),
       'keyboard': keyboard?.map((model) => model.toJson()).toList(),
+      'employing': employing?.map((model) => model.toJson()).toList(),
     };
   }
 }
@@ -621,6 +631,7 @@ class ChosenModel {
       'wish': wish,
       'glad': glad,
       'buried': buried,
+      'dirt': dirt,
     };
   }
 }
