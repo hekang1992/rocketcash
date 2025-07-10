@@ -88,7 +88,7 @@ class WorkView extends GetView<WorkController> {
                                     controller.inputControllers[index]!.text;
                                 listModel.rates =
                                     controller.inputControllers[index]!.text;
-                                controller.model.refresh();
+                                // controller.model.refresh();
                               }),
                           );
                         } else if (opportunities == 'meniyearually') {

@@ -92,7 +92,7 @@ class BankView extends GetView<BankController> {
                                 controller.inputControllers[index]!.text;
                             list1Model.rates =
                                 controller.inputControllers[index]!.text;
-                            controller.listModel.refresh();
+                            // controller.listModel.refresh();
                           }),
                       );
                     } else if (opportunities == 'meniyearually') {

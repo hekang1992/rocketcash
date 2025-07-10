@@ -210,7 +210,7 @@ Widget phoneListView([
               child: TextField(
                 controller: controller,
                 textAlignVertical: TextAlignVertical.center,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   isDense: true,
                   border: InputBorder.none,
