@@ -33,7 +33,7 @@ class OneListController extends GetxController {
     super.onInit();
     productID = Get.parameters['productID'] ?? '';
     authStr = Get.parameters['auth'] ?? '';
-    debugPrint("onInit 被调用=====onelist");
+    debugPrint("onInit =====onelist");
 
     if (productID != null && productID!.isNotEmpty) {
       getAuthInfo(productID!);
@@ -43,13 +43,13 @@ class OneListController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    debugPrint("onReady 被调用=====onelist");
+    debugPrint("onReady =====onelist");
   }
 
   @override
   void onClose() {
     super.onClose();
-    debugPrint("onClose 被调用=====onelist");
+    debugPrint("onClose =====onelist");
   }
 
   /// 从相册选择
@@ -58,7 +58,7 @@ class OneListController extends GetxController {
   }) async {
     final status = await Permission.photos.request();
 
-    print("✈️ 权限状态: $status");
+    print("✈️ type=====: $status");
 
     if (status.isGranted || status.isLimited) {
       final XFile? image = await ImagePicker().pickImage(

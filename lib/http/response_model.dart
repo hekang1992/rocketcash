@@ -43,6 +43,8 @@ class MaidenModel {
   TrainedModel? trained;
   EssenceModel? essence;
   int? functions;
+  GreatlyModel? uis;
+  DishearteninglyModel? dishearteningly;
 
   MaidenModel({
     this.fairy,
@@ -63,6 +65,8 @@ class MaidenModel {
     this.trained,
     this.essence,
     this.functions,
+    this.uis,
+    this.dishearteningly,
   });
 
   factory MaidenModel.fromJson(Map<String, dynamic> json) {
@@ -75,6 +79,9 @@ class MaidenModel {
       reverberated: json['reverberated'],
       browsing: json['browsing'],
       functions: json['functions'],
+      dishearteningly: json['dishearteningly'] != null
+          ? DishearteninglyModel.fromJson(json['dishearteningly'])
+          : null,
       phoenix: json['phoenix'] != null
           ? PhoenixModel.fromJson(json['phoenix'])
           : null,
@@ -84,6 +91,7 @@ class MaidenModel {
       points: json['points'] != null
           ? GreatlyModel.fromJson(json['points'])
           : null,
+      uis: json['uis'] != null ? GreatlyModel.fromJson(json['uis']) : null,
       function: json['function'] != null
           ? FunctionModel.fromJson(json['function'])
           : null,
@@ -170,6 +178,8 @@ class TicketsModel {
   String? ticket;
   String? trolled;
   String? rpgs;
+  String? skill;
+  String? companion;
 
   TicketsModel({
     this.activating,
@@ -184,6 +194,8 @@ class TicketsModel {
     this.ticket,
     this.trolled,
     this.rpgs,
+    this.skill,
+    this.companion,
   });
 
   factory TicketsModel.fromJson(Map<String, dynamic> json) {
@@ -200,6 +212,8 @@ class TicketsModel {
       ticket: json['ticket'],
       trolled: json['trolled'],
       rpgs: json['rpgs'],
+      skill: json['skill'],
+      companion: json['companion'],
     );
   }
 
@@ -217,6 +231,8 @@ class TicketsModel {
       'ticket': ticket,
       'trolled': trolled,
       'rpgs': rpgs,
+      'skill': skill,
+      'companion': companion,
     };
   }
 }
@@ -632,6 +648,31 @@ class EssenceModel {
       'rare': rare,
       'resource': resource,
       'valuable': valuable,
+    };
+  }
+}
+
+class DishearteninglyModel {
+  String? rates;
+  List<TicketsModel>? tickets;
+
+  DishearteninglyModel({this.rates, this.tickets});
+
+  factory DishearteninglyModel.fromJson(Map<String, dynamic> json) {
+    return DishearteninglyModel(
+      rates: json['rates'],
+      tickets: json['tickets'] != null
+          ? (json['tickets'] as List)
+                .map((item) => TicketsModel.fromJson(item))
+                .toList()
+          : [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'rates': rates,
+      'tickets': tickets?.map((model) => model.toJson()).toList(),
     };
   }
 }

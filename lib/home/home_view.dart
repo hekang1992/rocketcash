@@ -16,198 +16,215 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Color(0xFFEBEDE5),
-        child: Stack(
-          children: [
-            // 顶部背景图
-            Image.asset(
-              'assets/images/home_head_imge.png',
-              width: MediaQuery.of(context).size.width,
-              height: 310.h,
-              fit: BoxFit.cover,
-            ),
-
-            SmartRefresher(
-              physics: BouncingScrollPhysics(),
-              controller: controller.refreshController,
-              onRefresh: () {
-                controller.getHomeInfo();
-              },
-              child: ListView(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 32.sp,
-                  bottom: 10.sp,
+      body: Obx(() {
+        final model = controller.model.value;
+        final rates = model.maiden?.greatly?.rates ?? '';
+        if (rates == 'outsidkeot') {
+          return Container(
+            color: Color(0xFFEBEDE5),
+            child: Stack(
+              children: [
+                // 顶部背景图
+                Image.asset(
+                  'assets/images/home_head_imge.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: 310.h,
+                  fit: BoxFit.cover,
                 ),
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset(
-                      'assets/images/green_home_image.png',
-                      width: 130.w,
-                      height: 17.h,
+
+                SmartRefresher(
+                  physics: BouncingScrollPhysics(),
+                  controller: controller.refreshController,
+                  onRefresh: () {
+                    controller.getHomeInfo();
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 32.sp,
+                      bottom: 10.sp,
                     ),
-                  ),
-                  SizedBox(height: 14.sp),
-                  Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 13.sp),
-                        child: SizedBox(
-                          height: 40.h,
-                          width: 120.w,
-                          child: Obx(() {
-                            final rates =
-                                controller.model.value.maiden?.greatly?.rates ??
-                                '';
-                            final desc = rates == 'outsidkeot'
-                                ? controller
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset(
+                          'assets/images/green_home_image.png',
+                          width: 130.w,
+                          height: 17.h,
+                        ),
+                      ),
+                      SizedBox(height: 14.sp),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 13.sp),
+                            child: SizedBox(
+                              height: 40.h,
+                              width: 120.w,
+                              child: Obx(() {
+                                final rates =
+                                    controller
+                                        .model
+                                        .value
+                                        .maiden
+                                        ?.greatly
+                                        ?.rates ??
+                                    '';
+                                final desc = rates == 'outsidkeot'
+                                    ? controller
+                                              .model
+                                              .value
+                                              .maiden
+                                              ?.greatly
+                                              ?.tickets
+                                              ?.first
+                                              .ticket ??
+                                          ''
+                                    : '';
+                                return Text(
+                                  desc,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'inter',
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/images/up_image_home.png',
+                            width: 34.w,
+                            height: 34.h,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.sp),
+                      Stack(
+                        alignment: AlignmentDirectional.centerStart,
+                        children: [
+                          Image.asset(
+                            'assets/images/home_black_image.png',
+                            width: 229.w,
+                            height: 54.h,
+                            fit: BoxFit.cover,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(width: 38.w),
+                              Obx(
+                                () => Text(
+                                  controller
                                           .model
                                           .value
                                           .maiden
                                           ?.greatly
                                           ?.tickets
                                           ?.first
-                                          .ticket ??
-                                      ''
-                                : '';
-                            return Text(
-                              desc,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'inter',
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
+                                          .costs ??
+                                      '',
+                                  style: TextStyle(
+                                    color: Color(0xFFD3F157),
+                                    fontFamily: 'inter',
+                                    fontSize: 30.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                               ),
-                            );
-                          }),
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/images/up_image_home.png',
-                        width: 34.w,
-                        height: 34.h,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.sp),
-                  Stack(
-                    alignment: AlignmentDirectional.centerStart,
-                    children: [
-                      Image.asset(
-                        'assets/images/home_black_image.png',
-                        width: 229.w,
-                        height: 54.h,
-                        fit: BoxFit.cover,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 38.w),
-                          Obx(
-                            () => Text(
-                              controller
-                                      .model
-                                      .value
-                                      .maiden
-                                      ?.greatly
-                                      ?.tickets
-                                      ?.first
-                                      .costs ??
-                                  '',
-                              style: TextStyle(
-                                color: Color(0xFFD3F157),
-                                fontFamily: 'inter',
-                                fontSize: 30.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
+                      SizedBox(height: 48.h),
+                      Obx(() {
+                        final model = controller.model.value;
+                        return itemRateView(model: model);
+                      }),
+                      SizedBox(height: 13.5.sp),
+                      Padding(
+                        padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                        child: Obx(() {
+                          final model = controller.model.value;
+                          return GuideCustomerBtn(
+                            color: Color(0xFFAAD301),
+                            titlecolor: Color(0xFF333333),
+                            title: 'Apply for funding',
+                            onPressed: () {
+                              int producdID =
+                                  model.maiden?.greatly?.tickets?.first.three ??
+                                  0;
+                              controller.applyProduct(producdID.toString());
+                            },
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 13.h),
+                      Obx(() {
+                        final model = controller.model.value;
+                        List<String> images = [];
+                        for (TicketsModel model1
+                            in model.maiden?.points?.tickets ?? []) {
+                          images.add(model1.trolled ?? '');
+                        }
+                        return CarouselSlider(
+                          options: CarouselOptions(
+                            disableCenter: true,
+                            height: 84.h,
+                            autoPlay: true,
+                            enableInfiniteScroll: false,
+                            viewportFraction: 1,
+                            enlargeCenterPage: true,
+                          ),
+                          items: images.map((url) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                left: 13.sp,
+                                right: 13.sp,
+                              ),
+                              child: Image.network(
+                                url,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(color: Colors.white);
+                                },
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      }),
+                      SizedBox(height: 10.h),
+                      loanitemsListView(),
+                      SizedBox(height: 18.h),
+                      appintrodueView(),
+                      SizedBox(height: 18.h),
+                      footerView(),
                     ],
                   ),
-                  SizedBox(height: 48.h),
-                  Obx(() {
-                    final model = controller.model.value;
-                    return itemRateView(model: model);
-                  }),
-                  SizedBox(height: 13.5.sp),
-                  Padding(
-                    padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
-                    child: Obx(() {
-                      final model = controller.model.value;
-                      return GuideCustomerBtn(
-                        color: Color(0xFFAAD301),
-                        titlecolor: Color(0xFF333333),
-                        title: 'Apply for funding',
-                        onPressed: () {
-                          int producdID =
-                              model.maiden?.greatly?.tickets?.first.three ?? 0;
-                          controller.applyProduct(producdID.toString());
-                        },
-                      );
-                    }),
-                  ),
-                  SizedBox(height: 13.h),
-                  Obx(() {
-                    final model = controller.model.value;
-                    List<String> images = [];
-                    for (TicketsModel model1
-                        in model.maiden?.points?.tickets ?? []) {
-                      images.add(model1.trolled ?? '');
-                    }
-                    return CarouselSlider(
-                      options: CarouselOptions(
-                        disableCenter: true,
-                        height: 84.h,
-                        autoPlay: true,
-                        enableInfiniteScroll: false,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                      ),
-                      items: images.map((url) {
-                        return Padding(
-                          padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
-                          child: Image.network(
-                            url,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(color: Colors.white);
-                            },
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  }),
-                  SizedBox(height: 10.h),
-                  loanitemsListView(),
-                  SizedBox(height: 18.h),
-                  appintrodueView(),
-                  SizedBox(height: 18.h),
-                  footerView(),
-                ],
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).padding.top,
-              right: 25.sp,
-              child: InkWell(
-                child: Image.asset(
-                  'assets/images/home_kef_imge.png',
-                  width: 37.w,
-                  height: 37.h,
                 ),
-                onTap: () {
-                  Get.toNamed(
-                    AppRoutes.webpage,
-                    parameters: {'pageUrl': 'https://www.apple.com'},
-                  );
-                },
-              ),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top,
+                  right: 25.sp,
+                  child: InkWell(
+                    child: Image.asset(
+                      'assets/images/home_kef_imge.png',
+                      width: 37.w,
+                      height: 37.h,
+                    ),
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.webpage,
+                        parameters: {'pageUrl': 'https://www.apple.com'},
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          );
+        } else {
+          return homeTwoViwe(context, model, controller);
+        }
+      }),
     );
   }
 }
@@ -476,6 +493,335 @@ Widget footerListView(String title) {
             height: 14.h,
           ),
           SizedBox(width: 14.w),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget homeTwoViwe(
+  BuildContext context,
+  BaseModel model,
+  HomeController controller,
+) {
+  List<TicketsModel> tickets = [];
+  for (TicketsModel model1 in model.maiden?.dishearteningly?.tickets ?? []) {
+    tickets.add(model1);
+  }
+
+  return Container(
+    padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+    color: Color(0xFFEBEDE5),
+    child: Stack(
+      children: [
+        Image.asset(
+          'assets/images/centerbg_image.png',
+          width: double.infinity,
+          height: 304.h,
+          fit: BoxFit.fill,
+        ),
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(width: 12.w),
+                  Image.asset(
+                    'assets/images/centername_logo.png',
+                    width: 143.w,
+                    height: 42.h,
+                    fit: BoxFit.cover,
+                  ),
+                  Spacer(),
+                  Image.asset(
+                    'assets/images/home_kef_imge.png',
+                    width: 37.w,
+                    height: 37.h,
+                  ),
+                  SizedBox(width: 23.w),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    model.maiden?.greatly?.tickets?.first.ticket ?? '',
+                    style: TextStyle(
+                      fontFamily: 'inter',
+                      fontSize: 14.sp,
+                      color: Color(0xFF333333),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Image.asset(
+                    'assets/images/up_image_home.png',
+                    width: 16.w,
+                    height: 16.h,
+                  ),
+                ],
+              ),
+              SizedBox(height: 11.h),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/home_black_image.png',
+                    width: 229.w,
+                    height: 54.h,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(
+                    model.maiden?.greatly?.tickets?.first.costs ?? '',
+                    style: TextStyle(
+                      color: Color(0xFFD3F157),
+                      fontFamily: 'inter',
+                      fontSize: 33.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 28.h),
+              Padding(
+                padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(9.sp)),
+                  ),
+                  height: 60.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(width: 3.sp),
+                      itemListView(
+                        imagestr: 'rate_list_image',
+                        title:
+                            model.maiden?.greatly?.tickets?.first.pissed ?? '',
+                        desc:
+                            model.maiden?.greatly?.tickets?.first.disarray ??
+                            '',
+                      ),
+                      SizedBox(width: 10),
+                      itemListView(
+                        imagestr: 'item_list_image',
+                        title:
+                            model.maiden?.greatly?.tickets?.first.guess ?? '',
+                        desc:
+                            '${model.maiden?.greatly?.tickets?.first.each ?? ''}${model.maiden?.greatly?.tickets?.first.paragraph ?? ''}s',
+                      ),
+                      SizedBox(width: 3.sp),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 13.h),
+              SizedBox(
+                height: 48.h,
+                width: 347.w,
+                child: GuideCustomerBtn(
+                  title: model.maiden?.greatly?.tickets?.first.activating ?? '',
+                  color: Color(0xFFAAD301),
+                  titlecolor: Colors.black,
+                  onPressed: () {
+                    final producdID =
+                        model.maiden?.greatly?.tickets?.first.three ?? 0;
+                    controller.applyProduct(producdID.toString());
+                  },
+                ),
+              ),
+              SizedBox(height: 13.h),
+              if (tickets.isNotEmpty)
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/singgl_ld_imge.png',
+                      width: 347.w,
+                      height: 90.h,
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 9.sp,
+                      right: 9.sp,
+                      bottom: 0,
+                      child: Container(
+                        width: 347.w,
+                        color: Colors.transparent,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 12.sp),
+                              child: SizedBox(
+                                width: 280.w,
+                                child: Container(
+                                  color: Colors.transparent,
+                                  child: CarouselSlider(
+                                    items: tickets.map((m) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.toNamed(
+                                            AppRoutes.webpage,
+                                            parameters: {
+                                              'pageUrl': m.rpgs ?? '',
+                                            },
+                                          );
+                                        },
+                                        child: Center(
+                                          child: SizedBox(
+                                            width: 280.w,
+                                            child: Text(
+                                              m.companion ?? '',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: 'inter',
+                                                color: Color(0xD9D37501),
+                                                fontSize: 13.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    options: CarouselOptions(
+                                      height: 90.0,
+                                      autoPlay: true,
+                                      autoPlayInterval: Duration(seconds: 3),
+                                      viewportFraction: 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            Image.asset(
+                              'assets/images/rig_lih_imge.png',
+                              width: 33.w,
+                              height: 90.h,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              SizedBox(height: 10.sp),
+              Container(
+                color: Colors.transparent,
+                child: Text(
+                  'Featured Products',
+                  style: TextStyle(
+                    fontFamily: 'inter',
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              GridView.builder(
+                padding: EdgeInsets.only(top: 5.sp),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.2,
+                ),
+                itemCount: model.maiden?.uis?.tickets?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final listModel = model.maiden?.uis?.tickets?[index];
+                  return homeTwoListView(
+                    listModel,
+                    onTap: () {
+                      final three = listModel?.three ?? 0;
+                      controller.applyProduct(three.toString());
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget homeTwoListView(TicketsModel? model, {required VoidCallback onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      decoration: BoxDecoration(color: Colors.transparent),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Image.asset(
+            'assets/images/bgi_li_tw_imge.png',
+            width: 165.w,
+            height: 135.h,
+            fit: BoxFit.cover,
+          ),
+          Positioned(
+            top: 10.sp,
+            child: Container(
+              width: 164.w,
+              color: Colors.transparent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 8.sp),
+                  Row(
+                    children: [
+                      SizedBox(width: 8.sp),
+                      Image.asset(
+                        'assets/images/login_icon_image.png',
+                        width: 30.w,
+                        height: 30.h,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        model?.draw ?? '',
+                        style: TextStyle(
+                          fontFamily: 'inter',
+                          color: Color(0xFF666666),
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    '${model?.skill ?? ''}₱',
+                    style: TextStyle(
+                      fontFamily: 'inter',
+                      color: Color(0xFF333333),
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 6.h),
+                  Image.asset(
+                    'assets/images/iagme_fda_acm.png',
+                    width: 88.w,
+                    height: 15.h,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(height: 9.h),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(9.sp),
+                    child: Image.asset(
+                      'assets/images/black_gr_image_btn.png',
+                      width: 107.w,
+                      height: 27.h,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     ),

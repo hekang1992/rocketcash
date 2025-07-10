@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 class IOSContactService {
   static const _channel = MethodChannel('contact_service');
 
-  /// 获取所有联系人（仅姓名和电话）
+  /// get name phone
   static Future<List<Contact>> getAllContacts() async {
     try {
       final contacts = await _channel.invokeMethod('getAllContacts');
@@ -14,12 +14,12 @@ class IOSContactService {
           .map((e) => Contact.fromMap(Map<String, String>.from(e)))
           .toList();
     } on PlatformException catch (e) {
-      print("获取联系人失败: ${e.message}");
+      print("name==phone===: ${e.message}");
       return [];
     }
   }
 
-  /// 单选联系人
+  /// single phone
   static Future<Contact?> pickContact() async {
     try {
       final contact = await _channel.invokeMethod('pickSingleContact');
@@ -27,7 +27,7 @@ class IOSContactService {
           ? Contact.fromMap(Map<String, String>.from(contact))
           : null;
     } on PlatformException catch (e) {
-      print("选择联系人失败: ${e.message}");
+      print("select--phone===== ${e.message}");
       return null;
     }
   }

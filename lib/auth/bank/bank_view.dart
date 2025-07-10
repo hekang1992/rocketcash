@@ -80,7 +80,7 @@ class BankView extends GetView<BankController> {
                   ...List.generate(listModel?.length ?? 0, (index) {
                     final list1Model = listModel?[index];
                     final opportunities = list1Model?.opportunities ?? '';
-                    print('index========$index');
+                    print('index======$index');
                     if (opportunities == 'flectuical') {
                       final rates = list1Model?.rates ?? '';
                       controller.inputControllers[index]?.text = rates;

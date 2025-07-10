@@ -79,7 +79,7 @@ extension Introduce on IntroduceController {
     }
   }
 
-  //获取用户umid信息
+  //get umid message
   Future<void> getAuthInfo(String productID) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {
@@ -99,7 +99,7 @@ extension Introduce on IntroduceController {
     }
   }
 
-  //跳转
+  //push
   Future<void> getProductDetailToNextPage(
     String producdID, {
     void Function(String)? block,
@@ -150,7 +150,7 @@ extension Introduce on IntroduceController {
             default:
           }
         } else {
-          print('glowing=========${model.maiden?.subtle?.glowing ?? ''}');
+          print('glowing======${model.maiden?.subtle?.glowing ?? ''}');
           //go order
           final glowing = model.maiden?.subtle?.glowing ?? '';
           String time = DateTime.now().millisecondsSinceEpoch.toString();

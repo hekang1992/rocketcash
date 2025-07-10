@@ -93,8 +93,8 @@ class _EmumViewState extends State<EmumView> {
                           selectindex = index;
                         });
                         widget.modelBlock(listModel);
-                        print('object=========${listModel.activate ?? ''}');
-                        print('object=========${listModel.rates ?? ''}');
+                        print('object========${listModel.activate ?? ''}');
+                        print('object========${listModel.rates ?? ''}');
                       },
                     );
                   },

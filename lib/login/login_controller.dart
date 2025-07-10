@@ -60,7 +60,7 @@ class LoginController extends GetxController {
     }
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
 
-    print("发送验证码给: $phone");
+    print("code===: $phone");
 
     // 发送成功后启动倒计时
     startCountdown();

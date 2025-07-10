@@ -222,7 +222,7 @@ showPicker(
         String districtName = selected[2] ?? '';
         cityBlock('$provinceName-$cityName-$districtName');
       } catch (e) {
-        print("选择失败: $e");
+        print("failure====: $e");
       }
     },
     pickerStyle: PickerStyle(

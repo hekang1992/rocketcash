@@ -46,6 +46,7 @@ Widget centerHeadView(BuildContext context) {
           'assets/images/centername_logo.png',
           width: 143.w,
           height: 42.h,
+          fit: BoxFit.cover,
         ),
       ),
       Positioned(

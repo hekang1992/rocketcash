@@ -24,7 +24,6 @@ class ContactController extends GetxController {
 }
 
 extension ContactVc on ContactController {
-  //获取联系人信息
   Future<void> getContactInfo(String productID) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     final dict = {'successfully': productID, 'pour': '1'};
@@ -41,7 +40,7 @@ extension ContactVc on ContactController {
     }
   }
 
-  //保存联系人模块
+  //save
   Future<void> upContactInfo(Map<String, dynamic> dict) async {
     dict['successfully'] = producdID;
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
@@ -61,7 +60,7 @@ extension ContactVc on ContactController {
     }
   }
 
-  //保存所有联系人信息
+  //sace all people
   Future<void> safeAllInfo(Map<String, dynamic> dict) async {
     try {
       final response = await HttpService().postForm('/computed/thosei', dict);
