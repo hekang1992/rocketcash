@@ -19,3 +19,5 @@ Color getRandomColorWithAlpha() {
     random.nextInt(256), // B
   );
 }
+
+const String h5Host = 'http://8.212.151.134:10393';

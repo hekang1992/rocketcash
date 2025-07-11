@@ -7,6 +7,7 @@ import 'package:rocketcash/home/home_controller.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rocketcash/routes/routes.dart';
+import 'package:rocketcash/other/coler/coler.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key}) {
@@ -142,7 +143,7 @@ Widget loanitemsListView() {
         onTap: () {
           Get.toNamed(
             AppRoutes.webpage,
-            parameters: {'pageUrl': 'https://www.apple.com.cn'},
+            parameters: {'pageUrl': '$h5Host/saladNutmeg'},
           );
         },
       ),

@@ -5,7 +5,6 @@ import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/home/home_controller.dart';
 import 'package:rocketcash/main/main_controller.dart';
 import 'package:rocketcash/order/order_controller.dart';
-import 'package:rocketcash/order/order_list_view.dart';
 import 'package:rocketcash/routes/routes.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -25,6 +24,8 @@ class _WebFlutterViewState extends State<WebFlutterView> {
 
   late final String pageUrl;
 
+  late final String whitePage;
+
   bool isLoading = true;
 
   String? matchedRoute;
@@ -33,6 +34,7 @@ class _WebFlutterViewState extends State<WebFlutterView> {
   void initState() {
     super.initState();
     pageUrl = Get.parameters['pageUrl'] ?? '';
+    whitePage = Get.parameters['page'] ?? '';
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -73,13 +75,16 @@ class _WebFlutterViewState extends State<WebFlutterView> {
             if (await _controller.canGoBack()) {
               _controller.goBack();
             } else {
-              // final vc = Get.put(MainController());
-              // vc.changeTabIndex(0);
-              // final index = vc.tabIndex.value;
+              if (whitePage == 'introduce') {
+                Get.back();
+                return;
+              }
               Get.until((route) {
                 final currentRoute = route.settings.name?.split('?').first;
                 if (currentRoute == AppRoutes.tab ||
-                    currentRoute == AppRoutes.orderlist) {
+                    currentRoute == AppRoutes.login ||
+                    currentRoute == AppRoutes.orderlist ||
+                    currentRoute == AppRoutes.centerlist) {
                   matchedRoute = currentRoute;
                   return true;
                 }

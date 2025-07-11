@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/login/login_controller.dart';
+import 'package:rocketcash/other/coler/coler.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -137,7 +138,7 @@ class LoginView extends GetView<LoginController> {
                                       Get.toNamed(
                                         AppRoutes.webpage,
                                         parameters: {
-                                          'pageUrl': 'https://www.apple.com.cn',
+                                          'pageUrl': '$h5Host/blueberryGi',
                                         },
                                       );
                                     },
@@ -153,7 +154,7 @@ class LoginView extends GetView<LoginController> {
                                       Get.toNamed(
                                         AppRoutes.webpage,
                                         parameters: {
-                                          'pageUrl': 'https://www.baidu.com',
+                                          'pageUrl': '$h5Host/saladNutmeg',
                                         },
                                       );
                                     },

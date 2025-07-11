@@ -6,6 +6,7 @@ import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/home/home_view.dart';
 import 'package:rocketcash/http/response_model.dart';
+import 'package:rocketcash/other/coler/coler.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class IntroduceView extends GetView<IntroduceController> {
@@ -88,7 +89,10 @@ class IntroduceView extends GetView<IntroduceController> {
                     onTap: () {
                       Get.toNamed(
                         AppRoutes.webpage,
-                        parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                        parameters: {
+                          'pageUrl': '$h5Host/blueberryGi',
+                          'page': 'introduce',
+                        },
                       );
                     },
                   ),

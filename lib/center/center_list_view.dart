@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/center/center_list_controller.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
+import 'package:rocketcash/other/coler/coler.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 class CenterListView extends GetView<CenterListController> {
@@ -29,7 +30,7 @@ class CenterListView extends GetView<CenterListController> {
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.webpage,
-                    parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                    parameters: {'pageUrl': '$h5Host/saladNutmeg'},
                   );
                 },
               ),
@@ -39,7 +40,7 @@ class CenterListView extends GetView<CenterListController> {
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.webpage,
-                    parameters: {'pageUrl': 'https://www.apple.com.cn'},
+                    parameters: {'pageUrl': '$h5Host/blueberryGi'},
                   );
                 },
               ),

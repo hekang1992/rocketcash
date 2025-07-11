@@ -118,8 +118,6 @@ class OneListController extends GetxController {
       PermissionConfig.showPermissionDeniedDialog('Camera');
     }
   }
-
-  // 显示权限被拒绝的对话框
 }
 
 extension ListVc on OneListController {

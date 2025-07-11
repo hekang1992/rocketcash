@@ -29,7 +29,7 @@ class LoginController extends GetxController {
     HiveStorage.saveloginTime(time);
   }
 
-  var isClick = false.obs;
+  var isClick = true.obs;
 
   //验证码
   var secondsLeft = 0.obs;

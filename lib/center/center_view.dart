@@ -141,7 +141,7 @@ Widget serviceView() {
       onTap: () {
         Get.toNamed(
           AppRoutes.webpage,
-          parameters: {'pageUrl': 'https://www.apple.com.cn'},
+          parameters: {'pageUrl': '$h5Host/blueberryGi'},
         );
       },
     ),
@@ -344,7 +344,7 @@ Widget moreFunctionView() {
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.webpage,
-                      parameters: {'pageUrl': 'https://www.apple.com/it'},
+                      parameters: {'pageUrl': h5Host},
                     );
                   },
                 ),

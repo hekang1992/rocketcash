@@ -5,8 +5,7 @@ import 'package:dio/io.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:rocketcash/http/login_info.dart';
-
-const String h5Host = 'http://8.212.151.134:10393';
+import 'package:rocketcash/other/coler/coler.dart';
 
 class GetApiUrlManager {
   Future<String?> buildApiUrl() async {
@@ -55,7 +54,7 @@ class HttpService {
   // 配置代理
   Future<void> _configureProxy() async {
     // 替换为你的电脑IP和Proxyman的端口
-    String proxyIP = "10.1.1.59";
+    String proxyIP = "10.1.1.62";
     // String proxyIP = "192.168.71.72";
     String proxyPort = "9090";
 
