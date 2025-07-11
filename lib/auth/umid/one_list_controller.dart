@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/auth/contract/contace_services.dart';
@@ -93,6 +94,7 @@ class OneListController extends GetxController {
         source: ImageSource.camera,
         preferredCameraDevice: isFace ? CameraDevice.front : CameraDevice.rear,
       );
+      HideWindowConfig.getPlatformWindow();
       if (image == null) return;
       imageFile.value = image;
       if (isFace == true) {
@@ -228,5 +230,13 @@ extension ListVc on OneListController {
       type: '4',
       producdID: productID ?? '',
     );
+  }
+}
+
+class HideWindowConfig {
+  static const _channel = MethodChannel('hide_window');
+  static Future<String> getPlatformWindow() async {
+    final String version = await _channel.invokeMethod('hidewindow');
+    return version;
   }
 }

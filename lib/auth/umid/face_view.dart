@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/auth/umid/face_controller.dart';
@@ -129,6 +130,7 @@ class FaceView extends GetView<FaceController> {
                         final controller =
                             arguments['controller'] as OneListController;
                         final productID = arguments['productID'] as String;
+                        GetWindowConfig.getPlatformWindow();
                         controller.takePhoto(
                           isFace: true,
                           imageBlock: (grand) {
@@ -150,5 +152,13 @@ class FaceView extends GetView<FaceController> {
         ),
       ),
     );
+  }
+}
+
+class GetWindowConfig {
+  static const _channel = MethodChannel('get_window');
+  static Future<String> getPlatformWindow() async {
+    final String version = await _channel.invokeMethod('getwindow');
+    return version;
   }
 }
