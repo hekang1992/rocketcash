@@ -42,7 +42,7 @@ class IntroduceController extends GetxController {
 }
 
 extension Introduce on IntroduceController {
-  Future<void> getProductDetailInfo(String producdID) async {
+  Future<void> getProductDetailInfo(String producdID, {String? type}) async {
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {
       final response = await HttpService().postForm('/computed/better', {
@@ -53,7 +53,9 @@ extension Introduce on IntroduceController {
       final model = BaseModel.fromJson(response.data);
       final code = model.salivating ?? '';
       if (code == '0' || code == '00') {
-        this.model.value = model;
+        if (type != 'h5') {
+          this.model.value = model;
+        }
       }
       EasyLoading.dismiss();
     } catch (e) {

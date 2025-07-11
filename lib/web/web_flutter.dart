@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/home/home_controller.dart';
 import 'package:rocketcash/main/main_controller.dart';
@@ -75,7 +76,7 @@ class _WebFlutterViewState extends State<WebFlutterView> {
           final startTime = DateTime.now().millisecondsSinceEpoch.toString();
           await Uploadfindinginfo.scInfo(
             startTime: startTime,
-            type: '9',
+            type: '10',
             producdID: producdID,
           );
         },
@@ -89,7 +90,8 @@ class _WebFlutterViewState extends State<WebFlutterView> {
           } else if (pageurl.contains('rocket.apploan.org/bearIrisBell')) {
             final uri = Uri.parse(pageurl);
             final value = uri.queryParameters['successfully'] ?? '';
-            Get.toNamed(AppRoutes.introduce, parameters: {'producdID': value});
+            final controller = Get.put(IntroduceController());
+            controller.getProductDetailInfo(value, type: 'h5');
           }
         },
       )

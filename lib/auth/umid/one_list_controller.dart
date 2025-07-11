@@ -177,7 +177,8 @@ extension ListVc on OneListController {
       final code = model.salivating ?? '';
       final companion = model.companion ?? '';
       if (code == '0' || code == '00') {
-        timeStr.value = model.maiden?.mechanical ?? '';
+        final mechanical = model.maiden?.mechanical ?? '';
+        timeStr.value = mechanical;
         photoModel.value = model;
         imageBlock(true);
         if (rates == '10') {

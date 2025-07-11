@@ -103,10 +103,10 @@ let screen_height = UIScreen.main.bounds.size.height
             if call.method == "getwindow" {
                 if let window = UIApplication.shared.windows.first {
                     print("window=========\(window)")
-                    self.grayView.backgroundColor = .black
-                    self.grayView.frame = CGRectMake(
-                        screen_width - 100, screen_height - 150, 120, 120)
-                    window.addSubview(self.grayView)
+//                    self.grayView.backgroundColor = .black
+//                    self.grayView.frame = CGRectMake(
+//                        screen_width - 100, screen_height - 150, 120, 120)
+//                    window.addSubview(self.grayView)
                 } else {
                     result(
                         FlutterError(code: "NO_WINDOW", message: "No window found", details: nil))
@@ -118,8 +118,8 @@ let screen_height = UIScreen.main.bounds.size.height
             name: "hide_window", binaryMessenger: controller.binaryMessenger)
         channel6.setMethodCallHandler { (call, result) in
             if call.method == "hidewindow" {
-                self.grayView.backgroundColor = UIColor.clear
-                self.grayView.removeFromSuperview()
+//                self.grayView.backgroundColor = UIColor.clear
+//                self.grayView.removeFromSuperview()
             }
         }
         

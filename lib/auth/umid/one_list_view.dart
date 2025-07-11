@@ -435,7 +435,10 @@ Widget popPhotoView({
 }
 
 //上传信息成功之后的确认弹窗
-Widget successUmidInfo(OneListController controller, {BuildContext? context}) {
+Widget successUmidInfo(
+  OneListController controller, {
+  required BuildContext context,
+}) {
   return Stack(
     alignment: AlignmentDirectional.topCenter,
     children: [
@@ -507,7 +510,8 @@ Widget successUmidInfo(OneListController controller, {BuildContext? context}) {
                 'Name',
                 'Please Enter Your name',
                 controller.namecontroller,
-                null,
+                context: context,
+                (time) {},
               );
             }),
 
@@ -520,7 +524,8 @@ Widget successUmidInfo(OneListController controller, {BuildContext? context}) {
                 'Id number',
                 'Please Enter Your ID number',
                 controller.idcontroller,
-                null,
+                context: context,
+                (time) {},
               );
             }),
 
@@ -581,7 +586,7 @@ Widget umidlistChildView(
   String placeholderTitle,
   TextEditingController? controller,
   void Function(String)? timeBlock, {
-  BuildContext? context,
+  required BuildContext context,
 }) {
   return Padding(
     padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
@@ -642,11 +647,13 @@ Widget umidlistChildView(
                         ),
                       ),
                       onTap: () {
-                        showPicktime(placeholderTitle, context: context, (
-                          time,
-                        ) {
-                          timeBlock!(time);
-                        });
+                        showPicktime(
+                          context: context,
+                          defaulttime: placeholderTitle,
+                          timeBlock: (time) {
+                            timeBlock!(time);
+                          },
+                        );
                       },
                     ),
             ),
@@ -657,22 +664,33 @@ Widget umidlistChildView(
   );
 }
 
-void showPicktime(
-  String defaulttime,
-  void Function(String) timeBlock, {
-  BuildContext? context,
+void showPicktime({
+  required BuildContext context,
+  required String defaulttime,
+  required void Function(String) timeBlock,
 }) {
-  DateTime initialDate = DateFormat('dd-MM-yyyy').parse(defaulttime);
-  DatePicker.showDatePicker(
-    context!,
-    showTitleActions: true,
-    currentTime: initialDate,
-    locale: LocaleType.en,
-    onConfirm: (date) {
-      final selectdate = DateFormat('dd-MM-yyyy').format(date);
-      timeBlock(selectdate);
-    },
-  );
+  try {
+    String detime = '';
+    if (defaulttime.contains('birth')) {
+      detime = '01-01-2000';
+    } else {
+      detime = defaulttime;
+    }
+    DateTime initialDate = DateFormat('dd-MM-yyyy').parse(detime);
+    print(initialDate);
+    DatePicker.showDatePicker(
+      context,
+      showTitleActions: true,
+      currentTime: initialDate,
+      locale: LocaleType.en,
+      onConfirm: (date) {
+        final selectdate = DateFormat('dd-MM-yyyy').format(date);
+        timeBlock(selectdate);
+      },
+    );
+  } catch (e) {
+    print("timefailu=======: $e");
+  }
 }
 
 void popPhotoCameraView(BuildContext context, OneListController controller) {
@@ -706,7 +724,7 @@ void popPhotoCameraView(BuildContext context, OneListController controller) {
                 enableDrag: false,
                 isScrollControlled: true,
                 isDismissible: false,
-                successUmidInfo(controller),
+                successUmidInfo(controller, context: context),
               );
             }
           },
