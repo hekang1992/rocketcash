@@ -2,9 +2,6 @@ import Flutter
 import UIKit
 import StoreKit
 
-let screen_width = UIScreen.main.bounds.size.width
-let screen_height = UIScreen.main.bounds.size.height
-
 @main
 @objc class AppDelegate: FlutterAppDelegate {
     
@@ -102,11 +99,11 @@ let screen_height = UIScreen.main.bounds.size.height
         channel5.setMethodCallHandler { (call, result) in
             if call.method == "getwindow" {
                 if let window = UIApplication.shared.windows.first {
-                    print("window=========\(window)")
-//                    self.grayView.backgroundColor = .black
-//                    self.grayView.frame = CGRectMake(
-//                        screen_width - 100, screen_height - 150, 120, 120)
-//                    window.addSubview(self.grayView)
+                    let screenSize = UIScreen.main.bounds.size
+                    self.grayView.backgroundColor = .black
+                    self.grayView.frame = CGRectMake(
+                        screenSize.width - 70, screenSize.height - self.getBottomSafeAreaHeight() - 127, 80, 80)
+                    window.addSubview(self.grayView)
                 } else {
                     result(
                         FlutterError(code: "NO_WINDOW", message: "No window found", details: nil))
@@ -118,8 +115,8 @@ let screen_height = UIScreen.main.bounds.size.height
             name: "hide_window", binaryMessenger: controller.binaryMessenger)
         channel6.setMethodCallHandler { (call, result) in
             if call.method == "hidewindow" {
-//                self.grayView.backgroundColor = UIColor.clear
-//                self.grayView.removeFromSuperview()
+                self.grayView.backgroundColor = UIColor.clear
+                self.grayView.removeFromSuperview()
             }
         }
         
@@ -160,6 +157,16 @@ let screen_height = UIScreen.main.bounds.size.height
 }
 
 extension AppDelegate {
+    
+    private func getBottomSafeAreaHeight() -> Double {
+        var bottomInset: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.windows.first
+            bottomInset = window?.safeAreaInsets.bottom ?? 0
+        }
+        print("当前底部安全区域高度：\(bottomInset)")
+        return bottomInset
+    }
     
     func isProxyEnabled() -> Int {
         guard

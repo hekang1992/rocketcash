@@ -24,6 +24,7 @@ class GuideCustomerBtn extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
       child: Text(
+        textAlign: TextAlign.center,
         title,
         style: TextStyle(
           color: titlecolor ?? Colors.white,
