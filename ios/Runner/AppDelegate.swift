@@ -1,31 +1,32 @@
 import Flutter
 import UIKit
+import StoreKit
 
 let screen_width = UIScreen.main.bounds.size.width
 let screen_height = UIScreen.main.bounds.size.height
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-
+    
     lazy var grayView: UIView = {
         let grayView = UIView()
         grayView.backgroundColor = .black
         return grayView
     }()
-
+    
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-
+        
         let controller = window?.rootViewController as! FlutterViewController
         let channel = FlutterMethodChannel(
             name: "contact_service",
             binaryMessenger: controller.binaryMessenger
         )
-
+        
         let contactHandler = ContactHandler()
-
+        
         channel.setMethodCallHandler { call, result in
             switch call.method {
             case "getAllContacts":
@@ -36,18 +37,18 @@ let screen_height = UIScreen.main.bounds.size.height
                 result(FlutterMethodNotImplemented)
             }
         }
-
+        
         let channel1 = FlutterMethodChannel(
             name: "device/memory", binaryMessenger: controller.binaryMessenger)
-
+        
         channel1.setMethodCallHandler { (call, result) in
             if call.method == "getMemoryInfo" {
                 let totalMemory = ProcessInfo.processInfo.physicalMemory
-
+                
                 var vmStats = vm_statistics64()
                 var count = mach_msg_type_number_t(
                     MemoryLayout<vm_statistics64_data_t>.stride / MemoryLayout<integer_t>.stride)
-
+                
                 let HOST_VM_INFO64_COUNT = mach_msg_type_number_t(
                     MemoryLayout<vm_statistics64_data_t>.size / MemoryLayout<integer_t>.size)
                 let resultCode = withUnsafeMutablePointer(to: &vmStats) {
@@ -55,14 +56,14 @@ let screen_height = UIScreen.main.bounds.size.height
                         host_statistics64(mach_host_self(), HOST_VM_INFO64, $0, &count)
                     }
                 }
-
+                
                 var freeMemory: UInt64 = 0
                 if resultCode == KERN_SUCCESS {
                     let pageSize = UInt64(vm_kernel_page_size)
                     freeMemory =
-                        (UInt64(vmStats.free_count) + UInt64(vmStats.inactive_count)) * pageSize
+                    (UInt64(vmStats.free_count) + UInt64(vmStats.inactive_count)) * pageSize
                 }
-
+                
                 result([
                     "totalMemory": Int(totalMemory),
                     "freeMemory": Int(freeMemory),
@@ -71,7 +72,7 @@ let screen_height = UIScreen.main.bounds.size.height
                 result(FlutterMethodNotImplemented)
             }
         }
-
+        
         let channel2 = FlutterMethodChannel(
             name: "proxy_util", binaryMessenger: controller.binaryMessenger)
         channel2.setMethodCallHandler { (call, result) in
@@ -79,7 +80,7 @@ let screen_height = UIScreen.main.bounds.size.height
                 result(self.isProxyEnabled())
             }
         }
-
+        
         let channel3 = FlutterMethodChannel(
             name: "vpn_util", binaryMessenger: controller.binaryMessenger)
         channel3.setMethodCallHandler { (call, result) in
@@ -87,7 +88,7 @@ let screen_height = UIScreen.main.bounds.size.height
                 result(self.isVPNConnected() ? 1 : 0)
             }
         }
-
+        
         let channel4 = FlutterMethodChannel(
             name: "en_us", binaryMessenger: controller.binaryMessenger)
         channel4.setMethodCallHandler { (call, result) in
@@ -95,7 +96,7 @@ let screen_height = UIScreen.main.bounds.size.height
                 result(Locale.preferredLanguages.first)
             }
         }
-
+        
         let channel5 = FlutterMethodChannel(
             name: "get_window", binaryMessenger: controller.binaryMessenger)
         channel5.setMethodCallHandler { (call, result) in
@@ -112,7 +113,7 @@ let screen_height = UIScreen.main.bounds.size.height
                 }
             }
         }
-
+        
         let channel6 = FlutterMethodChannel(
             name: "hide_window", binaryMessenger: controller.binaryMessenger)
         channel6.setMethodCallHandler { (call, result) in
@@ -121,14 +122,45 @@ let screen_height = UIScreen.main.bounds.size.height
                 self.grayView.removeFromSuperview()
             }
         }
-
+        
+        let channel7 = FlutterMethodChannel(
+            name: "judge_fate", binaryMessenger: controller.binaryMessenger)
+        channel7.setMethodCallHandler { (call, result) in
+            if call.method == "judgefate" {
+                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                    SKStoreReviewController.requestReview(in: scene)
+                }
+            }
+        }
+        
+        let channel8 = FlutterMethodChannel(
+            name: "send_email", binaryMessenger: controller.binaryMessenger)
+        channel8.setMethodCallHandler { (call, result) in
+            if call.method == "sendemail" {
+                if let args = call.arguments as? [String: Any],
+                   let email = args["email"] as? String,
+                   let phone = args["phone"] as? String {
+                    if email.contains("email:"), let range = email.range(of: ":") {
+                        let emailuRL = String(email[range.upperBound...])
+                        let bodyContent = "RocketCash: \(phone)"
+                        let mailtoURLString = "mailto:\(emailuRL)?body=\(bodyContent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+                        if let mailtoURL = URL(string: mailtoURLString), UIApplication.shared.canOpenURL(mailtoURL) {
+                            UIApplication.shared.open(mailtoURL, options: [:], completionHandler: nil)
+                        }
+                    }
+                } else {
+                    result(FlutterError(code: "INVALID_ARGUMENT", message: "Missing email or phone", details: nil))
+                }
+            }
+        }
+        
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 }
 
 extension AppDelegate {
-
+    
     func isProxyEnabled() -> Int {
         guard
             let proxySettings = CFNetworkCopySystemProxySettings()?.takeRetainedValue()
@@ -136,25 +168,25 @@ extension AppDelegate {
         else {
             return 0
         }
-
+        
         if let httpEnable = proxySettings["HTTPEnable"] as? Int, httpEnable == 1 {
             return 1
         }
         if let httpsEnable = proxySettings["HTTPSEnable"] as? Int, httpsEnable == 1 {
             return 1
         }
-
+        
         return 0
     }
-
+    
     func isVPNConnected() -> Bool {
         guard let cfDict = CFNetworkCopySystemProxySettings(),
-            let nsDict = cfDict.takeRetainedValue() as? [String: Any],
-            let scopes = nsDict["__SCOPED__"] as? [String: Any]
+              let nsDict = cfDict.takeRetainedValue() as? [String: Any],
+              let scopes = nsDict["__SCOPED__"] as? [String: Any]
         else {
             return false
         }
-
+        
         for key in scopes.keys {
             if key.contains("tap") || key.contains("tun") || key.contains("ppp")
                 || key.contains("ipsec") || key.contains("ipsec0") || key.contains("utun")
@@ -162,8 +194,8 @@ extension AppDelegate {
                 return true
             }
         }
-
+        
         return false
     }
-
+    
 }

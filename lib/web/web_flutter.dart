@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/home/home_controller.dart';
 import 'package:rocketcash/main/main_controller.dart';
 import 'package:rocketcash/order/order_controller.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
+import 'package:rocketcash/other/location/location.dart';
 import 'package:rocketcash/routes/routes.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -60,6 +65,61 @@ class _WebFlutterViewState extends State<WebFlutterView> {
             });
           },
         ),
+      )
+      ..addJavaScriptChannel(
+        'bagelToas',
+        onMessageReceived: (message) async {
+          String? value = message.message;
+          List<dynamic> list = jsonDecode(value);
+          final producdID = list.first;
+          final startTime = DateTime.now().millisecondsSinceEpoch.toString();
+          await Uploadfindinginfo.scInfo(
+            startTime: startTime,
+            type: '9',
+            producdID: producdID,
+          );
+        },
+      )
+      ..addJavaScriptChannel(
+        'radishEgg',
+        onMessageReceived: (message) {
+          String? pageurl = message.message;
+          if (pageurl.isURL) {
+            _controller.loadRequest(Uri.parse(pageurl));
+          } else if (pageurl.contains('rocket.apploan.org/bearIrisBell')) {
+            final uri = Uri.parse(pageurl);
+            final value = uri.queryParameters['successfully'] ?? '';
+            Get.toNamed(AppRoutes.introduce, parameters: {'producdID': value});
+          }
+        },
+      )
+      ..addJavaScriptChannel(
+        'ninjaWhea',
+        onMessageReceived: (message) {
+          Get.back();
+        },
+      )
+      ..addJavaScriptChannel(
+        'quinceHon',
+        onMessageReceived: (message) {
+          final controller = Get.put(MainController());
+          controller.changeTabIndex(0);
+          Get.back();
+        },
+      )
+      ..addJavaScriptChannel(
+        'coffeeJui',
+        onMessageReceived: (message) {
+          String? email = message.message;
+          final phone = HiveStorage.getPhone() ?? '';
+          SendEmail.sendeimail(email, phone);
+        },
+      )
+      ..addJavaScriptChannel(
+        'cookJui',
+        onMessageReceived: (message) {
+          JudgeFage.isJudge();
+        },
       )
       ..loadRequest(Uri.parse(pageUrl));
   }
@@ -130,5 +190,31 @@ class _WebFlutterViewState extends State<WebFlutterView> {
         ),
       ),
     );
+  }
+}
+
+class JudgeFage {
+  static const MethodChannel _channel = MethodChannel('judge_fate');
+  static Future<void> isJudge() async {
+    try {
+      await _channel.invokeMethod('judgefate');
+    } catch (e) {
+      print('Failed to invoke method: $e');
+    }
+  }
+}
+
+class SendEmail {
+  static const MethodChannel _channel = MethodChannel('send_email');
+
+  static Future<void> sendeimail(String email, String phone) async {
+    try {
+      await _channel.invokeMethod('sendemail', {
+        'email': email,
+        'phone': phone,
+      });
+    } catch (e) {
+      print('Failed to invoke method: $e');
+    }
   }
 }

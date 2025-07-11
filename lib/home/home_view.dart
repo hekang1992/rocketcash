@@ -436,11 +436,11 @@ Widget homeOneListView(
                             parameters: {'pageUrl': m.rpgs ?? ''},
                           );
                         },
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                        child: SizedBox(
+                          width: 347.w,
                           child: Image.network(
                             m.trolled ?? '',
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                             errorBuilder: (context, error, stackTrace) {
                               return Container(color: Colors.white);
                             },

@@ -16,7 +16,7 @@ class CenterController extends GetxController {
 
     final position = await LocationService.getDetailedLocation();
     print(
-      'latitude==========${position['latitude']}, longitude=========${position['longitude']}',
+      'latitude==========${position['etern']}, longitude=========${position['grant']}',
     );
   }
 

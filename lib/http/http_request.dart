@@ -46,7 +46,7 @@ class HttpService {
       ),
     );
 
-    await _configureProxy();
+    // await _configureProxy();
   }
 
   Dio get dio => _dio;
