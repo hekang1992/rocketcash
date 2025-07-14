@@ -141,7 +141,7 @@ Widget serviceView() {
       onTap: () {
         Get.toNamed(
           AppRoutes.webpage,
-          parameters: {'pageUrl': '$h5Host/blueberryGi'},
+          parameters: {'pageUrl': '$h5Host/mackerelHor'},
         );
       },
     ),

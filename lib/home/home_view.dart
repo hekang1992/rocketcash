@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/home/home_controller.dart';
+import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rocketcash/routes/routes.dart';
@@ -335,11 +336,19 @@ Widget homeOneListView(
                   Row(
                     children: [
                       Spacer(),
-                      Image.asset(
-                        'assets/images/home_kef_imge.png',
-                        width: 33.w,
-                        height: 33.w,
-                        fit: BoxFit.cover,
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                            AppRoutes.webpage,
+                            parameters: {'pageUrl': '$h5Host/mackerelHor'},
+                          );
+                        },
+                        child: Image.asset(
+                          'assets/images/home_kef_imge.png',
+                          width: 33.w,
+                          height: 33.w,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       SizedBox(width: 23.w),
                     ],
@@ -430,10 +439,18 @@ Widget homeOneListView(
                     ),
                     items: tickes.map((m) {
                       return InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          final nextUrl = m.rpgs ?? '';
+                          final dict = await LoginInfoManager.getLoginInfo();
+                          String? pageUrl =
+                              URLParameterHelper.appendQueryParameters(
+                                nextUrl,
+                                dict,
+                              ) ??
+                              '';
                           Get.toNamed(
                             AppRoutes.webpage,
-                            parameters: {'pageUrl': m.rpgs ?? ''},
+                            parameters: {'pageUrl': pageUrl},
                           );
                         },
                         child: SizedBox(
