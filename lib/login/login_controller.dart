@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rocketcash/other/hive/save_info.dart';
@@ -147,7 +149,26 @@ extension LoginVc on LoginController {
       final response = await HttpService().postForm('/computed/world', dict);
       BaseModel model = BaseModel.fromJson(response.data);
       final salivating = model.salivating ?? '';
-      if (salivating == '0' || salivating == '00') {}
+      if (salivating == '0' || salivating == '00') {
+        final scheme = model.maiden?.essence?.resource ?? '';
+        final appid = model.maiden?.essence?.valuable ?? '';
+        final name = model.maiden?.essence?.rare ?? '';
+        final token = model.maiden?.essence?.amounts ?? '';
+        Map<String, dynamic> json = {
+          'scheme': scheme,
+          'appid': appid,
+          'name': name,
+          'token': token,
+        };
+        FacebookManager.getFacebook(json);
+      }
     } catch (e) {}
+  }
+}
+
+class FacebookManager {
+  static const _channel = MethodChannel('face_book');
+  static Future<void> getFacebook(Map<String, dynamic> json) async {
+    await _channel.invokeMethod('facebook', json);
   }
 }

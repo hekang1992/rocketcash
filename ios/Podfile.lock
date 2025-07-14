@@ -11,7 +11,18 @@ PODS:
     - Flutter
   - disk_space (0.0.1):
     - Flutter
+  - FBAEMKit (18.0.0):
+    - FBSDKCoreKit_Basics (= 18.0.0)
+  - FBSDKCoreKit (18.0.0):
+    - FBAEMKit (= 18.0.0)
+    - FBSDKCoreKit_Basics (= 18.0.0)
+  - FBSDKCoreKit_Basics (18.0.0)
+  - FBSDKLoginKit (18.0.0):
+    - FBSDKCoreKit (= 18.0.0)
   - Flutter (1.0.0)
+  - flutter_facebook_auth (7.1.2):
+    - FBSDKLoginKit (~> 18.0.0)
+    - Flutter
   - flutter_image_compress_common (1.0.0):
     - Flutter
     - Mantle
@@ -72,6 +83,7 @@ DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - disk_space (from `.symlinks/plugins/disk_space/ios`)
   - Flutter (from `Flutter`)
+  - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -87,6 +99,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
     - libwebp
     - Mantle
     - SDWebImage
@@ -107,6 +123,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/disk_space/ios"
   Flutter:
     :path: Flutter
+  flutter_facebook_auth:
+    :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   flutter_image_compress_common:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
   flutter_keyboard_visibility:
@@ -139,7 +157,12 @@ SPEC CHECKSUMS:
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   disk_space: ccb69269e2be924154eca27eb36803f72d4772fb
+  FBAEMKit: e34530df538b8eb8aeb53c35867715ba6c63ef0c
+  FBSDKCoreKit: d3f479a69127acebb1c6aad91c1a33907bcf6c2f
+  FBSDKCoreKit_Basics: 017b6dc2a1862024815a8229e75661e627ac1e29
+  FBSDKLoginKit: 5875762d1fe09ddcb05d03365d4f5dc34413843d
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_facebook_auth: d97dc09216aebd99d7ac52360186a630f67bdf18
   flutter_image_compress_common: 1697a328fd72bfb335507c6bca1a65fa5ad87df1
   flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13

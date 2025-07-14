@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import StoreKit
+import FBSDKCoreKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -147,6 +148,23 @@ import StoreKit
                     }
                 } else {
                     result(FlutterError(code: "INVALID_ARGUMENT", message: "Missing email or phone", details: nil))
+                }
+            }
+        }
+        
+        let channel9 = FlutterMethodChannel(
+            name: "face_book", binaryMessenger: controller.binaryMessenger)
+        channel9.setMethodCallHandler { (call, result) in
+            if call.method == "facebook" {
+                if let jsonData = call.arguments as? [String: Any] {
+                    Settings.shared.appID = jsonData["appid"] as? String ?? ""
+                    Settings.shared.clientToken = jsonData["token"] as? String ?? ""
+                    Settings.shared.displayName = jsonData["name"] as? String ?? ""
+                    Settings.shared.appURLSchemeSuffix = jsonData["scheme"] as? String ?? ""
+                    ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
+                    result(nil)
+                } else {
+                    result(FlutterError(code: "INVALID_ARGUMENT", message: "Invalid JSON data", details: nil))
                 }
             }
         }
