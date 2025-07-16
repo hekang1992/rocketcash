@@ -70,17 +70,9 @@ extension Home on HomeController {
         return;
       }
     }
-    final position = await LocationService.getDetailedLocation();
-    await uploadLocationInfo(position);
-
-    final startTime = HiveStorage.getloginTime() ?? '';
-    Uploadfindinginfo.scInfo(
-      startTime: startTime,
-      type: '1',
-      producdID: producdID,
-    );
 
     Map<String, String> dict = await LoginInfoManager.getLoginInfo();
+
     EasyLoading.show(status: 'loading...', dismissOnTap: true);
     try {
       final response = await HttpService().postForm('/computed/eerily', {
@@ -109,6 +101,16 @@ extension Home on HomeController {
     } catch (e) {
       EasyLoading.dismiss();
     }
+
+    final position = await LocationService.getDetailedLocation();
+    await uploadLocationInfo(position);
+
+    final startTime = HiveStorage.getloginTime() ?? '';
+    Uploadfindinginfo.scInfo(
+      startTime: startTime,
+      type: '1',
+      producdID: producdID,
+    );
   }
 
   //上报定位信息

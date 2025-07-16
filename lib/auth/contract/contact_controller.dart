@@ -52,6 +52,11 @@ extension ContactVc on ContactController {
       if (code == '0' || code == '00') {
         final controller = Get.put(IntroduceController());
         controller.getProductDetailToNextPage(producdID);
+        await Uploadfindinginfo.scInfo(
+          startTime: startTime,
+          type: '7',
+          producdID: producdID,
+        );
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();
@@ -66,13 +71,7 @@ extension ContactVc on ContactController {
       final response = await HttpService().postForm('/computed/thosei', dict);
       final model = BaseModel.fromJson(response.data);
       final code = model.salivating ?? '';
-      if (code == '0' || code == '00') {
-        await Uploadfindinginfo.scInfo(
-          startTime: startTime,
-          type: '7',
-          producdID: producdID,
-        );
-      }
+      if (code == '0' || code == '00') {}
       EasyLoading.dismiss();
     } catch (e) {
       EasyLoading.dismiss();

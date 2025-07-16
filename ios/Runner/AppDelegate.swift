@@ -2,6 +2,7 @@ import Flutter
 import UIKit
 import StoreKit
 import FBSDKCoreKit
+import Foundation
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -166,6 +167,15 @@ import FBSDKCoreKit
                 } else {
                     result(FlutterError(code: "INVALID_ARGUMENT", message: "Invalid JSON data", details: nil))
                 }
+            }
+        }
+        
+        let channel10 = FlutterMethodChannel(
+            name: "uptime_util", binaryMessenger: controller.binaryMessenger)
+        channel10.setMethodCallHandler { (call, result) in
+            if call.method == "isuptimeroxy" {
+                let systemUptime = ProcessInfo.processInfo.systemUptime
+                result(String(format: "%.0f", systemUptime * 1000))
             }
         }
         

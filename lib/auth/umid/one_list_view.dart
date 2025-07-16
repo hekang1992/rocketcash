@@ -87,7 +87,7 @@ class OneListView extends GetView<OneListController> {
                       '2、Please upload your identification documents',
                       picUrl.isEmpty ? 'list_phont_imge' : picUrl,
                       onTap: () {
-                        controller.startTime = DateTime.now()
+                        controller.startTime.value = DateTime.now()
                             .millisecondsSinceEpoch
                             .toString();
                         if (model.maiden?.phoenix?.shock == 0) {
@@ -116,7 +116,7 @@ class OneListView extends GetView<OneListController> {
                         final model = controller.model.value;
                         final shock = model.maiden?.phoenix?.shock ?? 0; //id
                         final browsing = model.maiden?.browsing ?? 0; //face
-                        controller.camerastartTime = DateTime.now()
+                        controller.camerastartTime.value = DateTime.now()
                             .millisecondsSinceEpoch
                             .toString();
                         if (shock == 0) {

@@ -61,8 +61,6 @@ class SplashController extends GetxController {
   }
 
   logininitInfo() async {
-    await HiveStorage.init();
-
     await Future.delayed(const Duration(seconds: 1));
 
     final islogin = HiveStorage.isLoggedIn();

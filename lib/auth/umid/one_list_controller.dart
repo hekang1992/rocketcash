@@ -23,9 +23,9 @@ class OneListController extends GetxController {
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController idcontroller = TextEditingController();
 
-  var startTime = '';
+  var startTime = ''.obs;
 
-  var camerastartTime = '';
+  var camerastartTime = ''.obs;
 
   var timeStr = ''.obs;
 
@@ -207,8 +207,8 @@ extension ListVc on OneListController {
       final code = model.salivating ?? '';
       final companion = model.companion ?? '';
       if (code == '0' || code == '00') {
-        block();
         await uplod3info();
+        block();
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();
@@ -219,7 +219,7 @@ extension ListVc on OneListController {
 
   Future<void> uplod3info() async {
     await Uploadfindinginfo.scInfo(
-      startTime: startTime,
+      startTime: startTime.value,
       type: '3',
       producdID: productID ?? '',
     );
@@ -227,7 +227,7 @@ extension ListVc on OneListController {
 
   Future<void> uplod4info() async {
     await Uploadfindinginfo.scInfo(
-      startTime: camerastartTime,
+      startTime: camerastartTime.value,
       type: '4',
       producdID: productID ?? '',
     );

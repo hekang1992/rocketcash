@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:network_info_plus/network_info_plus.dart';
@@ -57,7 +58,7 @@ class HttpService {
     // 替换为你的电脑IP和Proxyman的端口
     final info = NetworkInfo();
     // String proxyIP = await info.getWifiIP() ?? '';
-    String proxyIP = '10.1.1.61';
+    String proxyIP = '10.1.1.60';
     String proxyPort = "8888";
 
     if (proxyIP.isNotEmpty) {

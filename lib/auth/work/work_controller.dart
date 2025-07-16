@@ -25,7 +25,7 @@ class WorkController extends GetxController {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
     await getJobInfo(producdID);
-    DateTime.now().millisecondsSinceEpoch.toString();
+    startTime = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override

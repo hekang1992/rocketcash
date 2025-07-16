@@ -3,11 +3,13 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rocketcash/http/http_request.dart';
+import 'package:rocketcash/other/hive/save_info.dart';
 import 'package:rocketcash/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HttpService().init();
+  await HiveStorage.init();
   runApp(RocketCashApp());
 }
 

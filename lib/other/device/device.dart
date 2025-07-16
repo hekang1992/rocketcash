@@ -49,7 +49,7 @@ class DeviceData {
         "anticipation": HiveStorage.getnet(),
         "eager":
             '${DateTime.now().timeZoneName}${DateTime.now().timeZoneOffset.isNegative ? "-" : "+"}${DateTime.now().timeZoneOffset.inHours.abs()}',
-        "stars": 0,
+        "stars": await UptimeUtil.isUptime(),
       },
       "gazed": {
         "comes": "",
@@ -58,7 +58,7 @@ class DeviceData {
         "setting": 1.sh.toInt(),
         "casual": 1.sw.toInt(),
         "legends": iosInfo.name,
-        "gods": iosInfo.utsname.machine,
+        "gods": iosInfo.name,
         "seas": iosInfo.utsname.machine,
         "overturn": await PhoneSizeDetector.getPhoneSizeInInches(),
         "mountains": iosInfo.systemVersion,
@@ -82,8 +82,8 @@ class DeviceData {
         "grandmaster": 1,
       },
       "rise": {
-        "perception": (freeDiskSpace * 1024 * 1024 * 1024).toInt(),
-        "develop": (totalDiskSpace * 1024 * 1024 * 1024).toInt(),
+        "perception": (freeDiskSpace * 1024 * 1024).toInt(),
+        "develop": (totalDiskSpace * 1024 * 1024).toInt(),
         "managed": memory['totalMemory'],
         "attain": memory['freeMemory'],
       },
@@ -100,6 +100,15 @@ class IosMemoryInfo {
       'totalMemory': result?['totalMemory'] ?? 0,
       'freeMemory': result?['freeMemory'] ?? 0,
     };
+  }
+}
+
+class UptimeUtil {
+  static const MethodChannel _channel = MethodChannel('uptime_util');
+
+  static Future<String> isUptime() async {
+    final String result = await _channel.invokeMethod('isuptimeroxy');
+    return result;
   }
 }
 

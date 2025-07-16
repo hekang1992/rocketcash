@@ -602,10 +602,18 @@ Widget homeTwoViwe(
                       fit: BoxFit.cover,
                     ),
                     Spacer(),
-                    Image.asset(
-                      'assets/images/home_kef_imge.png',
-                      width: 37.w,
-                      height: 37.h,
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.webpage,
+                          parameters: {'pageUrl': '$h5Host/mackerelHor'},
+                        );
+                      },
+                      child: Image.asset(
+                        'assets/images/home_kef_imge.png',
+                        width: 37.w,
+                        height: 37.h,
+                      ),
                     ),
                     SizedBox(width: 23.w),
                   ],
@@ -731,12 +739,19 @@ Widget homeTwoViwe(
                                     child: CarouselSlider(
                                       items: tickets.map((m) {
                                         return InkWell(
-                                          onTap: () {
+                                          onTap: () async {
+                                            final nextUrl = m.rpgs ?? '';
+                                            final dict =
+                                                await LoginInfoManager.getLoginInfo();
+                                            String? pageUrl =
+                                                URLParameterHelper.appendQueryParameters(
+                                                  nextUrl,
+                                                  dict,
+                                                ) ??
+                                                '';
                                             Get.toNamed(
                                               AppRoutes.webpage,
-                                              parameters: {
-                                                'pageUrl': m.rpgs ?? '',
-                                              },
+                                              parameters: {'pageUrl': pageUrl},
                                             );
                                           },
                                           child: Center(
