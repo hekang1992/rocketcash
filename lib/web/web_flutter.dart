@@ -72,7 +72,7 @@ class _WebFlutterViewState extends State<WebFlutterView> {
         onMessageReceived: (message) async {
           String? value = message.message;
           List<dynamic> list = jsonDecode(value);
-          final producdID = list.first;
+          final producdID = list.first.toString();
           final startTime = DateTime.now().millisecondsSinceEpoch.toString();
           await Uploadfindinginfo.scInfo(
             startTime: startTime,
