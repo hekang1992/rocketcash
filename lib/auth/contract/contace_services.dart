@@ -49,12 +49,24 @@ class Contact {
 
 class PermissionConfig {
   static showPermissionDeniedDialog(String permissionName) {
+    var permissionStr = '';
+    if (permissionName == 'Location') {
+      permissionStr =
+          'RocketCash needs to access your location information to determine whether you are within the service coverage area. It also helps us tailor loan products that better suit your needs.';
+    } else if (permissionName == 'Gallery') {
+      permissionStr =
+          'Through the photo album, RocketCash can obtain your ID photo to complete the authentication.';
+    } else if (permissionName == 'Camera') {
+      permissionStr =
+          'Through the camera, RocketCash can capture your ID photo to complete the verification process.';
+    } else if (permissionName == 'Contact') {
+      permissionStr =
+          'To complete identity verification, RocketCash requires access to all your contacts.';
+    }
     Get.dialog(
       AlertDialog(
         title: Text('$permissionName permission denied'),
-        content: Text(
-          '$permissionName permission is required to proceed. Please go to the settings and enable the permission.',
-        ),
+        content: Text(permissionStr),
         actions: [
           TextButton(child: const Text('Cancel'), onPressed: () => Get.back()),
           TextButton(

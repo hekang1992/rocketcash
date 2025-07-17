@@ -34,17 +34,17 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>相机</string>
+	<string>Through the camera, RocketCash can capture your ID photo to complete the verification process.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>通讯录</string>
+	<string>For identity verification and fraud prevention purposes, RocketCash need to request access to your contact information.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>定位</string>
+	<string>RocketCash needs to access your location information to determine whether you are within the service coverage area. It also helps us tailor loan products that better suit your needs.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>定位</string>
+	<string>RocketCash needs to access your location information to determine whether you are within the service coverage area. It also helps us tailor loan products that better suit your needs.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>相册</string>
+	<string>Through the photo album, RocketCash can obtain your ID photo to complete the authentication.</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>idfa</string>
+	<string>RocketCash requests access to your advertising identifier to personalize loan offers, enhance your experience, and help protect your account security.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
