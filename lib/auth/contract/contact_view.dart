@@ -80,6 +80,10 @@ class ContactView extends GetView<ContactController> {
                     },
                     phoneBlock: () async {
                       final status = await Permission.contacts.status;
+                      if (status.isLimited) {
+                        PermissionConfig.showPermissionDeniedDialog('Contact');
+                        return;
+                      }
                       if (!status.isGranted) {
                         await Permission.contacts.request();
                       }

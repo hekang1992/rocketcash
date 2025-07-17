@@ -48,7 +48,7 @@ class _WebFlutterViewState extends State<WebFlutterView> {
           onPageStarted: (url) {
             setState(() {
               isLoading = true;
-              EasyLoading.show(status: 'loading...', dismissOnTap: true);
+              EasyLoading.show(status: 'loading...', dismissOnTap: false);
             });
           },
           onPageFinished: (url) async {
@@ -85,13 +85,29 @@ class _WebFlutterViewState extends State<WebFlutterView> {
         'radishEgg',
         onMessageReceived: (message) {
           String? pageurl = message.message;
-          if (pageurl.isURL) {
+          if (pageurl.startsWith('http://') || pageurl.startsWith('https://')) {
             _controller.loadRequest(Uri.parse(pageurl));
           } else if (pageurl.contains('rocket.apploan.org/bearIrisBell')) {
             final uri = Uri.parse(pageurl);
             final value = uri.queryParameters['successfully'] ?? '';
             final controller = Get.put(IntroduceController());
             controller.getProductDetailInfo(value, type: 'h5');
+          } else if (pageurl.contains('rocket.apploan.org/apricxotSoda')) {
+            final controller = Get.put(MainController());
+            controller.changeTabIndex(0);
+            Get.until((route) {
+              final currentRoute = route.settings.name?.split('?').first;
+              if (currentRoute == AppRoutes.tab) {
+                matchedRoute = currentRoute;
+                return true;
+              }
+              return false;
+            });
+          } else if (pageurl.contains('rocket.apploan.org/amaranthCucu')) {
+            HiveStorage.clearPhone();
+            HiveStorage.clearToken();
+            HiveStorage.clearLoginTime();
+            Get.offAllNamed(AppRoutes.login);
           }
         },
       )
@@ -106,7 +122,14 @@ class _WebFlutterViewState extends State<WebFlutterView> {
         onMessageReceived: (message) {
           final controller = Get.put(MainController());
           controller.changeTabIndex(0);
-          Get.back();
+          Get.until((route) {
+            final currentRoute = route.settings.name?.split('?').first;
+            if (currentRoute == AppRoutes.tab) {
+              matchedRoute = currentRoute;
+              return true;
+            }
+            return false;
+          });
         },
       )
       ..addJavaScriptChannel(

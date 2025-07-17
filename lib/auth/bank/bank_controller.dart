@@ -56,7 +56,7 @@ class BankController extends GetxController {
 
 extension BankVc on BankController {
   Future<void> getBankInfo(String productID) async {
-    EasyLoading.show(status: 'loading...', dismissOnTap: true);
+    EasyLoading.show(status: 'loading...', dismissOnTap: false);
     final dict = {'successfully': productID, 'alter': '0'};
     try {
       final response = await HttpService().get(

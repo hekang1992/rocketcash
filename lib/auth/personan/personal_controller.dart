@@ -24,8 +24,8 @@ class PersonalController extends GetxController {
   void onInit() async {
     super.onInit();
     producdID = Get.parameters['producdID'] ?? '';
-    await getPersonalInfo(producdID);
     startTime = DateTime.now().millisecondsSinceEpoch.toString();
+    await getPersonalInfo(producdID);
   }
 
   @override
