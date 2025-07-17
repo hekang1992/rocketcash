@@ -56,9 +56,8 @@ class HttpService {
   // 配置代理
   Future<void> _configureProxy() async {
     // 替换为你的电脑IP和Proxyman的端口
-    final info = NetworkInfo();
-    // String proxyIP = await info.getWifiIP() ?? '';
-    String proxyIP = '10.1.1.60';
+    // String proxyIP = '10.1.1.83';
+    String proxyIP = '192.168.8.163';
     String proxyPort = "8888";
 
     if (proxyIP.isNotEmpty) {

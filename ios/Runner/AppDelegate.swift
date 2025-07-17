@@ -192,7 +192,6 @@ extension AppDelegate {
             let window = UIApplication.shared.windows.first
             bottomInset = window?.safeAreaInsets.bottom ?? 0
         }
-        print("当前底部安全区域高度：\(bottomInset)")
         return bottomInset
     }
     

@@ -528,7 +528,7 @@ Widget homeTwoListView(TicketsModel? model, {required VoidCallback onTap}) {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    '${model?.skill ?? ''}₱',
+                    '${model?.costs ?? ''}₱',
                     style: TextStyle(
                       fontFamily: 'inter',
                       color: Color(0xFF333333),

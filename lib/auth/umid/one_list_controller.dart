@@ -23,9 +23,9 @@ class OneListController extends GetxController {
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController idcontroller = TextEditingController();
 
-  var startTime = ''.obs;
+  var startTime = '';
 
-  var camerastartTime = ''.obs;
+  var camerastartTime = '';
 
   var timeStr = ''.obs;
 
@@ -39,6 +39,8 @@ class OneListController extends GetxController {
     if (productID != null && productID!.isNotEmpty) {
       getAuthInfo(productID!);
     }
+
+    startTime = DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   @override
@@ -218,16 +220,18 @@ extension ListVc on OneListController {
   }
 
   Future<void> uplod3info() async {
+    print("umid开始时间========${startTime}");
     await Uploadfindinginfo.scInfo(
-      startTime: startTime.value,
+      startTime: startTime,
       type: '3',
       producdID: productID ?? '',
     );
   }
 
   Future<void> uplod4info() async {
+    print("人脸开始时间========${camerastartTime}");
     await Uploadfindinginfo.scInfo(
-      startTime: camerastartTime.value,
+      startTime: camerastartTime,
       type: '4',
       producdID: productID ?? '',
     );

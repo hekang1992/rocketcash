@@ -87,9 +87,9 @@ class OneListView extends GetView<OneListController> {
                       '2、Please upload your identification documents',
                       picUrl.isEmpty ? 'list_phont_imge' : picUrl,
                       onTap: () {
-                        controller.startTime.value = DateTime.now()
-                            .millisecondsSinceEpoch
-                            .toString();
+                        // controller.startTime.value = DateTime.now()
+                        //     .millisecondsSinceEpoch
+                        //     .toString();
                         if (model.maiden?.phoenix?.shock == 0) {
                           //相册相机弹窗
                           popPhotoCameraView(context, controller);
@@ -116,9 +116,9 @@ class OneListView extends GetView<OneListController> {
                         final model = controller.model.value;
                         final shock = model.maiden?.phoenix?.shock ?? 0; //id
                         final browsing = model.maiden?.browsing ?? 0; //face
-                        controller.camerastartTime.value = DateTime.now()
-                            .millisecondsSinceEpoch
-                            .toString();
+                        // controller.camerastartTime = DateTime.now()
+                        //     .millisecondsSinceEpoch
+                        //     .toString();
                         if (shock == 0) {
                           FlutterShowToast.showToast(
                             'Kindly upload your identification photo first.',

@@ -9,7 +9,9 @@ import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 
 class FaceView extends GetView<FaceController> {
-  const FaceView({super.key});
+  FaceView({super.key}) {
+    final _ = Get.put(FaceController());
+  }
 
   @override
   Widget build(BuildContext context) {
