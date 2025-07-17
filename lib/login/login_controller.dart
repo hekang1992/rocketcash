@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rocketcash/other/hive/save_info.dart';
