@@ -5,7 +5,6 @@ import 'package:dio/io.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 import 'package:rocketcash/http/login_info.dart';
 import 'package:rocketcash/other/coler/coler.dart';
 
@@ -55,9 +54,6 @@ class HttpService {
 
   // 配置代理
   Future<void> _configureProxy() async {
-    // 替换为你的电脑IP和Proxyman的端口
-    // String proxyIP = '10.1.1.83';
-    // String proxyIP = '192.168.8.163';
     String proxyIP = '192.168.71.54';
     String proxyPort = "8888";
 

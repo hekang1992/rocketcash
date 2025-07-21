@@ -20,4 +20,4 @@ Color getRandomColorWithAlpha() {
   );
 }
 
-const String h5Host = 'http://8.212.151.134:10393';
+const String h5Host = 'https://gold-digger-solutions-tech.com';
