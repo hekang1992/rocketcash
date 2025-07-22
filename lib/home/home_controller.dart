@@ -60,11 +60,11 @@ extension Home on HomeController {
 
   //申请产品
   Future<void> applyProduct(String producdID) async {
-    final function = this.model.value.maiden?.function ?? 0;
+    final function = model.value.maiden?.functions ?? 0;
     LocationPermission permission = await Geolocator.checkPermission();
     if (function == 1) {
       //判断是否定位
-      if (permission != LocationPermission.always ||
+      if (permission != LocationPermission.always &&
           permission != LocationPermission.whileInUse) {
         PermissionConfig.showPermissionDeniedDialog('Location');
         return;

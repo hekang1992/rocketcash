@@ -209,8 +209,8 @@ extension ListVc on OneListController {
       final code = model.salivating ?? '';
       final companion = model.companion ?? '';
       if (code == '0' || code == '00') {
-        await uplod3info();
         block();
+        await uplod3info();
       }
       FlutterShowToast.showToast(companion);
       EasyLoading.dismiss();
