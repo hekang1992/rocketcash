@@ -245,14 +245,38 @@ Widget footerView() {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                footerListView('How long does the application take?'),
+                footerListView(
+                  //1
+                  'How long does the application take?',
+                  onTap: () {
+                    Get.dialog(
+                      barrierDismissible: false,
+                      useSafeArea: false,
+                      oneHomeDescClickView('image_list_one'),
+                    );
+                  },
+                ),
                 SizedBox(height: 8.h),
                 footerListView(
                   'What are the consequences of overdue repayment?',
+                  onTap: () {
+                    Get.dialog(
+                      barrierDismissible: false,
+                      useSafeArea: false,
+                      oneHomeDescClickView('image_list_two'),
+                    );
+                  },
                 ),
                 SizedBox(height: 8.h),
                 footerListView(
                   'What materials are needed to apply for a loan?',
+                  onTap: () {
+                    Get.dialog(
+                      barrierDismissible: false,
+                      useSafeArea: false,
+                      oneHomeDescClickView('image_list_three'),
+                    );
+                  },
                 ),
               ],
             ),
@@ -263,7 +287,7 @@ Widget footerView() {
   );
 }
 
-Widget footerListView(String title) {
+Widget footerListView(String title, {required VoidCallback onTap}) {
   return Padding(
     padding: EdgeInsets.only(left: 18.sp, right: 18.sp),
     child: Container(
@@ -271,31 +295,34 @@ Widget footerListView(String title) {
         color: Color(0x5CDFEBAC),
         borderRadius: BorderRadius.circular(9.sp),
       ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 247.w,
-            child: Padding(
-              padding: EdgeInsets.only(left: 12.sp, top: 9.sp, bottom: 9.sp),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontFamily: 'inter',
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF666666),
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 247.w,
+              child: Padding(
+                padding: EdgeInsets.only(left: 12.sp, top: 9.sp, bottom: 9.sp),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontFamily: 'inter',
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF666666),
+                  ),
                 ),
               ),
             ),
-          ),
-          Spacer(),
-          Image.asset(
-            'assets/images/right_image.png',
-            width: 14.w,
-            height: 14.h,
-          ),
-          SizedBox(width: 14.w),
-        ],
+            Spacer(),
+            Image.asset(
+              'assets/images/right_image.png',
+              width: 14.w,
+              height: 14.h,
+            ),
+            SizedBox(width: 14.w),
+          ],
+        ),
       ),
     ),
   );
@@ -828,6 +855,46 @@ Widget homeTwoViwe(
                 ),
               ],
             ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget oneHomeDescClickView(String imageStr) {
+  return Center(
+    child: Stack(
+      children: [
+        Image.asset('assets/images/$imageStr.png', width: 340.w, height: 275.h),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: InkWell(
+            child: SizedBox(width: 40.w, height: 40.h),
+            onTap: () {
+              Get.back();
+            },
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          child: InkWell(
+            child: SizedBox(width: 160.w, height: 100.h),
+            onTap: () {
+              Get.back();
+            },
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: InkWell(
+            child: SizedBox(width: 160.w, height: 100.h),
+            onTap: () {
+              Get.back();
+            },
           ),
         ),
       ],
