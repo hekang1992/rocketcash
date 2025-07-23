@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:rocketcash/auth/introduce/introduce_controller.dart';
 import 'package:rocketcash/center/center_list_view.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
+import 'package:rocketcash/home/home_controller.dart';
 import 'package:rocketcash/home/home_view.dart';
 import 'package:rocketcash/http/response_model.dart';
 import 'package:rocketcash/other/coler/coler.dart';
@@ -24,6 +25,8 @@ class IntroduceView extends GetView<IntroduceController> {
           'Identity Authentication',
           onPressed: () {
             Get.back(result: 'order');
+            final homevc = Get.put(HomeController());
+            homevc.getHomeInfo();
           },
         ),
         body: Container(
