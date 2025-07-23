@@ -14,7 +14,7 @@ class GuideView extends GetView<GuideController> {
       Stack(
         children: [
           Image.asset(
-            'assets/images/list_guide_bg.png',
+            'assets/images/appbg_Image.png',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -35,7 +35,7 @@ class GuideView extends GetView<GuideController> {
       Stack(
         children: [
           Image.asset(
-            'assets/images/list_guide_bg.png',
+            'assets/images/appbg_Image.png',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
