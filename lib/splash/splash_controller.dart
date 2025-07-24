@@ -44,13 +44,14 @@ class SplashController extends GetxController {
     });
 
     ever(connectionStatus, (value) async {
-      if (value == 'none' || value == "unknow") {
-        Fluttertoast.showToast(
-          msg: 'Connection lost, please check your network.',
-        );
-      } else if (value == 'mobile' || value == "wifi") {
-        await logininitInfo();
-      }
+      // if (value == 'none' || value == "unknown") {
+      //   Fluttertoast.showToast(
+      //     msg: 'Connection lost, please check your network.',
+      //   );
+      // } else if (value == 'mobile' || value == "wifi") {
+      //   await logininitInfo();
+      // }
+      await logininitInfo();
     });
   }
 
