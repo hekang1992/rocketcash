@@ -15,7 +15,61 @@ class CenterView extends GetView<CenterController> {
       child: Column(
         children: [
           centerHeadView(context),
-          centerListView(),
+          Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              Image.asset(
+                'assets/images/dingdan_lig_li.png',
+                width: 338.w,
+                height: 213.h,
+                fit: BoxFit.contain,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.orderlist,
+                        arguments: {'type': '1'},
+                      );
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      width: 100.w,
+                      height: 120.h,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.orderlist,
+                        arguments: {'type': '2'},
+                      );
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      width: 100.w,
+                      height: 120.h,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.orderlist,
+                        arguments: {'type': '3'},
+                      );
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      width: 100.w,
+                      height: 120.h,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
           SizedBox(height: 20.h),
           moreFunctionView(),
         ],
@@ -214,7 +268,7 @@ Widget orderListImageView(
 Widget moreFunctionView() {
   return SizedBox(
     width: double.infinity,
-    height: 200.h,
+    height: 230.h,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -237,9 +291,9 @@ Widget moreFunctionView() {
         Padding(
           padding: EdgeInsets.only(left: 15, right: 15),
           child: Container(
-            height: 90.h,
+            height: 140.h,
             decoration: BoxDecoration(
-              color: Color(0xFFF5F5F5),
+              color: Color(0xFFECF6D2),
               borderRadius: BorderRadius.circular(9.sp),
             ),
             child: Column(
@@ -252,13 +306,13 @@ Widget moreFunctionView() {
                       children: [
                         SizedBox(width: 15.w),
                         Image.asset(
-                          'assets/images/list_one_image.png',
+                          'assets/images/more_one_lifad.png',
                           width: 20.w,
                           height: 20.h,
                         ),
                         SizedBox(width: 10.w),
                         Text(
-                          'Our official website',
+                          'Quick contact',
                           style: TextStyle(
                             fontFamily: 'inter',
                             fontSize: 13.sp,
@@ -267,7 +321,7 @@ Widget moreFunctionView() {
                         ),
                         Spacer(),
                         Image.asset(
-                          'assets/images/right_image.png',
+                          'assets/images/rig_ad_fa.png',
                           width: 16.w,
                           height: 16.h,
                         ),
@@ -278,7 +332,7 @@ Widget moreFunctionView() {
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.webpage,
-                      parameters: {'pageUrl': h5Host},
+                      parameters: {'pageUrl': '$h5Host/mackerelHor'},
                     );
                   },
                 ),
@@ -291,13 +345,13 @@ Widget moreFunctionView() {
                       children: [
                         SizedBox(width: 15.w),
                         Image.asset(
-                          'assets/images/list_two_image.png',
+                          'assets/images/more_two_liafa.png',
                           width: 20.w,
                           height: 20.h,
                         ),
                         SizedBox(width: 10.w),
                         Text(
-                          'Settings',
+                          'Set Up',
                           style: TextStyle(
                             fontFamily: 'inter',
                             fontSize: 13.sp,
@@ -306,7 +360,45 @@ Widget moreFunctionView() {
                         ),
                         Spacer(),
                         Image.asset(
-                          'assets/images/right_image.png',
+                          'assets/images/rig_ad_fa.png',
+                          width: 16.w,
+                          height: 16.h,
+                        ),
+                        SizedBox(width: 18.w),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.webpage,
+                      parameters: {'pageUrl': h5Host},
+                    );
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 45.h,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 15.w),
+                        Image.asset(
+                          'assets/images/more_three_lisfa.png',
+                          width: 20.w,
+                          height: 20.h,
+                        ),
+                        SizedBox(width: 10.w),
+                        Text(
+                          'Our website',
+                          style: TextStyle(
+                            fontFamily: 'inter',
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Spacer(),
+                        Image.asset(
+                          'assets/images/rig_ad_fa.png',
                           width: 16.w,
                           height: 16.h,
                         ),

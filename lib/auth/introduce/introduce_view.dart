@@ -37,7 +37,6 @@ class IntroduceView extends GetView<IntroduceController> {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: 21.h),
                 Obx(() {
                   final model = controller.model.value;
                   return oneView(model);
@@ -46,7 +45,7 @@ class IntroduceView extends GetView<IntroduceController> {
                 SizedBox(
                   width: 347.w,
                   child: GuideCustomerBtn(
-                    title: 'Start the authentication',
+                    title: 'Apply for a loan',
                     onPressed: () {
                       controller.getProductDetailToNextPage(
                         controller.producdID,
@@ -69,7 +68,7 @@ class IntroduceView extends GetView<IntroduceController> {
                         children: [
                           TextSpan(
                             text:
-                                'We follow strict operational procedures and quality standards, as detailed in our',
+                                'We uphold stringent operational processes and quality guidelines, as elaborated upon in our',
                             style: TextStyle(
                               fontFamily: 'inter',
                               color: Color(0xFF999999),
@@ -237,39 +236,40 @@ Widget oneView(BaseModel model) {
     alignment: AlignmentDirectional.topCenter,
     children: [
       Image.asset(
-        'assets/images/one_iam_oige.png',
-        width: 347.w,
-        height: 210.h,
+        'assets/images/home_head_imge.png',
+        width: 375.w,
+        height: 310.h,
+        fit: BoxFit.fill,
       ),
-      Positioned(
-        top: 0,
-        left: 0,
-        child: Image.asset(
-          'assets/images/ll_ad_image.png',
-          width: 170.w,
-          height: 43.h,
-          fit: BoxFit.cover,
-        ),
-      ),
-      Positioned(
-        top: 9.sp,
-        left: 20.sp,
-        child: Row(
-          children: [
-            Image.asset(
-              'assets/images/login_icon_image.png',
-              width: 24.w,
-              height: 24.h,
-            ),
-            SizedBox(width: 9.sp),
-            Image.asset(
-              'assets/images/appim_ge_ii.png',
-              width: 92.w,
-              height: 16.h,
-            ),
-          ],
-        ),
-      ),
+      // Positioned(
+      //   top: 0,
+      //   left: 0,
+      //   child: Image.asset(
+      //     'assets/images/ll_ad_image.png',
+      //     width: 170.w,
+      //     height: 43.h,
+      //     fit: BoxFit.cover,
+      //   ),
+      // ),
+      // Positioned(
+      //   top: 9.sp,
+      //   left: 20.sp,
+      //   child: Row(
+      //     children: [
+      //       Image.asset(
+      //         'assets/images/login_icon_image.png',
+      //         width: 24.w,
+      //         height: 24.h,
+      //       ),
+      //       SizedBox(width: 9.sp),
+      //       Image.asset(
+      //         'assets/images/appim_ge_ii.png',
+      //         width: 92.w,
+      //         height: 16.h,
+      //       ),
+      //     ],
+      //   ),
+      // ),
       Positioned(
         top: 52.sp,
         child: Column(
@@ -280,7 +280,7 @@ Widget oneView(BaseModel model) {
                 fontFamily: 'inter',
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF333333),
+                color: Color(0xFFFFFFFF),
               ),
             ),
             SizedBox(height: 5.sp),
@@ -288,42 +288,89 @@ Widget oneView(BaseModel model) {
               model.maiden?.subtle?.columnText?.tag1?.threat ?? '',
               style: TextStyle(
                 fontFamily: 'inter',
-                fontSize: 32.sp,
+                fontSize: 58.sp,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF333333),
+                color: Color(0xFFFFFFFF),
               ),
             ),
             SizedBox(height: 5.h),
-            Stack(
+            Row(
               children: [
-                Image.asset(
-                  'assets/images/indfa_iamge_dsas.png',
-                  width: 311.w,
-                  height: 68.h,
+                Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  children: [
+                    Image.asset(
+                      'assets/images/de_li_imge.png',
+                      width: 165.w,
+                      height: 97.h,
+                    ),
+                    Positioned(
+                      bottom: 10.sp,
+                      child: Text(
+                        '${model.maiden?.subtle?.screen ?? ''}days',
+                        style: TextStyle(
+                          color: Color(0xffAE4D2F),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Positioned.fill(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      itemListView(
-                        imagestr: 'item_list_image',
-                        title:
-                            model.maiden?.subtle?.columnText?.tag2?.appeared ??
-                            '',
-                        desc:
-                            model.maiden?.subtle?.columnText?.tag2?.threat ??
-                            '',
+                SizedBox(width: 10.sp),
+                Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  children: [
+                    Image.asset(
+                      'assets/images/rate_oi_image.png',
+                      width: 165.w,
+                      height: 97.h,
+                    ),
+                    Positioned(
+                      bottom: 10.sp,
+                      child: Text(
+                        model.maiden?.subtle?.columnText?.tag2?.threat ?? '',
+                        style: TextStyle(
+                          color: Color(0xffAE4D2F),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
-                      itemListView(
-                        imagestr: 'rate_list_image',
-                        title: model.maiden?.subtle?.termDesc ?? '',
-                        desc: model.maiden?.subtle?.screen ?? '',
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
+            // Stack(
+            //   children: [
+            //     Image.asset(
+            //       'assets/images/indfa_iamge_dsas.png',
+            //       width: 311.w,
+            //       height: 68.h,
+            //     ),
+            //     Positioned.fill(
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //         children: [
+            //           itemListView(
+            //             imagestr: 'item_list_image',
+            //             title:
+            //                 model.maiden?.subtle?.columnText?.tag2?.appeared ??
+            //                 '',
+            //             desc:
+            //                 model.maiden?.subtle?.columnText?.tag2?.threat ??
+            //                 '',
+            //           ),
+            //           itemListView(
+            //             imagestr: 'rate_list_image',
+            //             title: model.maiden?.subtle?.termDesc ?? '',
+            //             desc: model.maiden?.subtle?.screen ?? '',
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
