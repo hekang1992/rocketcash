@@ -10,20 +10,15 @@ class CenterView extends GetView<CenterController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.white,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            centerHeadView(context),
-            centerListView(),
-            SizedBox(height: 20.h),
-            moreFunctionView(),
-          ],
-        ),
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          centerHeadView(context),
+          centerListView(),
+          SizedBox(height: 20.h),
+          moreFunctionView(),
+        ],
       ),
     );
   }
@@ -35,70 +30,9 @@ Widget centerHeadView(BuildContext context) {
     children: [
       Image.asset(
         'assets/images/centerbg_image.png',
-        width: double.infinity,
-        height: 304.h,
+        width: 414.w,
+        height: 243.h,
         fit: BoxFit.fill,
-      ),
-      Positioned(
-        top: MediaQuery.of(context).padding.top + 10.h,
-        left: 15.w,
-        child: Image.asset(
-          'assets/images/centername_logo.png',
-          width: 143.w,
-          height: 42.h,
-          fit: BoxFit.cover,
-        ),
-      ),
-      Positioned(
-        bottom: 0, // 紧贴底部
-        left: 0, // 水平居中：通过 left/right 约束
-        right: 0,
-        child: Align(
-          child: Stack(
-            children: [
-              Image.asset(
-                'assets/images/green_bg.png',
-                width: 348.w,
-                height: 144.h,
-                fit: BoxFit.fill,
-              ),
-              Positioned(bottom: 18.h, left: 0, right: 0, child: serviceView()),
-            ],
-          ),
-        ),
-      ),
-      Positioned(
-        bottom: 55.h,
-        left: 0, // 水平居中：通过 left/right 约束
-        right: 0,
-        child: Align(
-          child: Stack(
-            children: [
-              Image.asset(
-                'assets/images/centerpeople_imge.png',
-                width: 348.w,
-                height: 144.h,
-                fit: BoxFit.fill,
-              ),
-              Positioned.fill(
-                top: 45.sp,
-                child: Center(
-                  child: Obx(
-                    () => Text(
-                      controller.phone.value,
-                      style: TextStyle(
-                        fontFamily: 'inter',
-                        color: Colors.black, // 视情况设置颜色
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     ],
   );

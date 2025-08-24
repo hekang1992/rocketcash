@@ -38,54 +38,53 @@ Widget tabbar(MainController controller, BuildContext context) {
         ),
       ],
     ),
-    child: Theme(
-      data: ThemeData(
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-      ),
-      child: BottomNavigationBar(
-        selectedItemColor: AppColors.tabselColor,
-        unselectedItemColor: AppColors.tabnorColor,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.transparent,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/images/home_nor.png',
-              width: 45.w,
-              height: 45.h,
-              fit: BoxFit.contain,
+    child: Stack(
+      children: [
+        // Image.asset('assets/images/tab_image_i.png', fit: BoxFit.fill),
+        BottomNavigationBar(
+          selectedItemColor: AppColors.tabselColor,
+          unselectedItemColor: AppColors.tabnorColor,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.transparent,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          elevation: 0,
+          items: [
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/images/home_nor.png',
+                width: 25.w,
+                height: 25.h,
+                fit: BoxFit.contain,
+              ),
+              activeIcon: Image.asset(
+                'assets/images/home_sel.png',
+                width: 25.w,
+                height: 25.h,
+                fit: BoxFit.contain,
+              ),
+              label: '',
             ),
-            activeIcon: Image.asset(
-              'assets/images/home_sel.png',
-              width: 45.w,
-              height: 45.h,
-              fit: BoxFit.contain,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/images/center_nor.png',
+                width: 25.w,
+                height: 25.h,
+                fit: BoxFit.contain,
+              ),
+              activeIcon: Image.asset(
+                'assets/images/center_sel.png',
+                width: 25.w,
+                height: 25.h,
+                fit: BoxFit.contain,
+              ),
+              label: '',
             ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/images/center_nor.png',
-              width: 45.w,
-              height: 45.h,
-              fit: BoxFit.contain,
-            ),
-            activeIcon: Image.asset(
-              'assets/images/center_sel.png',
-              width: 45.w,
-              height: 45.h,
-              fit: BoxFit.contain,
-            ),
-            label: '',
-          ),
-        ],
-        currentIndex: controller.tabIndex.value,
-        onTap: (value) => controller.changeTabIndex(value),
-      ),
+          ],
+          currentIndex: controller.tabIndex.value,
+          onTap: (value) => controller.changeTabIndex(value),
+        ),
+      ],
     ),
   );
 }
