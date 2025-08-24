@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rocketcash/guide/guide_customer_btn.dart';
 import 'package:rocketcash/home/home_controller.dart';
@@ -358,7 +359,7 @@ Widget homeOneListView(
             },
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -381,70 +382,40 @@ Widget homeOneListView(
                     ],
                   ),
                   SizedBox(height: 10.h),
+                  Text(
+                    'Applicable for fund application (₱)',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  Text(
+                    model.maiden?.greatly?.tickets?.first.costs ?? '',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 65.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
                   Image.asset(
-                    'assets/images/green_home_image.png',
-                    width: 130.w,
-                    height: 17.h,
-                  ),
-                  SizedBox(height: 14.h),
-                  Row(
-                    children: [
-                      SizedBox(width: 5.sp),
-                      SizedBox(
-                        width: 103.w,
-                        child: Text(
-                          model.maiden?.greatly?.tickets?.first.ticket ?? '',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: 'inter',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/images/up_image_home.png',
-                        width: 34.w,
-                        height: 34.h,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.sp),
-                  Stack(
-                    alignment: AlignmentDirectional.centerStart,
-                    children: [
-                      Image.asset(
-                        'assets/images/home_black_image.png',
-                        width: 229.w,
-                        height: 54.h,
-                        fit: BoxFit.cover,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 38.w),
-                          Text(
-                            model.maiden?.greatly?.tickets?.first.costs ?? '',
-                            style: TextStyle(
-                              color: Color(0xFFD3F157),
-                              fontFamily: 'inter',
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    'assets/images/image_lo_hoen.png',
+                    width: 320.w,
+                    height: 33.h,
+                    fit: BoxFit.contain,
                   ),
                   SizedBox(height: 48.h),
-                  itemRateView(model: model),
-                  SizedBox(height: 13.5.sp),
+                  // itemRateView(model: model),
+                  SizedBox(height: 20.sp),
                   Center(
                     child: SizedBox(
                       width: 347.w,
                       height: 50.h,
                       child: GuideCustomerBtn(
-                        color: Color(0xFFAAD301),
-                        titlecolor: Color(0xFF333333),
+                        color: Color(0xFFFF962D),
+                        titlecolor: Color(0xFFffffff),
                         title:
                             model.maiden?.greatly?.tickets?.first.activating ??
                             '',
@@ -456,49 +427,133 @@ Widget homeOneListView(
                       ),
                     ),
                   ),
-                  SizedBox(height: 13.h),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: 84.0,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      viewportFraction: 1,
-                    ),
-                    items: tickes.map((m) {
-                      return InkWell(
-                        onTap: () async {
-                          final nextUrl = m.rpgs ?? '';
-                          final dict = await LoginInfoManager.getLoginInfo();
-                          String? pageUrl =
-                              URLParameterHelper.appendQueryParameters(
-                                nextUrl,
-                                dict,
-                              ) ??
-                              '';
-                          Get.toNamed(
-                            AppRoutes.webpage,
-                            parameters: {'pageUrl': pageUrl},
-                          );
-                        },
+                  SizedBox(height: 3.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: 10.sp),
+                      Stack(
+                        alignment: AlignmentDirectional.topCenter,
+                        children: [
+                          Image.asset(
+                            'assets/images/de_li_imge.png',
+                            width: 165.w,
+                            height: 97.h,
+                          ),
+                          Positioned(
+                            bottom: 10.sp,
+                            child: Text(
+                              '${model.maiden?.greatly?.tickets?.first.each ?? ''}${model.maiden?.greatly?.tickets?.first.paragraph ?? ''}s',
+                              style: TextStyle(
+                                color: Color(0xffAE4D2F),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Stack(
+                        alignment: AlignmentDirectional.topCenter,
+                        children: [
+                          Image.asset(
+                            'assets/images/rate_oi_image.png',
+                            width: 165.w,
+                            height: 97.h,
+                          ),
+                          Positioned(
+                            bottom: 10.sp,
+                            child: Text(
+                              model.maiden?.greatly?.tickets?.first.disarray ??
+                                  '',
+                              style: TextStyle(
+                                color: Color(0xffAE4D2F),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 10.sp),
+                    ],
+                  ),
+                  SizedBox(height: 10.sp),
+                  Stack(
+                    alignment: AlignmentDirectional.topCenter,
+                    children: [
+                      Image.asset(
+                        'assets/images/llimg_li_ifa.png',
+                        width: 350.w,
+                        height: 242.h,
+                        fit: BoxFit.contain,
+                      ),
+                      Positioned(
+                        bottom: 20.sp,
                         child: SizedBox(
-                          width: 347.w,
-                          child: Image.network(
-                            'https://img.iplaysoft.com/wp-content/uploads/2019/free-images/free_stock_photo.jpg',
-                            fit: BoxFit.fill,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(color: Colors.white);
-                            },
+                          width: 350.w,
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            'Before applying for a loan, it is of vital importance for users to carefully read the loan terms.',
+                            style: TextStyle(
+                              color: Color(0xff666666),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      );
-                    }).toList(),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 10.sp),
+                  Image.asset(
+                    'assets/images/foot_li_liage.png',
+                    width: 350.w,
+                    height: 133.h,
+                    fit: BoxFit.contain,
+                  ),
+                  // CarouselSlider(
+                  //   options: CarouselOptions(
+                  //     height: 84.0,
+                  //     autoPlay: true,
+                  //     autoPlayInterval: Duration(seconds: 3),
+                  //     viewportFraction: 1,
+                  //   ),
+                  //   items: tickes.map((m) {
+                  //     return InkWell(
+                  //       onTap: () async {
+                  //         final nextUrl = m.rpgs ?? '';
+                  //         final dict = await LoginInfoManager.getLoginInfo();
+                  //         String? pageUrl =
+                  //             URLParameterHelper.appendQueryParameters(
+                  //               nextUrl,
+                  //               dict,
+                  //             ) ??
+                  //             '';
+                  //         Get.toNamed(
+                  //           AppRoutes.webpage,
+                  //           parameters: {'pageUrl': pageUrl},
+                  //         );
+                  //       },
+                  //       child: SizedBox(
+                  //         width: 347.w,
+                  //         child: Image.network(
+                  //           'https://img.iplaysoft.com/wp-content/uploads/2019/free-images/free_stock_photo.jpg',
+                  //           fit: BoxFit.fill,
+                  //           errorBuilder: (context, error, stackTrace) {
+                  //             return Container(color: Colors.white);
+                  //           },
+                  //         ),
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  // ),
                   SizedBox(height: 10.h),
-                  loanitemsListView(),
+                  // loanitemsListView(),
                   SizedBox(height: 18.h),
-                  appintrodueView(),
+                  // appintrodueView(),
                   SizedBox(height: 18.h),
-                  footerView(),
+                  // footerView(),
                   SizedBox(height: 20.h),
                 ],
               ),
