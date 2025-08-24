@@ -50,16 +50,36 @@ Widget tabbar(MainController controller, BuildContext context) {
         backgroundColor: Colors.transparent,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        elevation: 0, // 移除默认阴影
+        elevation: 0,
         items: [
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/home_nor.png')),
-            activeIcon: ImageIcon(AssetImage('assets/images/home_sel.png')),
+            icon: Image.asset(
+              'assets/images/home_nor.png',
+              width: 45.w,
+              height: 45.h,
+              fit: BoxFit.contain,
+            ),
+            activeIcon: Image.asset(
+              'assets/images/home_sel.png',
+              width: 45.w,
+              height: 45.h,
+              fit: BoxFit.contain,
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/center_nor.png')),
-            activeIcon: ImageIcon(AssetImage('assets/images/center_sel.png')),
+            icon: Image.asset(
+              'assets/images/center_nor.png',
+              width: 45.w,
+              height: 45.h,
+              fit: BoxFit.contain,
+            ),
+            activeIcon: Image.asset(
+              'assets/images/center_sel.png',
+              width: 45.w,
+              height: 45.h,
+              fit: BoxFit.contain,
+            ),
             label: '',
           ),
         ],
