@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GuideCustomerBtn extends StatelessWidget {
   final VoidCallback onPressed;
@@ -19,8 +20,10 @@ class GuideCustomerBtn extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        backgroundColor: color ?? Colors.black,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+        backgroundColor: color ?? Color(0xffFF962D),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.sp),
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
       child: Text(
@@ -28,9 +31,9 @@ class GuideCustomerBtn extends StatelessWidget {
         title,
         style: TextStyle(
           color: titlecolor ?? Colors.white,
-          fontSize: 16,
+          fontSize: 18.sp,
           fontFamily: 'inter',
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
         ),
       ),
     );

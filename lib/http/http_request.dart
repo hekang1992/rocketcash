@@ -47,15 +47,13 @@ class HttpService {
       ),
     );
 
-    // await _configureProxy();
+    await _configureProxy();
   }
-
-  Dio get dio => _dio;
 
   // 配置代理
   Future<void> _configureProxy() async {
-    String proxyIP = '192.168.71.54';
-    String proxyPort = "8888";
+    String proxyIP = '192.168.71.22';
+    String proxyPort = "9090";
 
     if (proxyIP.isNotEmpty) {
       (_dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {

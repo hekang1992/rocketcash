@@ -11,7 +11,6 @@ class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
@@ -27,43 +26,87 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 20.sp,
+                top: MediaQuery.of(context).padding.top + 40.sp,
+              ),
+              child: Image.asset(
+                'assets/images/wel_con_image.png',
+                width: 207.w,
+                height: 84.h,
+              ),
+            ),
             Positioned(
               left: 0,
               right: 0,
-              top: MediaQuery.of(context).padding.top + 25.h,
+              top: MediaQuery.of(context).padding.top + 65.h,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/login_icon_image.png',
-                    width: 88.w,
-                    height: 88.h,
-                  ),
-                  SizedBox(height: 21.h),
-                  Image.asset(
-                    'assets/images/name_icon_image.png',
-                    width: 136.w,
-                    height: 30.h,
-                  ),
-                  SizedBox(height: 38.h),
+                  SizedBox(height: 21.h + 18.h),
+                  SizedBox(height: 98.h),
                   SizedBox(
                     width: 320.w,
-                    child: phoneListView(
-                      'Mobile phone number (+63)',
-                      'login_phone_imge',
-                      'Please enter your mobile phone number',
-                      260,
-                      false,
-                      controller.phonecontroller,
-                      null,
-                      null,
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text('+63'),
+                              SizedBox(width: 12.sp),
+                              Container(
+                                width: 1,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2),
+                                  ),
+                                  color: Color(0xff8DCE00),
+                                ),
+                              ),
+                              SizedBox(width: 12.sp),
+                              SizedBox(
+                                width: 250,
+                                child: TextField(
+                                  controller: controller.phonecontroller,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: InputBorder.none,
+                                    hintText: 'Enter mobile number',
+                                    hintStyle: TextStyle(
+                                      color: Color(0xFF999999),
+                                      fontFamily: 'inter',
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 2.sp),
+                          Image.asset('assets/images/dot_linge_login.png'),
+                        ],
+                      ),
                     ),
+                    // phoneListView(
+                    //   'Mobile phone number (+63)',
+                    //   'login_phone_imge',
+                    //   'Please enter your mobile phone number',
+                    //   260,
+                    //   false,
+                    //   controller.phonecontroller,
+                    //   null,
+                    //   null,
+                    // ),
                   ),
-                  SizedBox(height: 25.h),
+                  SizedBox(height: 15.h),
                   SizedBox(
                     width: 320.w,
                     child: phoneListView(
-                      'Verification code',
+                      '',
                       'login_code_imge',
                       'Please enter the verification code',
                       225,
@@ -80,7 +123,7 @@ class LoginView extends GetView<LoginController> {
                     width: 320.w,
                     height: 50.h,
                     child: GuideCustomerBtn(
-                      title: 'Embark on the RocketCash journey',
+                      title: 'Log in',
                       onPressed: () {
                         controller.tologininfo(
                           phone: controller.phonecontroller.text,
@@ -127,7 +170,9 @@ class LoginView extends GetView<LoginController> {
                                 fontWeight: FontWeight.w500,
                               ),
                               children: [
-                                const TextSpan(text: 'I have read and agreed '),
+                                const TextSpan(
+                                  text: 'Read understand and agree ',
+                                ),
                                 TextSpan(
                                   text: '"Privacy Policy"',
                                   style: const TextStyle(
@@ -202,8 +247,8 @@ Widget phoneListView([
       SizedBox(height: 8.h),
       Row(
         children: [
-          Image.asset('assets/images/$imageStr.png', width: 17.w, height: 17.h),
-          SizedBox(width: 10.w),
+          // Image.asset('assets/images/$imageStr.png', width: 17.w, height: 17.h),
+          // SizedBox(width: 10.w),
           SizedBox(
             width: textwidth?.w,
             height: 20.h,
@@ -226,6 +271,7 @@ Widget phoneListView([
               ),
             ),
           ),
+          SizedBox(width: 25.sp),
           if (isshow == true && secondsLeft != null)
             Obx(
               () => SizedBox(
@@ -234,8 +280,8 @@ Widget phoneListView([
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero, // 去掉默认 padding
-                    backgroundColor: Color(0xFFDFE8BA),
-                    foregroundColor: Colors.black, // ✅ 设置文字颜色
+                    backgroundColor: Color(0xFFFF962D),
+                    foregroundColor: Colors.white, // ✅ 设置文字颜色
                   ),
                   onPressed: secondsLeft.value == 0 ? onPressed : null,
                   child: Text(

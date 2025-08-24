@@ -15,13 +15,6 @@ class BaseModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'salivating': salivating,
-      'companion': companion,
-      'maiden': maiden?.toJson(),
-    };
-  }
 }
 
 class MaidenModel {
